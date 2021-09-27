@@ -1,4 +1,4 @@
-# mog
+# firstapp
 
 A new Flutter project.
 

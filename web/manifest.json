@@ -1,6 +1,6 @@
 {
-    "name": "mog",
-    "short_name": "mog",
+    "name": "firstapp",
+    "short_name": "firstapp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
