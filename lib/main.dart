@@ -2,7 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'fitness.dart';
 import 'nutrition.dart';
-import 'social.dart';
+import 'home.dart';
 import 'profile.dart';
 
 void main() {
@@ -14,21 +14,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        fontFamily: 'SanFran',
-        primarySwatch: Colors.red,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Mog Test'),
-    );
+        title: 'Mog',
+        theme: ThemeData(
+          fontFamily: 'SanFran',
+          primarySwatch: Colors.red,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: MyHomePage(
+          title: '',
+        ));
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  final String title;
+  String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -36,30 +37,61 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedPage = 0;
-  final _pageOptions = [Fitness(), Nutrition(), Social(), Profile()];
+  String pageTitle = "Default";
+  final _pageOptions = [Home(), Fitness(), Nutrition(), Profile()];
+
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      key: _scaffoldKey,
+      appBar: AppBar(title: Text("why this shit not working")),
       body: _pageOptions[selectedPage],
       bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Colors.red,
-        items: [
-          TabItem(icon: Icons.fitness_center_rounded, title: 'Fitness'),
-          TabItem(icon: Icons.local_dining_rounded, title: 'Nutrition'),
-          TabItem(icon: Icons.group_rounded, title: 'Social'),
-          TabItem(icon: Icons.person_rounded, title: 'Profile'),
-        ],
-        initialActiveIndex: 0, //optional, default as 0
         onTap: (int i) {
+          onTabTapped;
           setState(() {
             selectedPage = i;
           });
         },
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        backgroundColor: Colors.red,
+        items: const [
+          TabItem(icon: Icons.home_rounded, title: 'Home'),
+          TabItem(icon: Icons.fitness_center_rounded, title: 'Fitness'),
+          TabItem(icon: Icons.local_dining_rounded, title: 'Nutrition'),
+          TabItem(icon: Icons.person_rounded, title: 'Profile'),
+        ],
+        initialActiveIndex: 0,
+      ),
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      selectedPage = index;
+      switch (index) {
+        case 0:
+          {
+            pageTitle = "Home";
+          }
+          break;
+        case 1:
+          {
+            pageTitle = "Fitness";
+          }
+          break;
+        case 2:
+          {
+            pageTitle = "Nutrition";
+          }
+          break;
+        case 3:
+          {
+            pageTitle = "Profile";
+          }
+          break;
+      }
+    });
   }
 }
