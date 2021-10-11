@@ -30,8 +30,6 @@ dependencies:
   convex_bottom_bar: ^3.0.0
   flutter:
     sdk: flutter
-  firebase_core: ^1.7.0
-  firebase_database: ^8.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -54,6 +52,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/images/
   fonts:
      - family: SanFran
        fonts:
