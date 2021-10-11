@@ -20,75 +20,97 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: MyHomePage(
+        home: HomePage(
           title: '',
         ));
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  String title;
+class HomePage extends StatefulWidget {
+  HomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<StatefulWidget> createState() => new _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int selectedPage = 0;
-  String pageTitle = "Default";
-  final _pageOptions = [Home(), Fitness(), Nutrition(), Profile()];
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  String _title = "default";
+
+  final List<Widget> _children = [
+    Home(),
+    Fitness(),
+    Nutrition(),
+    Profile(),
+  ];
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+
+  @override
+  initState() {
+    _title = 'Some default value';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text("why this shit not working")),
-      body: _pageOptions[selectedPage],
-      bottomNavigationBar: ConvexAppBar(
-        onTap: (int i) {
-          onTabTapped;
-          setState(() {
-            selectedPage = i;
-          });
-        },
+      appBar: AppBar(
+        title: Text(
+          _title,
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red,
-        items: const [
-          TabItem(icon: Icons.home_rounded, title: 'Home'),
-          TabItem(icon: Icons.fitness_center_rounded, title: 'Fitness'),
-          TabItem(icon: Icons.local_dining_rounded, title: 'Nutrition'),
-          TabItem(icon: Icons.person_rounded, title: 'Profile'),
+      ),
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        selectedItemColor: Theme.of(context).primaryColor,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center_rounded),
+            title: Text('Fitness'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.local_dining_rounded),
+            title: Text('Nutrition'),
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_rounded), title: Text('Profile'))
         ],
-        initialActiveIndex: 0,
       ),
     );
   }
 
   void onTabTapped(int index) {
     setState(() {
-      selectedPage = index;
+      _currentIndex = index;
       switch (index) {
         case 0:
           {
-            pageTitle = "Home";
+            _title = 'Home';
           }
           break;
         case 1:
           {
-            pageTitle = "Fitness";
+            _title = 'Fitness';
           }
           break;
         case 2:
           {
-            pageTitle = "Nutrition";
+            _title = 'Nutrition';
           }
           break;
         case 3:
           {
-            pageTitle = "Profile";
+            _title = 'Profile';
           }
           break;
       }
