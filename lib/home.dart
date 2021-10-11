@@ -7,24 +7,25 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Center(
               child: Column(
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
+                margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
                 child: Text("Your Current Group",
-                    style: TextStyle(fontSize: 12), textAlign: TextAlign.left),
+                    style: TextStyle(fontSize: 15), textAlign: TextAlign.left),
               ),
               Container(
-                  height: 350,
+                  height: 250,
                   width: 500,
                   color: Colors.transparent,
                   child: Card(
                     color: Colors.grey.shade300,
-                    margin: const EdgeInsets.all(20.0),
-                    elevation: 0.0,
+                    margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
+                    elevation: 10,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: SizedBox(
@@ -32,13 +33,63 @@ class Home extends StatelessWidget {
                       child: InkWell(
                         splashColor: Colors.grey,
                         onTap: () {},
-                        child: Row(
-                          children: const <Widget>[
+                        child: Column(
+                          children: <Widget>[
                             Expanded(
-                              child: Text("Goobers",
-                                  style: TextStyle(fontSize: 25),
-                                  textAlign: TextAlign.center),
-                            ),
+                                child: Row(children: <Widget>[
+                              Container(
+                                  width: 125,
+                                  height: 125,
+                                  margin: EdgeInsets.fromLTRB(10, 0, 25, 0),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: AssetImage(
+                                              'assets/images/gooberGroupPFP.jpg')))),
+                              Expanded(
+                                child: Text("Goober",
+                                    style: TextStyle(fontSize: 40),
+                                    textAlign: TextAlign.start),
+                              ),
+                            ])),
+                            Expanded(
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: <Widget>[
+                                  Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                  'assets/images/blakeProfilePic.jpg')))),
+                                  Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                  'assets/images/anthonyProfilePic.jpg')))),
+                                  Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: AssetImage(
+                                                  'assets/images/bryanProfilePic.jpg'))))
+                                ])),
                           ],
                         ),
                       ),
@@ -52,7 +103,6 @@ class Home extends StatelessWidget {
   }
 }
 
-
 // child: Text(
 //            "Home Page",
- //           style: TextStyle(fontSize: 20, fontFamily: 'SanFran'),
+//           style: TextStyle(fontSize: 20, fontFamily: 'SanFran'),
