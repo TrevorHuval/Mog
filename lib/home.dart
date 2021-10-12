@@ -1,12 +1,13 @@
 import 'package:firstapp/group.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class Home extends StatelessWidget {
   Widget buildProfilePics() => Container(
-      width: 50,
-      height: 50,
+      width: 37,
+      height: 37,
       decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
@@ -17,30 +18,30 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+        body: Stack(children: <Widget>[
+      Container(
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Center(
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Container(
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
-                        child: Text("Current Group:",
-                            style: TextStyle(fontSize: 17),
+                        child: Text("Current Group",
+                            style: TextStyle(fontSize: 20),
                             textAlign: TextAlign.left),
                       ),
                       Container(
-                          height: 250,
+                          height: 200,
                           width: 500,
                           color: Colors.transparent,
                           child: Card(
-                            color: Colors.grey.shade300,
+                            color: Colors.grey.shade200,
                             margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-                            elevation: 7,
+                            elevation: 5,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
@@ -60,29 +61,36 @@ class Home extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Row(children: <Widget>[
+                                    // Group Image
                                     Container(
                                         width: 125,
                                         height: 125,
                                         margin:
-                                            EdgeInsets.fromLTRB(10, 0, 25, 0),
+                                            EdgeInsets.fromLTRB(10, 0, 15, 0),
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Colors.white,
                                             image: DecorationImage(
-                                                fit: BoxFit.cover,
+                                                fit: BoxFit.contain,
                                                 image: AssetImage(
                                                     'assets/images/gooberGroupPFP.jpg')))),
-                                    Expanded(
-                                      child: Text("Goober",
-                                          style: TextStyle(fontSize: 40),
-                                          textAlign: TextAlign.start),
+                                    // Group Name
+                                    Container(
+                                      width: 175,
+                                      height: 75,
+                                      child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text("Goober",
+                                              style: TextStyle(
+                                                  fontWeight:
+                                                      FontWeight.bold))),
                                     ),
                                   ])),
                                   Expanded(
                                       child: ListView.separated(
                                     padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
                                     scrollDirection: Axis.horizontal,
-                                    itemCount: 6,
+                                    itemCount: 20,
                                     separatorBuilder: (context, _) =>
                                         SizedBox(width: 12),
                                     itemBuilder: (context, index) =>
@@ -91,7 +99,14 @@ class Home extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          ))
+                          )),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                        child: Text("Feed",
+                            style: TextStyle(fontSize: 20),
+                            textAlign: TextAlign.left),
+                      ),
                     ],
                   ),
                 ),
@@ -100,7 +115,35 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-    );
+      DraggableScrollableSheet(
+          initialChildSize: 0.5,
+          minChildSize: 0.5,
+          maxChildSize: 1.0,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+              child: Container(
+                child: ListView.builder(
+                    itemCount: 20,
+                    controller: scrollController,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/trevorProfilePic.jpg'),
+                        ),
+                        title: Text('Trevor Huval'),
+                        subtitle: Text('Checked in today at the gym'),
+                      );
+                    }),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            );
+          }),
+    ]));
   }
 }
 

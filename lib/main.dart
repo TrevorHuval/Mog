@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   initState() {
-    _title = 'Some default value';
+    _title = 'Home';
   }
 
   @override
@@ -88,6 +88,39 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.red,
       ),
       body: _children[_currentIndex],
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          // backgroundColor: Colors.grey,
+          children: <Widget>[
+            SizedBox(
+              height: 127,
+              child: DrawerHeader(
+                // child: CircleAvatar(),
+                child: Text(
+                  'theanthonyduong',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.white),
+                ),
+                decoration: BoxDecoration(color: Colors.red),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings', style: TextStyle(fontSize: 25)),
+              onTap: () {},
+            ),
+            Spacer(),
+            ListTile(
+              leading: Icon(Icons.highlight_remove),
+              title: Text('Sign out', style: TextStyle(fontSize: 25)),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
