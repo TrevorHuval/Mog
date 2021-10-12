@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Fitness extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class Fitness extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
-                child: Text("Today's workout is:",
+                child: Text("Today's workout:",
                     style: TextStyle(fontSize: 20), textAlign: TextAlign.left),
               ),
               Container(
@@ -44,21 +45,22 @@ class Fitness extends StatelessWidget {
                                   margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white)),
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: AssetImage(
+                                              'asset/images/back.jpg')))),
                               Container(
                                   width: 90,
                                   height: 90,
                                   margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white)),
-                              Container(
-                                  width: 90,
-                                  height: 90,
-                                  margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white)),
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: AssetImage(
+                                              'asset/images/bi.jpg')))),
                             ])),
                           ],
                         ),
