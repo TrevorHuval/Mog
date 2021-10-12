@@ -8,10 +8,10 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.grey.shade700,
       body: Column(
         children: <Widget>[
           Container(
+            // child: Align(alignment: Alignment.centerLeft),
             width: 350,
             height: 145,
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -75,11 +75,10 @@ class Profile extends StatelessWidget {
           ),
         ],
       ),
-
-      // Side menu for settings and misc
       endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
+          // backgroundColor: Colors.grey,
           children: <Widget>[
             SizedBox(
               height: 127,
@@ -91,6 +90,17 @@ class Profile extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(color: Colors.red.shade900),
               ),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings, size: 40),
+              title: Text('Settings', style: TextStyle(fontSize: 25)),
+              onTap: () {},
+            ),
+            Spacer(),
+            ListTile(
+              leading: Icon(Icons.highlight_remove, size: 40),
+              title: Text('Sign out', style: TextStyle(fontSize: 25)),
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.settings, size: 40),
