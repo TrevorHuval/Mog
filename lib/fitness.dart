@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:firstapp/fitnessCalc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -78,7 +78,7 @@ class Fitness extends StatelessWidget {
                   color: Colors.transparent,
                   child: Card(
                     color: Colors.grey.shade300,
-                    margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
+                    margin: const EdgeInsets.fromLTRB(20, 35, 20, 0),
                     elevation: 10,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -86,7 +86,12 @@ class Fitness extends StatelessWidget {
                       height: 75.0,
                       child: InkWell(
                         splashColor: Colors.grey,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => fitnessCalc()));
+                        },
                         child: Column(
                           children: <Widget>[
                             Expanded(
@@ -94,29 +99,15 @@ class Fitness extends StatelessWidget {
                               Container(
                                   width: 90,
                                   height: 90,
-                                  margin: EdgeInsets.fromLTRB(5, 0, 10, 100),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                              'assets/images/gooberGroupPFP.jpg')))),
+                                  margin: EdgeInsets.fromLTRB(1, 0, 10, 100)),
                               Container(
                                   width: 90,
                                   height: 90,
-                                  margin: EdgeInsets.fromLTRB(5, 0, 10, 100),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                              'assets/images/gooberGroupPFP.jpg')))),
+                                  margin: EdgeInsets.fromLTRB(1, 10, 1, 10)),
                               Expanded(
-                                child: Text("Back & Biceps",
+                                child: Text("Deadlift 5/5/5",
                                     style: TextStyle(fontSize: 35),
-                                    textAlign: TextAlign.center),
+                                    textAlign: TextAlign.left),
                               ),
                             ])),
                           ],
