@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Fitness extends StatelessWidget {
   @override
@@ -40,22 +39,26 @@ class Fitness extends StatelessWidget {
                             Expanded(
                                 child: Row(children: <Widget>[
                               Container(
-                                  width: 115,
-                                  height: 115,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 25, 0),
+                                  width: 90,
+                                  height: 90,
+                                  margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                              'assets/images/gooberGroupPFP.jpg')))),
-                              Expanded(
-                                child: Text(
-                                    DateFormat('EEEE').format(DateTime.now()),
-                                    style: TextStyle(fontSize: 40),
-                                    textAlign: TextAlign.start),
-                              ),
+                                      color: Colors.white)),
+                              Container(
+                                  width: 90,
+                                  height: 90,
+                                  margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white)),
+                              Container(
+                                  width: 90,
+                                  height: 90,
+                                  margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white)),
                             ])),
                           ],
                         ),
