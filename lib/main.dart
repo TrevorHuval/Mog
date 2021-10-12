@@ -1,18 +1,22 @@
+// ignore_for_file: deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'fitness.dart';
 import 'nutrition.dart';
 import 'home.dart';
+import 'test.dart';
 import 'profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,25 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomePage(
-          title: '',
-        ));
+        home: FutureBuilder(
+            future: _fbApp,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print('Error building! ${snapshot.error.toString()}');
+                return Text('Something went wrong :(');
+              } else if (snapshot.hasData) {
+                return HomePage(
+                  title: '',
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            })
+        //HomePage(
+        //title: '',
+        );
   }
 }
 
@@ -46,6 +66,7 @@ class _HomePageState extends State<HomePage> {
     Fitness(),
     Nutrition(),
     Profile(),
+    Test(),
   ];
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
@@ -86,7 +107,9 @@ class _HomePageState extends State<HomePage> {
             title: Text('Nutrition'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded), title: Text('Profile'))
+              icon: Icon(Icons.person_rounded), title: Text('Profile')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.text_snippet_rounded), title: Text('Test'))
         ],
       ),
     );
@@ -114,6 +137,11 @@ class _HomePageState extends State<HomePage> {
         case 3:
           {
             _title = 'Profile';
+          }
+          break;
+        case 4:
+          {
+            _title = 'Test';
           }
           break;
       }
