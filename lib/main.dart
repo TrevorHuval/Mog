@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'fitness.dart';
 import 'nutrition.dart';
 import 'home.dart';
+import 'test.dart';
 import 'profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -27,21 +28,23 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: FutureBuilder(
-          future: _fbApp,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              print ('Error building! ${snapshot.error.toString()}');
-              return Text('Something went wrong :(');
-            } else if (snapshot.hasData) {
-              return HomePage( title: '',);
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),);
-            }
-          }
-        )
+            future: _fbApp,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print('Error building! ${snapshot.error.toString()}');
+                return Text('Something went wrong :(');
+              } else if (snapshot.hasData) {
+                return HomePage(
+                  title: '',
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            })
         //HomePage(
-          //title: '',
+        //title: '',
         );
   }
 }
@@ -63,6 +66,7 @@ class _HomePageState extends State<HomePage> {
     Fitness(),
     Nutrition(),
     Profile(),
+    Test(),
   ];
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
@@ -103,7 +107,9 @@ class _HomePageState extends State<HomePage> {
             title: Text('Nutrition'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded), title: Text('Profile'))
+              icon: Icon(Icons.person_rounded), title: Text('Profile')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.text_snippet_rounded), title: Text('Test'))
         ],
       ),
     );
@@ -131,6 +137,11 @@ class _HomePageState extends State<HomePage> {
         case 3:
           {
             _title = 'Profile';
+          }
+          break;
+        case 4:
+          {
+            _title = 'Test';
           }
           break;
       }
