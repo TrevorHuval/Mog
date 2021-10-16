@@ -1,7 +1,6 @@
 // ignore_for_file: deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:firstapp/fitnesscalc.dart';
 import 'package:flutter/material.dart';
 import 'fitness.dart';
 import 'nutrition.dart';
@@ -65,10 +64,8 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _children = [
     Home(),
     Fitness(),
-    Nutrition(),
     Profile(),
     Test(),
-    fitnessCalc()
   ];
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
@@ -138,10 +135,6 @@ class _HomePageState extends State<HomePage> {
             title: Text('Fitness'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_dining_rounded),
-            title: Text('Nutrition'),
-          ),
-          BottomNavigationBarItem(
               icon: Icon(Icons.person_rounded), title: Text('Profile')),
           BottomNavigationBarItem(
               icon: Icon(Icons.text_snippet_rounded), title: Text('Test'))
@@ -166,15 +159,10 @@ class _HomePageState extends State<HomePage> {
           break;
         case 2:
           {
-            _title = 'Nutrition';
-          }
-          break;
-        case 3:
-          {
             _title = 'Profile';
           }
           break;
-        case 4:
+        case 3:
           {
             _title = 'Test';
           }

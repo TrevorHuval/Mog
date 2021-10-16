@@ -41,7 +41,7 @@ class Home extends StatelessWidget {
                           child: Card(
                             color: Colors.grey.shade200,
                             margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-                            elevation: 5,
+                            elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
@@ -100,9 +100,19 @@ class Home extends StatelessWidget {
                               ),
                             ),
                           )),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Check In',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                        margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
                         child: Text("Feed",
                             style: TextStyle(fontSize: 20),
                             textAlign: TextAlign.left),
@@ -116,18 +126,19 @@ class Home extends StatelessWidget {
         ),
       ),
       DraggableScrollableSheet(
-          initialChildSize: 0.5,
-          minChildSize: 0.5,
+          initialChildSize: 0.45,
+          minChildSize: 0.45,
           maxChildSize: 1.0,
           builder: (BuildContext context, ScrollController scrollController) {
             return Padding(
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: Container(
                 child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     itemCount: 20,
                     controller: scrollController,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
+                      return const ListTile(
                         leading: CircleAvatar(
                           backgroundImage:
                               AssetImage('assets/images/trevorProfilePic.jpg'),
