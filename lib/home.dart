@@ -101,12 +101,19 @@ class Home extends StatelessWidget {
                         ),
                       )),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 120, vertical: 15),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Check In',
-                        style: TextStyle(fontSize: 25),
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    child: SizedBox(
+                      height: 50,
+                      width: 400,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10))),
+                        onPressed: () {},
+                        child: const Text(
+                          'CHECK IN',
+                          style: TextStyle(fontSize: 15),
+                        ),
                       ),
                     ),
                   ),
