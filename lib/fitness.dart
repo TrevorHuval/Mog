@@ -8,10 +8,9 @@ class Fitness extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: Stack(
         children: <Widget>[
-          Center(
+          SingleChildScrollView(
               child: Column(
             children: <Widget>[
               Container(
@@ -27,45 +26,41 @@ class Fitness extends StatelessWidget {
                   child: Card(
                     color: Colors.grey.shade300,
                     margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-                    elevation: 10,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: SizedBox(
-                      height: 75.0,
-                      child: Column(
-                        children: <Widget>[
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                            child: Row(children: <Widget>[
+                          Container(
+                              width: 90,
+                              height: 90,
+                              margin: EdgeInsets.fromLTRB(5, 10, 10, 100),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/gooberGroupPFP.jpg')))),
+                          Container(
+                              width: 90,
+                              height: 90,
+                              margin: EdgeInsets.fromLTRB(5, 10, 10, 100),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                          'assets/images/gooberGroupPFP.jpg')))),
                           Expanded(
-                              child: Row(children: <Widget>[
-                            Container(
-                                width: 90,
-                                height: 90,
-                                margin: EdgeInsets.fromLTRB(5, 10, 10, 100),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            'assets/images/gooberGroupPFP.jpg')))),
-                            Container(
-                                width: 90,
-                                height: 90,
-                                margin: EdgeInsets.fromLTRB(5, 10, 10, 100),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            'assets/images/gooberGroupPFP.jpg')))),
-                            Expanded(
-                              child: Text("Back & Biceps",
-                                  style: TextStyle(fontSize: 35),
-                                  textAlign: TextAlign.center),
-                            ),
-                          ])),
-                        ],
-                      ),
+                            child: Text("Back & Biceps",
+                                style: TextStyle(fontSize: 35),
+                                textAlign: TextAlign.center),
+                          ),
+                        ])),
+                      ],
                     ),
                   )),
               Container(
@@ -75,7 +70,6 @@ class Fitness extends StatelessWidget {
                   child: Card(
                     color: Colors.grey.shade300,
                     margin: const EdgeInsets.fromLTRB(20, 35, 20, 0),
-                    elevation: 10,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: SizedBox(

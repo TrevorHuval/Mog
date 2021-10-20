@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 
 class Home extends StatelessWidget {
   Widget buildProfilePics() => Container(
       width: 37,
       height: 37,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
           image: DecorationImage(
@@ -17,144 +18,132 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(children: <Widget>[
-      Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
-                        child: Text("Current Group",
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.left),
-                      ),
-                      Container(
-                          height: 200,
-                          width: 500,
-                          color: Colors.transparent,
-                          child: Card(
-                            color: Colors.grey.shade200,
-                            margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: InkWell(
-                              splashColor: Colors.grey,
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Group()));
-                              },
-                              child: Column(
-                                children: <Widget>[
-                                  const SizedBox(
-                                    height:
-                                        15, // Creates margin inside the card for the group pic and name
-                                  ),
-                                  Expanded(
-                                      child: Row(children: <Widget>[
-                                    // Group Image
-                                    Container(
-                                        width: 125,
-                                        height: 125,
-                                        margin:
-                                            EdgeInsets.fromLTRB(10, 0, 15, 0),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                            image: DecorationImage(
-                                                fit: BoxFit.contain,
-                                                image: AssetImage(
-                                                    'assets/images/gooberGroupPFP.jpg')))),
-                                    // Group Name
-                                    Container(
-                                      width: 175,
-                                      height: 75,
-                                      child: FittedBox(
-                                          fit: BoxFit.fitWidth,
-                                          child: Text("Goober",
-                                              style: TextStyle(
-                                                  fontWeight:
-                                                      FontWeight.bold))),
-                                    ),
-                                  ])),
-                                  Expanded(
-                                      child: ListView.separated(
-                                    padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: 20,
-                                    separatorBuilder: (context, _) =>
-                                        SizedBox(width: 12),
-                                    itemBuilder: (context, index) =>
-                                        buildProfilePics(),
-                                  )),
-                                ],
-                              ),
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Check In',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
-                        child: Text("Feed",
-                            style: TextStyle(fontSize: 20),
-                            textAlign: TextAlign.left),
-                      ),
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (OverscrollIndicatorNotification overScroll) {
+              overScroll.disallowGlow();
+              return false;
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                    child: const Text("Current Group",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.left),
                   ),
-                ),
-              )
-            ],
+                  Container(
+                      height: 200,
+                      width: 500,
+                      color: Colors.transparent,
+                      child: Card(
+                        color: Colors.grey.shade200,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 5),
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: InkWell(
+                          splashColor: Colors.grey,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Group()));
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              const SizedBox(
+                                height:
+                                    15, // Creates margin inside the card for the group pic and name
+                              ),
+                              Expanded(
+                                  child: Row(children: <Widget>[
+                                // Group Image
+                                Container(
+                                    width: 125,
+                                    height: 125,
+                                    margin: EdgeInsets.fromLTRB(10, 0, 15, 0),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                        image: DecorationImage(
+                                            fit: BoxFit.contain,
+                                            image: AssetImage(
+                                                'assets/images/gooberGroupPFP.jpg')))),
+                                // Group Name
+                                Container(
+                                  width: 175,
+                                  height: 75,
+                                  child: FittedBox(
+                                      fit: BoxFit.fitWidth,
+                                      child: Text("Goober",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold))),
+                                ),
+                              ])),
+                              Expanded(
+                                  child: ListView.separated(
+                                padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 20,
+                                separatorBuilder: (context, _) =>
+                                    SizedBox(width: 12),
+                                itemBuilder: (context, index) =>
+                                    buildProfilePics(),
+                              )),
+                            ],
+                          ),
+                        ),
+                      )),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Check In',
+                        style: TextStyle(fontSize: 25),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    child: Text("Feed",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.left),
+                  ),
+                  Container(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: 20,
+                      itemBuilder: (BuildContext context, int index) {
+                        return const ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: AssetImage(
+                                'assets/images/trevorProfilePic.jpg'),
+                          ),
+                          title: Text('Trevor Huval'),
+                          subtitle: Text('Checked in today at the gym'),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
-      DraggableScrollableSheet(
-          initialChildSize: 0.45,
-          minChildSize: 0.45,
-          maxChildSize: 1.0,
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Container(
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: 20,
-                    controller: scrollController,
-                    itemBuilder: (BuildContext context, int index) {
-                      return const ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              AssetImage('assets/images/trevorProfilePic.jpg'),
-                        ),
-                        title: Text('Trevor Huval'),
-                        subtitle: Text('Checked in today at the gym'),
-                      );
-                    }),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            );
-          }),
-    ]));
+    );
   }
 }
 

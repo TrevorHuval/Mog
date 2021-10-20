@@ -50,49 +50,56 @@ class Group extends StatelessWidget {
             },
             body: TabBarView(
               children: [
-                Container(
-                  child: ListView(children: const <Widget>[
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/blakeProfilePic.jpg'),
+                NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (OverscrollIndicatorNotification overscroll) {
+                    overscroll.disallowGlow();
+                    return false;
+                  },
+                  child: ListView(
+                    children: <Widget>[
+                      ListTile(
+                        onTap: () {},
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/blakeProfilePic.jpg'),
+                        ),
+                        title: Text('Blake Lalonde'),
+                        subtitle: Text('Current Streak: 365'),
                       ),
-                      title: Text('Blake Lalonde'),
-                      subtitle: Text('Current Streak: 365'),
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/trevorProfilePic.jpg'),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/trevorProfilePic.jpg'),
+                        ),
+                        title: Text('Trevor Huval'),
+                        subtitle: Text('Current Streak: 1'),
                       ),
-                      title: Text('Trevor Huval'),
-                      subtitle: Text('Current Streak: 1'),
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/bryanProfilePic.jpg'),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/bryanProfilePic.jpg'),
+                        ),
+                        title: Text('Bryan Tran'),
+                        subtitle: Text('Current Streak: 0'),
                       ),
-                      title: Text('Bryan Tran'),
-                      subtitle: Text('Current Streak: 0'),
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/anthonyProfilePic.jpg'),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/anthonyProfilePic.jpg'),
+                        ),
+                        title: Text('Anthony Duong'),
+                        subtitle: Text('Current Streak: 32'),
                       ),
-                      title: Text('Anthony Duong'),
-                      subtitle: Text('Current Streak: 32'),
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/horacioProfilePic.jpg'),
+                      ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage('assets/images/horacioProfilePic.jpg'),
+                        ),
+                        title: Text('Horacio Medina'),
+                        subtitle: Text('Current Streak: 32'),
                       ),
-                      title: Text('Horacio Medina'),
-                      subtitle: Text('Current Streak: 32'),
-                    ),
-                  ]),
+                    ],
+                  ),
                 ),
                 Container(
                   child: ListView.builder(
