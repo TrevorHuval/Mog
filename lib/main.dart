@@ -7,6 +7,7 @@ import 'home.dart';
 import 'test.dart';
 import 'profile.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'progress.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'SanFran',
           primarySwatch: Colors.red,
+          backgroundColor: Colors.grey.shade100,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: FutureBuilder(
@@ -63,6 +65,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _children = [
     Home(),
     Fitness(),
+    Progress(),
     Profile(),
     Test(),
   ];
@@ -134,39 +137,53 @@ class _HomePageState extends State<HomePage> {
             title: Text('Fitness'),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded), title: Text('Profile')),
+            icon: Icon(Icons.bar_chart_rounded),
+            title: Text('Progress'),
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.text_snippet_rounded), title: Text('Test'))
+            icon: Icon(Icons.person_rounded),
+            title: Text('Profile'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.text_snippet_rounded),
+            title: Text('Test'),
+          ),
         ],
       ),
     );
   }
 
   void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-      switch (index) {
-        case 0:
-          {
-            _title = 'Home';
-          }
-          break;
-        case 1:
-          {
-            _title = 'Fitness';
-          }
-          break;
-        case 2:
-          {
-            _title = 'Profile';
-          }
-          break;
-        case 3:
-          {
-            _title = 'Test';
-          }
-          break;
-      }
-    });
+    setState(
+      () {
+        _currentIndex = index;
+        switch (index) {
+          case 0:
+            {
+              _title = 'Home';
+            }
+            break;
+          case 1:
+            {
+              _title = 'Fitness';
+            }
+            break;
+          case 2:
+            {
+              _title = 'Progress';
+            }
+            break;
+          case 3:
+            {
+              _title = 'Profile';
+            }
+            break;
+          case 4:
+            {
+              _title = 'Test';
+            }
+        }
+      },
+    );
   }
 }

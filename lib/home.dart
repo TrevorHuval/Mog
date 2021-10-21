@@ -1,9 +1,11 @@
 import 'package:firstapp/group.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
+import 'calendar.dart';
 
 class Home extends StatelessWidget {
   Widget buildProfilePics() => Container(
@@ -20,6 +22,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        //backgroundColor: Colors.grey.shade100,
         body: Center(
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -125,6 +128,7 @@ class Home extends StatelessWidget {
                         textAlign: TextAlign.left),
                   ),
                   Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
                     child: ListView.separated(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
