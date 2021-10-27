@@ -22,6 +22,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -40,10 +41,11 @@ class Profile extends StatelessWidget {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Card(
+                      elevation: 0,
                       color: Colors.grey.shade200,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                          Radius.circular(20),
                         ),
                       ),
                       child: Container(
@@ -133,10 +135,11 @@ class Profile extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 5),
                       child: Card(
+                        elevation: 0,
                         color: Colors.grey.shade200,
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(20))),
                         child: InkWell(
                           splashColor: Colors.grey,
                           onTap: () {
@@ -199,10 +202,11 @@ class Profile extends StatelessWidget {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Card(
+                      elevation: 0,
                       color: Colors.grey.shade200,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                          Radius.circular(20),
                         ),
                       ),
                       child: Container(

@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //backgroundColor: Colors.grey.shade100,
+        backgroundColor: Colors.white,
         body: Center(
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -36,7 +36,8 @@ class Home extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
                     child: const Text("Current Group",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left),
                   ),
                   Container(
@@ -44,12 +45,13 @@ class Home extends StatelessWidget {
                       width: 500,
                       color: Colors.transparent,
                       child: Card(
+                        elevation: 0,
                         color: Colors.grey.shade200,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(20))),
                         child: InkWell(
                           splashColor: Colors.grey,
                           onTap: () {
@@ -107,24 +109,27 @@ class Home extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     child: SizedBox(
                       height: 50,
-                      width: 400,
+                      width: 200,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            elevation: 0,
                             shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(10))),
+                                borderRadius: new BorderRadius.circular(15))),
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'CHECK IN',
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                    margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
                     child: Text("Feed",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left),
                   ),
                   Container(

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'SanFran',
           primarySwatch: Colors.red,
-          backgroundColor: Colors.grey.shade100,
+          backgroundColor: Colors.white,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: FutureBuilder(
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           _title,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.red,
       ),
