@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:firstapp/fitnessCalc.dart';
 import 'package:firstapp/diary.dart';
+import 'package:firstapp/fitness2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -41,7 +42,7 @@ class Fitness extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => diary(),
+                            builder: (context) => fitness2(),
                           ),
                         );
                       },

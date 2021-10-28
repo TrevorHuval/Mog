@@ -15,7 +15,7 @@ class diary extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Back and Biceps'),
+          title: Text('Choose a workout to edit'),
           backgroundColor: Colors.red,
         ),
         body: Center(
@@ -30,16 +30,13 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   '\nBack Workouts:',
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
               ListTile(
                 title: Text(
                   'Iso-Lateral Pulldowns',
                   style: TextStyle(fontSize: 20),
-                ),
-                subtitle: Text(
-                  'Sets: 4 | Reps: 10 | 45lbs',
                 ),
                 onTap: () {},
               ),
@@ -48,9 +45,6 @@ class diary extends StatelessWidget {
                   'Iso-Lateral High Rows',
                   style: TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(
-                  'Sets: 3 | Reps: 10 | 110lbs',
-                ),
                 onTap: () {},
               ),
               ListTile(
@@ -58,24 +52,20 @@ class diary extends StatelessWidget {
                   'Seated Rows',
                   style: TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(
-                  'Sets: 4 | Reps: 10 | 85lbs',
-                ),
                 onTap: () {},
               ),
+              //
+              // Spacer
               ListTile(
                 title: Text(
                   'Bicep Workouts:',
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
               ListTile(
                 title: Text(
-                  'Seated Biceps',
+                  'Seated Bicep Curl',
                   style: TextStyle(fontSize: 20),
-                ),
-                subtitle: Text(
-                  'Sets: 3 | Reps: 10 | 45lbs',
                 ),
                 onTap: () {},
               ),
@@ -84,18 +74,41 @@ class diary extends StatelessWidget {
                   'Hammer Heads',
                   style: TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(
-                  'Sets: 3 | Reps: 10 | 25lbs',
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text(
+                  'Curling Bar',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {},
+              ),
+              //
+              // Spacer
+              ListTile(
+                title: Text(
+                  'Chest Workouts:',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Bench Press',
+                  style: TextStyle(fontSize: 20),
                 ),
                 onTap: () {},
               ),
               ListTile(
                 title: Text(
-                  'Pullups',
+                  'Inclined Dumbbell Press',
                   style: TextStyle(fontSize: 20),
                 ),
-                subtitle: Text(
-                  'Sets: 3 | Reps: 10',
+                onTap: () {},
+              ),
+              ListTile(
+                title: Text(
+                  'Cable Flies',
+                  style: TextStyle(fontSize: 20),
                 ),
                 onTap: () {},
               ),
