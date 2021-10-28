@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  percent_indicator: ^2.1.7+2
   table_calendar: ^3.0.2
   fl_chart: ^0.40.2
   convex_bottom_bar: ^3.0.0
