@@ -7,9 +7,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'graph.dart';
 
-class Progress extends StatelessWidget {
+class Progress extends StatefulWidget {
+  @override
+  _Progress createState() => _Progress();
+}
+
+class _Progress extends State<Progress> {
   var selectedDateMessage = "Select a date";
-  var graphTitle = "Weight";
+  String graphTitle = "Weight";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -132,7 +138,9 @@ class Progress extends StatelessWidget {
                                   ),
                                 ).then((returnVal) {
                                   if (returnVal != null) {
-                                    graphTitle = '$returnVal';
+                                    setState(() {
+                                      graphTitle = '$returnVal';
+                                    });
                                   }
                                 });
                               },
