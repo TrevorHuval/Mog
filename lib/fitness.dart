@@ -12,6 +12,7 @@ class Fitness extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
           ListView(
@@ -27,11 +28,12 @@ class Fitness extends StatelessWidget {
                 width: 500,
                 color: Colors.transparent,
                 child: Card(
+                  elevation: 0,
                   color: Colors.grey.shade200,
                   margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(20),
                     ),
                   ),
                   child: SizedBox(
@@ -98,11 +100,12 @@ class Fitness extends StatelessWidget {
                 width: 500,
                 color: Colors.transparent,
                 child: Card(
+                  elevation: 0,
                   color: Colors.grey.shade200,
                   margin: const EdgeInsets.fromLTRB(20, 35, 20, 0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(10),
+                      Radius.circular(20),
                     ),
                   ),
                   child: SizedBox(

@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/group.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class Profile extends StatelessWidget {
   Widget buildProfilePics() => Container(
@@ -22,6 +23,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -33,6 +35,14 @@ class Profile extends StatelessWidget {
                 children: <Widget>[
                   // Container for the profile information
                   Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                    child: const Text("Profile",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left),
+                  ),
+                  Container(
                     width: 500,
                     height: 175,
                     // alignment: Alignment.topCenter,
@@ -40,10 +50,11 @@ class Profile extends StatelessWidget {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Card(
+                      elevation: 0,
                       color: Colors.grey.shade200,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+                          Radius.circular(20),
                         ),
                       ),
                       child: Container(
@@ -67,55 +78,65 @@ class Profile extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Column(children: <Widget>[
-                                    Container(
-                                      height: 45,
-                                      width: 185,
-                                      margin: EdgeInsets.only(top: 30),
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Text(
-                                          "Anthony Duong",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        width: 185,
+                                        child: FittedBox(
+                                          fit: BoxFit.contain,
+                                          child: Text(
+                                            "Anthony Duong",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      height: 20,
-                                      width: 185,
-                                      child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: Text(
-                                          "Height: 5'8",
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 20,
+                                        width: 185,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: Text(
+                                            "Height: 5'8",
+                                            style: TextStyle(
+                                                color: Colors.grey.shade700,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      height: 20,
-                                      width: 185,
-                                      child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: Text(
-                                          "Weight: 170",
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 20,
+                                        width: 185,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: Text(
+                                            "Weight: 170",
+                                            style: TextStyle(
+                                                color: Colors.grey.shade700,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.centerLeft,
-                                      height: 20,
-                                      width: 185,
-                                      child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: Text(
-                                          "Sex: Male",
+                                      Container(
+                                        alignment: Alignment.centerLeft,
+                                        height: 20,
+                                        width: 185,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: Text(
+                                            "Sex: Male",
+                                            style: TextStyle(
+                                                color: Colors.grey.shade700,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ])
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -124,8 +145,135 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                    child: const Text("Max Calculations",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left),
+                  ),
 
-                  // Favorite Groups container
+                  // Max Calculations container
+                  Container(
+                    // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    child: Card(
+                      elevation: 0,
+                      color: Colors.grey.shade200,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 125,
+                                height: 25,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Bench:",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.shade700)),
+                                    Text("105 lbs",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.shade700)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 125,
+                                height: 25,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Squat:",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.shade700)),
+                                    Text("135 lbs",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.shade700)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 125,
+                                height: 25,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Deadlift:",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.shade700)),
+                                    Text("185 lbs",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey.shade700)),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              LinearPercentIndicator(
+                                width: 140,
+                                lineHeight: 14,
+                                percent: 0.425,
+                                //center: Text("425 / 1000"),
+                                backgroundColor: Colors.grey.shade300,
+                                progressColor: Color.fromRGBO(0, 255, 0, 100),
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                "425 / 1000",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade700,
+                                    fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                    child: const Text("Favorite Group",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.left),
+                  ),
                   Container(
                       height: 200,
                       width: 500,
@@ -133,10 +281,11 @@ class Profile extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 5),
                       child: Card(
+                        elevation: 0,
                         color: Colors.grey.shade200,
                         shape: RoundedRectangleBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(20))),
                         child: InkWell(
                           splashColor: Colors.grey,
                           onTap: () {
@@ -190,37 +339,6 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                       )),
-
-                  // Max Calculations container
-                  Container(
-                    width: 500,
-                    height: 175,
-                    // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    child: Card(
-                      color: Colors.grey.shade200,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                      child: Container(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "\nMax Calculations",
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            Text(
-                              "Benchpress: 105lbs\nSquat: 135lbs\nDeadlift: 185lbs\nGoal: 415/1000lbs",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
