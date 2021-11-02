@@ -46,7 +46,7 @@ class _TableBasicsExampleState extends State<Calendar> {
               selectedDecoration:
                   BoxDecoration(color: Colors.red, shape: BoxShape.circle),
               todayDecoration: BoxDecoration(
-                  color: Colors.red.shade200, shape: BoxShape.circle)),
+                  color: Colors.grey.shade300, shape: BoxShape.circle)),
           selectedDayPredicate: (day) {
             return isSameDay(_selectedDay, day);
           },

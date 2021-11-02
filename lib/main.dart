@@ -3,12 +3,12 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'fitness.dart';
-import 'fitness2.dart';
 import 'home.dart';
 import 'test.dart';
 import 'profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'progress.dart';
+import 'settings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,7 +112,10 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings', style: TextStyle(fontSize: 25)),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Settings()));
+              },
             ),
             Spacer(),
             ListTile(

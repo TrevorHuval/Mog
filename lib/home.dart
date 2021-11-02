@@ -7,7 +7,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'calendar.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+  @override
+  _Home createState() => _Home();
+}
+
+class _Home extends State<Home> {
   Widget buildProfilePics() => Container(
       width: 37,
       height: 37,
@@ -46,7 +52,7 @@ class Home extends StatelessWidget {
                       color: Colors.transparent,
                       child: Card(
                         elevation: 0,
-                        color: Colors.grey.shade200,
+                        color: Colors.grey.shade100,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
                         shape: RoundedRectangleBorder(
@@ -105,28 +111,65 @@ class Home extends StatelessWidget {
                           ),
                         ),
                       )),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    child: SizedBox(
-                      height: 50,
-                      width: 200,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(15))),
-                        onPressed: () {},
-                        child: Text(
-                          'CHECK IN',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 25),
+                        child: SizedBox(
+                          height: 40,
+                          width: 150,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(15))),
+                            onPressed: () {},
+                            child: Text(
+                              'CHECK IN',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Text(
+                        "OR",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 15),
+                        child: SizedBox(
+                          height: 40,
+                          width: 150,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.grey.shade200,
+                                elevation: 0,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(15))),
+                            onPressed: () {},
+                            child: Text(
+                              'REST DAY',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey.shade600),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                    margin: EdgeInsets.fromLTRB(25, 0, 0, 0),
                     child: Text("Feed",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),

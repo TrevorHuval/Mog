@@ -34,14 +34,7 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   // Container for the profile information
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                    child: const Text("Profile",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.left),
-                  ),
+
                   Container(
                     width: 500,
                     height: 175,
@@ -80,6 +73,8 @@ class Profile extends StatelessWidget {
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Container(
                                         width: 185,
@@ -102,8 +97,10 @@ class Profile extends StatelessWidget {
                                           child: Text(
                                             "Height: 5'8",
                                             style: TextStyle(
-                                                color: Colors.grey.shade700,
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.grey.shade700,
+                                              fontSize: 15,
+                                              //fontWeight: FontWeight.bold
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -116,22 +113,21 @@ class Profile extends StatelessWidget {
                                           child: Text(
                                             "Weight: 170",
                                             style: TextStyle(
-                                                color: Colors.grey.shade700,
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.grey.shade700,
+                                              fontSize: 15,
+                                              //fontWeight: FontWeight.bold
+                                            ),
                                           ),
                                         ),
                                       ),
                                       Container(
-                                        alignment: Alignment.centerLeft,
-                                        height: 20,
-                                        width: 185,
                                         child: FittedBox(
-                                          fit: BoxFit.fill,
                                           child: Text(
                                             "Sex: Male",
                                             style: TextStyle(
-                                                color: Colors.grey.shade700,
-                                                fontWeight: FontWeight.bold),
+                                              color: Colors.grey.shade700,
+                                              fontSize: 15,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -161,7 +157,7 @@ class Profile extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: Card(
                       elevation: 0,
-                      color: Colors.grey.shade200,
+                      color: Colors.grey.shade100,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(20),
@@ -186,12 +182,12 @@ class Profile extends StatelessWidget {
                                     Text("Bench:",
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                            //fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade700)),
                                     Text("105 lbs",
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                            //fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade700)),
                                   ],
                                 ),
@@ -206,12 +202,12 @@ class Profile extends StatelessWidget {
                                     Text("Squat:",
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                            //fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade700)),
                                     Text("135 lbs",
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                            //fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade700)),
                                   ],
                                 ),
@@ -226,12 +222,12 @@ class Profile extends StatelessWidget {
                                     Text("Deadlift:",
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                            //fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade700)),
                                     Text("185 lbs",
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontWeight: FontWeight.bold,
+                                            //fontWeight: FontWeight.bold,
                                             color: Colors.grey.shade700)),
                                   ],
                                 ),
@@ -256,7 +252,7 @@ class Profile extends StatelessWidget {
                               Text(
                                 "425 / 1000",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    //fontWeight: FontWeight.bold,
                                     color: Colors.grey.shade700,
                                     fontSize: 10),
                               ),
@@ -269,7 +265,7 @@ class Profile extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                    child: const Text("Favorite Group",
+                    child: const Text("Group",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left),
@@ -282,7 +278,7 @@ class Profile extends StatelessWidget {
                           horizontal: 20, vertical: 5),
                       child: Card(
                         elevation: 0,
-                        color: Colors.grey.shade200,
+                        color: Colors.grey.shade100,
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
