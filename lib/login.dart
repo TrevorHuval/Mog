@@ -1,3 +1,4 @@
+import 'package:firstapp/create_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -18,59 +19,64 @@ class _Login extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Center(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                  width: 125,
-                  height: 125,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image:
-                              AssetImage('assets/images/gooberGroupPFP.jpg')))),
               Column(
                 children: [
                   Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      alignment: Alignment.centerLeft,
-                      child: Text("Login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 25))),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        icon: Icon(Icons.email_rounded),
-                        labelText: 'E-mail',
+                      width: 125,
+                      height: 125,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  'assets/images/mog_icon_no_background_red.png')))),
+                  Column(
+                    children: [
+                      Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          alignment: Alignment.centerLeft,
+                          child: const Text("Login",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 25))),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            icon: Icon(Icons.email_rounded),
+                            labelText: 'E-mail',
+                          ),
+                        ),
                       ),
-                    ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 20),
+                        child: PasswordField(
+                          fieldKey: _passwordFieldKey,
+                          labelText: 'Password',
+                          onFieldSubmitted: (String value) {
+                            setState(() {
+                              password = value;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      ElevatedButton(
+                          child: const Text("Submit",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)))),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: PasswordField(
-                      fieldKey: _passwordFieldKey,
-                      labelText: 'Password',
-                      onFieldSubmitted: (String value) {
-                        setState(() {
-                          password = value;
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                  ElevatedButton(
-                      child: Text("Submit",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)))),
                 ],
               ),
               Row(
@@ -78,15 +84,20 @@ class _Login extends State<Login> {
                 children: [
                   Text("Don't have an account?  ",
                       style: TextStyle(color: Colors.grey.shade500)),
-                  InkWell(
+                  GestureDetector(
                     child: Text(
                       "Create account",
                       style: TextStyle(
-                          color: Colors.red,
-                          decoration: TextDecoration.underline),
+                        color: Colors.red,
+                      ),
                     ),
-                    onTap: () {},
-                  ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const CreateAccount()));
+                    },
+                  )
                 ],
               ),
             ],
@@ -132,7 +143,7 @@ class _PasswordFieldState extends State<PasswordField> {
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
-        icon: Icon(Icons.lock_rounded),
+        icon: const Icon(Icons.lock_rounded),
         border: const UnderlineInputBorder(),
         hintText: widget.hintText,
         labelText: widget.labelText,
