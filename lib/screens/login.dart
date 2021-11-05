@@ -15,8 +15,8 @@ class _Login extends State<Login> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  late String email;
-  late String password;
+  String email = "";
+  String password = "";
 
   void signInAction() async {
     try {
@@ -83,9 +83,9 @@ class _Login extends State<Login> {
                         child: PasswordField(
                           fieldKey: _passwordFieldKey,
                           labelText: 'Password',
-                          onFieldSubmitted: (String value) {
+                          onFieldSubmitted: (val) {
                             setState(() {
-                              password = value;
+                              password = val;
                             });
                           },
                         ),
@@ -94,7 +94,7 @@ class _Login extends State<Login> {
                       ElevatedButton(
                           child: const Text("Submit",
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          onPressed: () async => {signInAction()},
+                          onPressed: () async => {signInAction(), print(password)},
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
                               shape: RoundedRectangleBorder(
