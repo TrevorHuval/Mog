@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -14,10 +15,42 @@ class _CreateAccount extends State<CreateAccount> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
       GlobalKey<FormFieldState<String>>();
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  String email = "";
+  String password = "";
+
+  void signUpAction() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  
+
   static const userSex = <String>[
     'Male',
     'Female',
   ];
+
+  void _setSexSelection(String selectedSex) {
+    Navigator.pop(context);
+    setState(() {
+      sex = selectedSex;
+    });
+  }
+
   final List<DropdownMenuItem<String>> _dropDownMenuItems = userSex
       .map(
         (String value) => DropdownMenuItem<String>(
@@ -29,8 +62,8 @@ class _CreateAccount extends State<CreateAccount> {
 
   String? _firstName;
   String? _lastName;
-  String? _email;
-  String? _password;
+  //String? _email;
+  //String? _password;
   String sex = "Select your sex";
   String? _weight;
   String? _height;
@@ -135,7 +168,7 @@ class _CreateAccount extends State<CreateAccount> {
                         const Divider(height: 40),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
                               "Email:",
                               style:
@@ -143,13 +176,19 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                             SizedBox(
                               width: 200,
-                              child: TextField(
+                              child: TextFormField(
                                 textAlign: TextAlign.end,
                                 style: TextStyle(color: Colors.red),
                                 maxLines: 1,
-                                decoration: InputDecoration.collapsed(
+                                decoration: const InputDecoration.collapsed(
                                     hintText: 'Enter your email'),
+                                onChanged: (val) {
+                                  setState(() {
+                                    email = val;
+                                  });
+                                },
                               ),
+                              
                             ),
                           ],
                         ),
@@ -168,7 +207,7 @@ class _CreateAccount extends State<CreateAccount> {
                                 fieldKey: _passwordFieldKey,
                                 onFieldSubmitted: (String value) {
                                   setState(() {
-                                    this._password = value;
+                                    this.password = value;
                                   });
                                 },
                               ),
@@ -187,8 +226,8 @@ class _CreateAccount extends State<CreateAccount> {
                             SizedBox(
                               width: 200,
                               child: TextFormField(
-                                enabled: this._password != null &&
-                                    this._password!.isNotEmpty,
+                                enabled: this.password != null &&
+                                    this.password.isNotEmpty,
                                 textAlign: TextAlign.end,
                                 decoration: const InputDecoration.collapsed(
                                   hintText: "Re-type password",
@@ -213,31 +252,38 @@ class _CreateAccount extends State<CreateAccount> {
                                       fontSize: 15,
                                       color: Colors.grey.shade700)),
                               onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      SimpleDialog(
-                                    title: const Text('Select your sex'),
-                                    children: [
-                                      ListTile(
-                                        title: const Text('Male'),
-                                        onTap: () =>
-                                            Navigator.pop(context, 'Male'),
-                                      ),
-                                      ListTile(
-                                        title: const Text('Female'),
-                                        onTap: () =>
-                                            Navigator.pop(context, 'Female'),
-                                      ),
-                                    ],
-                                  ),
-                                ).then((returnVal) {
-                                  if (returnVal != null) {
-                                    setState(() {
-                                      sex = returnVal;
-                                    });
-                                  }
-                                });
+                                showModalBottomSheet(
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(20)),
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).canvasColor,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: const Radius.circular(20),
+                                          topRight: const Radius.circular(20),
+                                        )),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: Icon(Icons.male_rounded),
+                                          title: Text("Male"),
+                                          onTap: () => _setSexSelection('Male'),
+                                        ),
+                                        ListTile(
+                                          leading: Icon(Icons.female_rounded),
+                                          title: Text("Female"),
+                                          onTap: () =>
+                                              _setSexSelection('Female'),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
                                 ;
                               },
                             )
@@ -275,6 +321,11 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                           ],
                         ),
+                        ElevatedButton(
+                          child: const Text("Create Account"),
+                          onPressed: () async => {
+                            signUpAction()
+                          })
                       ],
                     ),
                   )),
@@ -284,7 +335,10 @@ class _CreateAccount extends State<CreateAccount> {
       ),
     );
   }
+  
 }
+
+
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -338,3 +392,5 @@ class _PasswordFieldState extends State<PasswordField> {
     );
   }
 }
+
+

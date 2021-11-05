@@ -1,22 +1,32 @@
 // ignore_for_file: deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'fitness.dart';
+import 'fitness2.dart';
 import 'home.dart';
 import 'test.dart';
+import 'login.dart';
 import 'profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'progress.dart';
-import 'settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override 
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
@@ -68,7 +78,7 @@ class _HomePageState extends State<HomePage> {
     Fitness(),
     Progress(),
     Profile(),
-    Test(),
+    Login(),
   ];
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
@@ -112,10 +122,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings', style: TextStyle(fontSize: 25)),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Settings()));
-              },
+              onTap: () {},
             ),
             Spacer(),
             ListTile(

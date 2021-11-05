@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/create_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,29 @@ class Login extends StatefulWidget {
 class _Login extends State<Login> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
       GlobalKey<FormFieldState<String>>();
-  String? email;
-  String? password;
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  late String email;
+  late String password;
+
+  void signInAction() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +74,11 @@ class _Login extends State<Login> {
                             icon: Icon(Icons.email_rounded),
                             labelText: 'E-mail',
                           ),
+                          onChanged: (val) {
+                                  setState(() {
+                                    email = val;
+                                  });
+                                },
                         ),
                       ),
                       Container(
@@ -70,7 +97,9 @@ class _Login extends State<Login> {
                       ElevatedButton(
                           child: const Text("Submit",
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          onPressed: () {},
+                          onPressed: () async => {
+                            signInAction()
+                          },
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
                               shape: RoundedRectangleBorder(
