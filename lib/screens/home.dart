@@ -1,4 +1,4 @@
-import 'package:firstapp/group.dart';
+import 'group.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';

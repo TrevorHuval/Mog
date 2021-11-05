@@ -1,10 +1,9 @@
-import 'package:firstapp/group_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'group_profile.dart';
+import '../widgets/group_profile.dart';
 
 class Group extends StatelessWidget {
   @override
