@@ -1,4 +1,4 @@
-import 'group.dart';
+import 'package:firstapp/screens/group.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -57,7 +57,7 @@ class _Home extends State<Home> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         child: InkWell(
-                          splashColor: Colors.grey,
+                          splashFactory: NoSplash.splashFactory,
                           onTap: () {
                             Navigator.push(
                                 context,

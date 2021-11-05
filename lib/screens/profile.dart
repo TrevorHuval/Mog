@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'group.dart';
+import 'package:firstapp/screens/group.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class Profile extends StatelessWidget {
@@ -283,7 +283,7 @@ class Profile extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
                         child: InkWell(
-                          splashColor: Colors.grey,
+                          splashFactory: NoSplash.splashFactory,
                           onTap: () {
                             Navigator.push(
                                 context,

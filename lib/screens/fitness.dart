@@ -77,7 +77,7 @@ class _Fitness extends State<Fitness> {
                     child: SizedBox(
                       height: 75.0,
                       child: InkWell(
-                        splashColor: Colors.grey,
+                        splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           Navigator.push(
                             context,
@@ -145,7 +145,7 @@ class _Fitness extends State<Fitness> {
                     child: SizedBox(
                       height: 75.0,
                       child: InkWell(
-                        splashColor: Colors.grey,
+                        splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           Navigator.push(
                             context,
