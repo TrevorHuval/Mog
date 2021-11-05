@@ -94,7 +94,8 @@ class _Login extends State<Login> {
                       ElevatedButton(
                           child: const Text("Submit",
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                          onPressed: () async => {signInAction(), print(password)},
+                          onPressed: () async =>
+                              {signInAction(), print(password)},
                           style: ElevatedButton.styleFrom(
                               elevation: 0,
                               shape: RoundedRectangleBorder(

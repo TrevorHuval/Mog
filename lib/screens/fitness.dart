@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:firstapp/fitnessCalc.dart';
-import 'package:firstapp/diary.dart';
+import 'package:firstapp/widgets/fitnessCalc.dart';
+import 'package:firstapp/screens/diary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:firstapp/fitness2.dart';
 import 'split.dart';
 
 class Fitness extends StatefulWidget {

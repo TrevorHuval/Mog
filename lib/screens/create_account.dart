@@ -22,10 +22,8 @@ class _CreateAccount extends State<CreateAccount> {
 
   void signUpAction() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -36,8 +34,6 @@ class _CreateAccount extends State<CreateAccount> {
       print(e);
     }
   }
-
-  
 
   static const userSex = <String>[
     'Male',
@@ -68,9 +64,6 @@ class _CreateAccount extends State<CreateAccount> {
   String? _weight;
   String? _height;
 
-  int _currentWeightValue = 60;
-  int _currentHeightValue = 60;
-
   String? _validateName(String? value) {
     if (value?.isEmpty ?? false) {
       return 'Name is required.';
@@ -93,14 +86,18 @@ class _CreateAccount extends State<CreateAccount> {
               Container(
                 margin: const EdgeInsets.only(left: 20, top: 20),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
+                        HapticFeedback.lightImpact();
                         Navigator.pop(context);
                       },
-                      child: const Icon(Icons.arrow_back_ios_new_rounded),
+                      child: const SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: Icon(Icons.arrow_back_ios_new_rounded)),
                     ),
-                    const SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: const [
@@ -111,18 +108,19 @@ class _CreateAccount extends State<CreateAccount> {
                             style:
                                 TextStyle(color: Colors.grey, fontSize: 14.5)),
                       ],
-                    )
+                    ),
+                    const SizedBox(width: 25)
                   ],
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
+                  child: SizedBox(
                     height: 500,
                     width: 500,
                     child: ListView(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,7 +167,7 @@ class _CreateAccount extends State<CreateAccount> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "Email:",
                               style:
                                   TextStyle(fontSize: 15, color: Colors.black),
@@ -178,7 +176,7 @@ class _CreateAccount extends State<CreateAccount> {
                               width: 200,
                               child: TextFormField(
                                 textAlign: TextAlign.end,
-                                style: TextStyle(color: Colors.red),
+                                style: const TextStyle(color: Colors.red),
                                 maxLines: 1,
                                 decoration: const InputDecoration.collapsed(
                                     hintText: 'Enter your email'),
@@ -188,7 +186,6 @@ class _CreateAccount extends State<CreateAccount> {
                                   });
                                 },
                               ),
-                              
                             ),
                           ],
                         ),
@@ -207,7 +204,7 @@ class _CreateAccount extends State<CreateAccount> {
                                 fieldKey: _passwordFieldKey,
                                 onFieldSubmitted: (String value) {
                                   setState(() {
-                                    this.password = value;
+                                    password = value;
                                   });
                                 },
                               ),
@@ -226,8 +223,7 @@ class _CreateAccount extends State<CreateAccount> {
                             SizedBox(
                               width: 200,
                               child: TextFormField(
-                                enabled: this.password != null &&
-                                    this.password.isNotEmpty,
+                                enabled: password.isNotEmpty,
                                 textAlign: TextAlign.end,
                                 decoration: const InputDecoration.collapsed(
                                   hintText: "Re-type password",
@@ -253,38 +249,39 @@ class _CreateAccount extends State<CreateAccount> {
                                       color: Colors.grey.shade700)),
                               onTap: () {
                                 showModalBottomSheet(
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(20)),
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context).canvasColor,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: const Radius.circular(20),
-                                          topRight: const Radius.circular(20),
-                                        )),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          leading: Icon(Icons.male_rounded),
-                                          title: Text("Male"),
-                                          onTap: () => _setSexSelection('Male'),
-                                        ),
-                                        ListTile(
-                                          leading: Icon(Icons.female_rounded),
-                                          title: Text("Female"),
-                                          onTap: () =>
-                                              _setSexSelection('Female'),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                                ;
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  context: context,
+                                  builder: (context) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).canvasColor,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                          )),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          ListTile(
+                                            leading:
+                                                const Icon(Icons.male_rounded),
+                                            title: const Text("Male"),
+                                            onTap: () =>
+                                                _setSexSelection('Male'),
+                                          ),
+                                          ListTile(
+                                            leading: const Icon(
+                                                Icons.female_rounded),
+                                            title: const Text("Female"),
+                                            onTap: () =>
+                                                _setSexSelection('Female'),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
                               },
                             )
                           ],
@@ -321,11 +318,15 @@ class _CreateAccount extends State<CreateAccount> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 40),
                         ElevatedButton(
-                          child: const Text("Create Account"),
-                          onPressed: () async => {
-                            signUpAction()
-                          })
+                            child: const Text("Create Account",
+                                style: TextStyle(fontWeight: FontWeight.bold)),
+                            style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20))),
+                            onPressed: () async => {signUpAction()})
                       ],
                     ),
                   )),
@@ -335,10 +336,7 @@ class _CreateAccount extends State<CreateAccount> {
       ),
     );
   }
-  
 }
-
-
 
 class PasswordField extends StatefulWidget {
   const PasswordField({
@@ -364,7 +362,7 @@ class PasswordField extends StatefulWidget {
 }
 
 class _PasswordFieldState extends State<PasswordField> {
-  bool _obscureText = true;
+  final bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -375,7 +373,7 @@ class _PasswordFieldState extends State<PasswordField> {
       textAlign: TextAlign.end,
       validator: widget.validator,
       onFieldSubmitted: widget.onFieldSubmitted,
-      decoration: InputDecoration.collapsed(
+      decoration: const InputDecoration.collapsed(
         //filled: true,
 
         border: InputBorder.none,
@@ -392,5 +390,3 @@ class _PasswordFieldState extends State<PasswordField> {
     );
   }
 }
-
-
