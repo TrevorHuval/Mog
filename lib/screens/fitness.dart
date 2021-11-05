@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/fitness2.dart';
+import 'split.dart';
 
 class Fitness extends StatefulWidget {
   const Fitness({Key? key}) : super(key: key);
@@ -45,9 +46,16 @@ class _Fitness extends State<Fitness> {
                             elevation: 0,
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(20))),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => split(),
+                            ),
+                          );
+                        },
                         child: const Text(
-                          "Edit Set",
+                          "Edit Split",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -75,7 +83,7 @@ class _Fitness extends State<Fitness> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => fitness2(),
+                              builder: (context) => diary(),
                             ),
                           );
                         },
