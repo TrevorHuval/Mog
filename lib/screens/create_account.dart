@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -14,10 +15,42 @@ class _CreateAccount extends State<CreateAccount> {
   final GlobalKey<FormFieldState<String>> _passwordFieldKey =
       GlobalKey<FormFieldState<String>>();
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  String email = "";
+  String password = "";
+
+  void signUpAction() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  
+
   static const userSex = <String>[
     'Male',
     'Female',
   ];
+
+  void _setSexSelection(String selectedSex) {
+    Navigator.pop(context);
+    setState(() {
+      sex = selectedSex;
+    });
+  }
+
   final List<DropdownMenuItem<String>> _dropDownMenuItems = userSex
       .map(
         (String value) => DropdownMenuItem<String>(
@@ -29,8 +62,8 @@ class _CreateAccount extends State<CreateAccount> {
 
   String? _firstName;
   String? _lastName;
-  String? _email;
-  String? _password;
+  //String? _email;
+  //String? _password;
   String sex = "Select your sex";
   String? _weight;
   String? _height;
@@ -82,68 +115,144 @@ class _CreateAccount extends State<CreateAccount> {
                   ],
                 ),
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: 50),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  height: 500,
-                  width: 500,
-                  child: ListView(
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            "First Name:",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                          SizedBox(
-                            width: 200,
-                            child: TextField(
-                              textAlign: TextAlign.end,
-                              style: TextStyle(color: Colors.red),
-                              maxLines: 1,
-                              decoration: InputDecoration.collapsed(
-                                  hintText: 'Enter your first name'),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    height: 500,
+                    width: 500,
+                    child: ListView(
+                      physics: BouncingScrollPhysics(),
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              "First Name:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
                             ),
-                          ),
-                        ],
-                      ),
-                      const Divider(height: 40),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text(
-                            "Last Name:",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                          SizedBox(
-                            width: 200,
-                            child: TextField(
-                              textAlign: TextAlign.end,
-                              style: TextStyle(color: Colors.red),
-                              maxLines: 1,
-                              decoration: InputDecoration.collapsed(
-                                  hintText: 'Enter your last name'),
+                            SizedBox(
+                              width: 200,
+                              child: TextField(
+                                textAlign: TextAlign.end,
+                                style: TextStyle(color: Colors.red),
+                                maxLines: 1,
+                                decoration: InputDecoration.collapsed(
+                                    hintText: 'Enter your first name'),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const Divider(height: 40),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Sex:",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                          GestureDetector(
-                            child: Text(sex,
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.grey.shade700)),
-                            onTap: () {
-                              showModalBottomSheet(
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              "Last Name:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: TextField(
+                                textAlign: TextAlign.end,
+                                style: TextStyle(color: Colors.red),
+                                maxLines: 1,
+                                decoration: InputDecoration.collapsed(
+                                    hintText: 'Enter your last name'),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Email:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: TextFormField(
+                                textAlign: TextAlign.end,
+                                style: TextStyle(color: Colors.red),
+                                maxLines: 1,
+                                decoration: const InputDecoration.collapsed(
+                                    hintText: 'Enter your email'),
+                                onChanged: (val) {
+                                  setState(() {
+                                    email = val;
+                                  });
+                                },
+                              ),
+                              
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Password:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: PasswordField(
+                                fieldKey: _passwordFieldKey,
+                                onFieldSubmitted: (String value) {
+                                  setState(() {
+                                    this.password = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Re-type password",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: TextFormField(
+                                enabled: this.password != null &&
+                                    this.password.isNotEmpty,
+                                textAlign: TextAlign.end,
+                                decoration: const InputDecoration.collapsed(
+                                  hintText: "Re-type password",
+                                ),
+                                obscureText: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Sex:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            GestureDetector(
+                              child: Text(sex,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey.shade700)),
+                              onTap: () {
+                                showModalBottomSheet(
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(20)),
@@ -152,9 +261,9 @@ class _CreateAccount extends State<CreateAccount> {
                                   return Container(
                                     decoration: BoxDecoration(
                                         color: Theme.of(context).canvasColor,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: const Radius.circular(20),
+                                          topRight: const Radius.circular(20),
                                         )),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
@@ -175,59 +284,113 @@ class _CreateAccount extends State<CreateAccount> {
                                   );
                                 },
                               );
-                            },
-                          )
-                        ],
-                      ),
-                      const Divider(height: 40),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Weight:",
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 200,
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.end,
-                                  style: const TextStyle(color: Colors.red),
-                                  maxLines: 1,
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(3)
-                                  ],
-                                  decoration: const InputDecoration.collapsed(
-                                      hintText: '135'),
+                                ;
+                              },
+                            )
+                          ],
+                        ),
+                        const Divider(height: 40),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Weight:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 200,
+                                  child: TextField(
+                                    keyboardType: TextInputType.phone,
+                                    textAlign: TextAlign.end,
+                                    style: const TextStyle(color: Colors.red),
+                                    maxLines: 1,
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(3)
+                                    ],
+                                    decoration: const InputDecoration.collapsed(
+                                        hintText: '135'),
+                                  ),
                                 ),
-                              ),
-                              const Text(
-                                " lbs",
-                                style:
-                                    TextStyle(fontSize: 15, color: Colors.red),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      const Divider(height: 40),
-                    ],
-                  ),
-                ),
-              ),
+                                const Text(" lbs",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.red))
+                              ],
+                            ),
+                          ],
+                        ),
+                        ElevatedButton(
+                          child: const Text("Create Account"),
+                          onPressed: () async => {
+                            signUpAction()
+                          })
+                      ],
+                    ),
+                  )),
             ],
           ),
         ),
       ),
     );
   }
+  
+}
 
-  void _setSexSelection(String selectedSex) {
-    Navigator.pop(context);
-    setState(() {
-      sex = selectedSex;
-    });
+
+
+class PasswordField extends StatefulWidget {
+  const PasswordField({
+    this.fieldKey,
+    this.hintText,
+    this.labelText,
+    this.helperText,
+    this.onSaved,
+    this.validator,
+    this.onFieldSubmitted,
+  });
+
+  final Key? fieldKey;
+  final String? hintText;
+  final String? labelText;
+  final String? helperText;
+  final FormFieldSetter<String>? onSaved;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onFieldSubmitted;
+
+  @override
+  _PasswordFieldState createState() => _PasswordFieldState();
+}
+
+class _PasswordFieldState extends State<PasswordField> {
+  bool _obscureText = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      key: widget.fieldKey,
+      obscureText: _obscureText,
+      onSaved: widget.onSaved,
+      textAlign: TextAlign.end,
+      validator: widget.validator,
+      onFieldSubmitted: widget.onFieldSubmitted,
+      decoration: InputDecoration.collapsed(
+        //filled: true,
+
+        border: InputBorder.none,
+        hintText: "Create your password",
+        //suffixIcon: GestureDetector(
+        //  onTap: () {
+        //    setState(() {
+        //      _obscureText = !_obscureText;
+        //    });
+        //  },
+        //  child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+        //),
+      ),
+    );
   }
 }
+
+
