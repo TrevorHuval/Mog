@@ -38,24 +38,37 @@ class _Fitness extends State<Fitness> {
                             fontWeight: FontWeight.bold,
                           )),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 25),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(20))),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => split(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          "Edit Split",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      child: Container(
+                        margin: EdgeInsets.only(right: 25),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20))),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context).canvasColor,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                          )),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: split(),
+                                      ));
+                                });
+                          },
+                          child: const Text(
+                            "Edit Split",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
