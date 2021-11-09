@@ -52,9 +52,9 @@ class _Login extends State<Login> {
                           shape: BoxShape.circle,
                           color: Colors.white,
                           image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                  'assets/images/mog_icon_no_background_red.png')))),
+                              fit: BoxFit.contain,
+                              image:
+                                  AssetImage('assets/images/mogIconRed.png')))),
                   Column(
                     children: [
                       Container(
