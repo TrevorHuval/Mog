@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import '../widgets/group_profile.dart';
+import 'setEntry.dart';
 
 class diary extends StatelessWidget {
   @override
@@ -37,21 +38,36 @@ class diary extends StatelessWidget {
                   'Iso-Lateral Pulldowns',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               ListTile(
                 title: Text(
                   'Iso-Lateral High Rows',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               ListTile(
                 title: Text(
                   'Seated Rows',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               //
               // Spacer
@@ -66,21 +82,36 @@ class diary extends StatelessWidget {
                   'Seated Bicep Curl',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               ListTile(
                 title: Text(
                   'Hammer Heads',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               ListTile(
                 title: Text(
                   'Curling Bar',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               //
               // Spacer
@@ -95,21 +126,36 @@ class diary extends StatelessWidget {
                   'Bench Press',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               ListTile(
                 title: Text(
                   'Inclined Dumbbell Press',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
               ListTile(
                 title: Text(
                   'Cable Flies',
                   style: TextStyle(fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => setEntry()),
+                  );
+                },
               ),
             ],
           ),
