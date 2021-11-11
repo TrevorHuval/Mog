@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firstapp/models/user.dart';
+import 'package:firstapp/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -7,8 +8,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/screens/group.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _Profile createState() => _Profile();
+}
+
+class _Profile extends State<Profile> {
   Widget buildProfilePics() => Container(
       width: 37,
       height: 37,
@@ -21,6 +28,10 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //final Object? uid = ModalRoute.of(context)!.settings.arguments;
+    //UserModel currentUser = UserModel();
+    //currentUser = _userService.getUserInfo(uid);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -78,58 +89,58 @@ class Profile extends StatelessWidget {
                                     children: <Widget>[
                                       Container(
                                         width: 185,
+                                        height: 70,
                                         child: FittedBox(
                                           fit: BoxFit.contain,
                                           child: Text(
-                                            "Anthony Duong",
+                                            "Anthony",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        height: 20,
-                                        width: 185,
-                                        child: FittedBox(
-                                          fit: BoxFit.fill,
-                                          child: Text(
-                                            "Height: 5'8",
-                                            style: TextStyle(
-                                              color: Colors.grey.shade700,
-                                              fontSize: 15,
-                                              //fontWeight: FontWeight.bold
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            child: FittedBox(
+                                              child: Text(
+                                                "Height: 5'8",
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade700,
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerLeft,
-                                        height: 20,
-                                        width: 185,
-                                        child: FittedBox(
-                                          fit: BoxFit.fill,
-                                          child: Text(
-                                            "Weight: 170",
-                                            style: TextStyle(
-                                              color: Colors.grey.shade700,
-                                              fontSize: 15,
-                                              //fontWeight: FontWeight.bold
+                                          Container(
+                                            child: FittedBox(
+                                              child: Text(
+                                                "Weight: 170",
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade700,
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      Container(
-                                        child: FittedBox(
-                                          child: Text(
-                                            "Sex: Male",
-                                            style: TextStyle(
-                                              color: Colors.grey.shade700,
-                                              fontSize: 15,
+                                          Container(
+                                            child: FittedBox(
+                                              child: Text(
+                                                "Sex: Male",
+                                                style: TextStyle(
+                                                  color: Colors.grey.shade700,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ],
                                   )
@@ -344,37 +355,3 @@ class Profile extends StatelessWidget {
     );
   }
 }
-
-//       // Side menu for settings and misc
-//       endDrawer: Drawer(
-//         child: ListView(
-//           padding: EdgeInsets.zero,
-//           children: <Widget>[
-//             SizedBox(
-//               height: 127,
-//               child: DrawerHeader(
-//                 // child: CircleAvatar(),
-//                 child: Text(
-//                   'theanthonyduong',
-//                   style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-//                 ),
-//                 decoration: BoxDecoration(color: Colors.red.shade900),
-//               ),
-//             ),
-//             ListTile(
-//               leading: Icon(Icons.settings, size: 40),
-//               title: Text('Settings', style: TextStyle(fontSize: 25)),
-//               onTap: () {},
-//             ),
-//             Spacer(),
-//             ListTile(
-//               leading: Icon(Icons.highlight_remove, size: 40),
-//               title: Text('Sign out', style: TextStyle(fontSize: 25)),
-//               onTap: () {},
-//             ),
-//           ],
-//         ),
-      // ),
-    // );
-  // }
-// }
