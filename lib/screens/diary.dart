@@ -29,7 +29,7 @@ class diary extends StatelessWidget {
             children: <Widget>[
               ListTile(
                 title: Text(
-                  '\nBack Workouts:',
+                  'Back Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
