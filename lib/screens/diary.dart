@@ -41,7 +41,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Iso-Lateral Pulldowns',
+                            )),
                   );
                 },
               ),
@@ -53,7 +56,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Iso-Lateral High Rows',
+                            )),
                   );
                 },
               ),
@@ -65,7 +71,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Seated Rows',
+                            )),
                   );
                 },
               ),
@@ -85,7 +94,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Seated Bicep Curl',
+                            )),
                   );
                 },
               ),
@@ -97,7 +109,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Hammer Heads',
+                            )),
                   );
                 },
               ),
@@ -109,7 +124,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Curling Bar',
+                            )),
                   );
                 },
               ),
@@ -129,7 +147,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Bench Press',
+                            )),
                   );
                 },
               ),
@@ -141,7 +162,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Inclined Dumbbell Press',
+                            )),
                   );
                 },
               ),
@@ -153,7 +177,10 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => setEntry()),
+                    MaterialPageRoute(
+                        builder: (context) => setEntry(
+                              exerciseType: 'Cable Flies',
+                            )),
                   );
                 },
               ),

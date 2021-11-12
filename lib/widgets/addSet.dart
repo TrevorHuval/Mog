@@ -11,58 +11,30 @@ class addSet extends StatefulWidget {
 class _addSet extends State<addSet> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        height: 75,
-        width: 500,
-        child: Card(
-          elevation: 0,
-          color: Colors.grey.shade200,
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
+    return Container(
+      height: 100,
+      child: Scaffold(
+        body: SizedBox(
+          height: 75,
+          width: 500,
+          child: Card(
+            elevation: 0,
+            color: Colors.grey.shade200,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20),
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  height: 30,
-                  width: 75,
-                  child: TextFormField(
-                    enableInteractiveSelection: false,
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10),
-                        ),
-                        labelText: 'Sets',
-                        labelStyle: TextStyle(fontSize: 15)),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                  width: 75,
-                  child: TextFormField(
-                    enableInteractiveSelection: false,
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10),
-                        ),
-                        labelText: 'Reps',
-                        labelStyle: TextStyle(fontSize: 15)),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                  width: 75,
-                  child: TextFormField(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    height: 30,
+                    width: 75,
+                    child: TextFormField(
                       enableInteractiveSelection: false,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
@@ -70,10 +42,41 @@ class _addSet extends State<addSet> {
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(10),
                           ),
-                          labelText: 'Weight',
-                          labelStyle: TextStyle(fontSize: 15))),
-                ),
-              ],
+                          labelText: 'Sets',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    width: 75,
+                    child: TextFormField(
+                      enableInteractiveSelection: false,
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(10),
+                          ),
+                          labelText: 'Reps',
+                          labelStyle: TextStyle(fontSize: 15)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    width: 75,
+                    child: TextFormField(
+                        enableInteractiveSelection: false,
+                        textAlign: TextAlign.center,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(10),
+                            ),
+                            labelText: 'Weight',
+                            labelStyle: TextStyle(fontSize: 15))),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
