@@ -2,23 +2,78 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'dart:collection';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import 'package:table_calendar/table_calendar.dart';
 
 class UtilsService {
-  //Future<String> uploadFile(File _image, String path) async {
-  //  firebase_storage.Reference storageReference =
-  //      firebase_storage.FirebaseStorage.instance.ref(path);
-//
-  //  //firebase_storage.UploadTask uploadTask = storageReference.putFile(_image);
-//
-  //  //await uploadTask.whenComplete(() => null);
-  //  String returnURL = '';
-  //  await storageReference.getDownloadURL().then((fileURL) {
-  //    returnURL = fileURL;
-  //  });
-  //  return returnURL;
-  //}
+  Future<String> uploadFile(File _image, String path) async {
+    firebase_storage.Reference storageReference =
+        firebase_storage.FirebaseStorage.instance.ref(path);
+
+    firebase_storage.UploadTask uploadTask = storageReference.putFile(_image);
+
+    await uploadTask.whenComplete(() => null);
+    String returnURL = '';
+    await storageReference.getDownloadURL().then((fileURL) {
+      returnURL = fileURL;
+    });
+    return returnURL;
+  }
+}
+
+class DatabaseService {
+  final String uid;
+  DatabaseService({required this.uid});
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('users');
+  final CollectionReference groupCollection =
+      FirebaseFirestore.instance.collection('groups');
+
+  Future createGroup(
+      String? firstName, String? lastName, String groupName) async {
+    DocumentReference groupDocRef = await groupCollection.add({
+      'groupName': groupName,
+      'groupImage': '',
+      'admin': uid,
+      'members': [],
+      //'messages': ,
+      'groupId': '',
+    });
+    userCollection.doc(uid).set({'inGroup': true}, SetOptions(merge: true));
+
+    await groupDocRef.update({
+      'members': FieldValue.arrayUnion([uid + '_' + firstName! + lastName!]),
+      'groupId': groupDocRef.id
+    });
+
+    DocumentReference userDocRef = userCollection.doc(uid);
+    return await userDocRef.update({
+      'groups': FieldValue.arrayUnion([groupDocRef.id + '_' + groupName])
+    });
+  }
+
+  getUserGroup() async {
+    return FirebaseFirestore.instance.collection('groups').id;
+  }
+/*
+  Future<bool> isUserInGroup() async {
+    DocumentReference userDocRef = userCollection.doc(uid);
+    DocumentSnapshot userDocSnapshot = await userDocRef.get();
+
+    if (FirebaseFirestore.instance
+            .collection("users")
+            .doc(uid)
+            .snapshots()
+            .isEmpty ==
+        true) {
+      return false;
+    }
+    return true;
+  }
+  */
 }
 
 /// Example event class.

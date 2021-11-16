@@ -34,7 +34,8 @@ class AuthService {
         'sex': sex,
         'weight': weight,
         'feet': feet,
-        'inches': inches
+        'inches': inches,
+        'inGroup': false,
       });
       _userFromFirebaseUser(user.user);
     } on FirebaseAuthException catch (e) {

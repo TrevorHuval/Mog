@@ -34,7 +34,7 @@ class Group extends StatelessWidget {
                               style: TextStyle(color: Colors.black)))
                     ],
                   ),
-                  expandedHeight: 215,
+                  expandedHeight: 300,
                   flexibleSpace: FlexibleSpaceBar(
                     collapseMode: CollapseMode.pin,
                     background: Scaffold(
@@ -103,7 +103,7 @@ class Group extends StatelessWidget {
                 ),
                 Container(
                   child: ListView.builder(
-                    itemCount: 100,
+                    itemCount: 20,
                     itemBuilder: (context, index) {
                       return Container(
                         height: 40,

@@ -1,27 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/group.dart';
+import 'package:firstapp/widgets/group_preview.dart';
+import 'package:firstapp/widgets/group_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firstapp/services/utils.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  UserModel loggedInUser;
+  Home(UserModel this.loggedInUser);
+
   @override
-  _Home createState() => _Home();
+  _Home createState() => _Home(loggedInUser);
 }
 
 class _Home extends State<Home> {
-  Widget buildProfilePics() => Container(
-      width: 37,
-      height: 37,
-      decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          image: DecorationImage(
-              fit: BoxFit.contain,
-              image: AssetImage('assets/images/blakeProfilePic.jpg'))));
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser;
+  _Home(UserModel this.loggedInUser);
+  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -36,75 +39,48 @@ class _Home extends State<Home> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 20, top: 25),
-                  child: const Text("Current Group",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.left),
-                ),
-                Container(
-                    height: 200,
-                    color: Colors.transparent,
-                    child: Card(
-                      elevation: 0,
-                      color: Colors.grey.shade100,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 5),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: InkWell(
-                        splashFactory: NoSplash.splashFactory,
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Group()));
-                        },
-                        child: Column(
-                          children: <Widget>[
-                            const SizedBox(
-                              height:
-                                  15, // Creates margin inside the card for the group pic and name
-                            ),
-                            Expanded(
-                                child: Row(children: <Widget>[
-                              // Group Image
-                              Container(
-                                  width: 125,
-                                  height: 125,
-                                  margin: EdgeInsets.fromLTRB(10, 0, 15, 0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: AssetImage(
-                                              'assets/images/gooberGroupPFP.jpg')))),
-                              // Group Name
-                              Container(
-                                width: 175,
-                                height: 75,
-                                child: FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text("Goober",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold))),
+                SizedBox(height: 20),
+                loggedInUser.inGroup == false
+                    ? Container(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Container(
+                            width: 500,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15))),
+                              child: Text(
+                                "CREATE GROUP",
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                            ])),
-                            Expanded(
-                                child: ListView.separated(
-                              padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 20,
-                              separatorBuilder: (context, _) =>
-                                  SizedBox(width: 12),
-                              itemBuilder: (context, index) =>
-                                  buildProfilePics(),
-                            )),
-                          ],
+                              onPressed: () {
+                                DatabaseService(uid: uid).createGroup(
+                                    loggedInUser.firstName,
+                                    loggedInUser.lastName,
+                                    "test");
+                              },
+                            ),
+                          ),
                         ),
-                      ),
-                    )),
+                      )
+                    : groupPreview(),
+                /*Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 20, top: 25),
+                      child: Text("Current Group",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.left),
+                    ),
+                    Container(height: 200, width: 500, child: groupPreview())
+                  ],
+                ),*/
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -154,13 +130,34 @@ class _Home extends State<Home> {
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade600),
+                                color: Colors.red),
                           ),
                         ),
                       ),
                     ),
                     SizedBox(width: 20)
                   ],
+                ),
+                SizedBox(
+                  height: 40,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.grey.shade200,
+                        elevation: 0,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15))),
+                    onPressed: () {
+                      print(loggedInUser.firstName);
+                      print(loggedInUser.inGroup.toString());
+                    },
+                    child: Text(
+                      'Test',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red),
+                    ),
+                  ),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,

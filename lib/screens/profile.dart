@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +12,17 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
+  UserModel loggedInUser;
+  Profile(UserModel this.loggedInUser);
+
   @override
-  _Profile createState() => _Profile();
+  _Profile createState() => _Profile(loggedInUser);
 }
 
 class _Profile extends State<Profile> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser;
+  _Profile(UserModel this.loggedInUser);
   Widget buildProfilePics() => Container(
       width: 37,
       height: 37,
@@ -26,12 +33,35 @@ class _Profile extends State<Profile> {
               fit: BoxFit.contain,
               image: AssetImage('assets/images/blakeProfilePic.jpg'))));
 
+  /*
+  ADD PROFILE IMAGE TO USER STARTER
+
+  SizedBox(
+    height: 100,
+    width: 100,
+    child: TextButton(
+      onPressed: () => getImage(),
+      child: profileImage == null
+          ? Icon(Icons.camera_alt_rounded)
+          : Container(
+              width: 100,
+              height: 100,
+              margin:
+                  EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: FileImage(profileImage!)),
+              ),
+            ),
+      ),
+  ),
+*/
+
   @override
   Widget build(BuildContext context) {
-    //final Object? uid = ModalRoute.of(context)!.settings.arguments;
-    //UserModel currentUser = UserModel();
-    //currentUser = _userService.getUserInfo(uid);
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -78,7 +108,7 @@ class _Profile extends State<Profile> {
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: AssetImage(
-                                            'assets/images/anthonyProfilePic.jpg'),
+                                            'assets/images/defaultUserProfileImage.jpg'),
                                       ),
                                     ),
                                   ),
@@ -93,7 +123,7 @@ class _Profile extends State<Profile> {
                                         child: FittedBox(
                                           fit: BoxFit.contain,
                                           child: Text(
-                                            "Anthony",
+                                            "${loggedInUser.firstName} ${loggedInUser.lastName}",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -107,7 +137,7 @@ class _Profile extends State<Profile> {
                                           Container(
                                             child: FittedBox(
                                               child: Text(
-                                                "Height: 5'8",
+                                                "Height: ${loggedInUser.feet}'${loggedInUser.inches}",
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                   color: Colors.grey.shade700,
@@ -120,7 +150,7 @@ class _Profile extends State<Profile> {
                                           Container(
                                             child: FittedBox(
                                               child: Text(
-                                                "Weight: 170",
+                                                "Weight: ${loggedInUser.weight}",
                                                 style: TextStyle(
                                                   color: Colors.grey.shade700,
                                                   fontSize: 15,
@@ -132,7 +162,7 @@ class _Profile extends State<Profile> {
                                           Container(
                                             child: FittedBox(
                                               child: Text(
-                                                "Sex: Male",
+                                                "Sex: ${loggedInUser.sex}",
                                                 style: TextStyle(
                                                   color: Colors.grey.shade700,
                                                   fontSize: 15,

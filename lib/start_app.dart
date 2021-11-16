@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -46,6 +47,7 @@ class _startApp extends State<startApp> {
                 return HomePage(
                   title: '',
                 );
+                ;
               } else {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -72,18 +74,8 @@ class _HomePageState extends State<HomePage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
 
-  List<Widget> _children() => [
-        Home(),
-        Fitness(),
-        Progress(),
-        Profile(),
-        Test(),
-      ];
-
-  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
-
   @override
-  initState() {
+  void initState() {
     super.initState();
     FirebaseFirestore.instance
         .collection("users")
@@ -91,10 +83,22 @@ class _HomePageState extends State<HomePage> {
         .get()
         .then((value) {
       this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
+      print(loggedInUser.firstName! + "in async");
     });
+    print("outside of function");
+    print(loggedInUser.firstName);
     _title = 'Home';
   }
+
+  List<Widget> _children() => [
+        Home(loggedInUser),
+        Fitness(),
+        Progress(),
+        Profile(loggedInUser),
+        Test(),
+      ];
+
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {

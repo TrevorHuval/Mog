@@ -8,6 +8,7 @@ class UserModel {
   final int? inches;
   final int? weight;
   final String? sex;
+  bool inGroup = false;
 
   UserModel(
       {this.id,
@@ -18,7 +19,8 @@ class UserModel {
       this.feet,
       this.inches,
       this.weight,
-      this.sex});
+      this.sex,
+      this.inGroup = false});
 
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -31,6 +33,7 @@ class UserModel {
       inches: map['inches'],
       weight: map['weight'],
       sex: map['sex'],
+      inGroup: map['inGroup'],
     );
   }
 
@@ -45,6 +48,7 @@ class UserModel {
       'inches': inches,
       'weight': weight,
       'sex': sex,
+      'inGroup': inGroup,
     };
   }
 }

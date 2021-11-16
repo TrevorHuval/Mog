@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/services/auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -51,6 +54,8 @@ class _CreateAccount extends State<CreateAccount> {
   String? feet;
   String? inches;
   String errorMessage = "";
+  File? profileImage;
+  final picker = ImagePicker();
 
   bool firstNameEmpty = true;
   bool lastNameEmpty = true;
@@ -125,6 +130,15 @@ class _CreateAccount extends State<CreateAccount> {
     });
   }
 
+  Future getImage() async {
+    final PickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (PickedFile != null) {
+        profileImage = File(PickedFile.path);
+      }
+    });
+  }
+
   final List<DropdownMenuItem<String>> _dropDownMenuItems = userSex
       .map(
         (String value) => DropdownMenuItem<String>(
@@ -136,11 +150,7 @@ class _CreateAccount extends State<CreateAccount> {
 
   String? _firstName;
   String? _lastName;
-  //String? _email;
-  //String? _password;
   String sex = "Select your sex";
-  String? _weight;
-  String? _height;
 
   String? _validateName(String? value) {
     if (value?.isEmpty ?? false) {

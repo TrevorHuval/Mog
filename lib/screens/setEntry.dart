@@ -94,7 +94,7 @@ class _setEntry extends State<setEntry> {
                           }
                         : null,
                     child: Text(
-                      'Remove Last',
+                      'Remove',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
