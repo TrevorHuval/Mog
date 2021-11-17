@@ -1,3 +1,4 @@
+import 'package:firstapp/services/auth.dart';
 import 'package:firstapp/start_app.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/all.dart';
@@ -11,11 +12,12 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-
+    print("test inside wrapper.dart");
     if (user == null) {
       return Login();
     }
-
-    return startApp();
+    print("passing up login, user is there");
+    return MaterialApp(
+        initialRoute: '/', routes: {'/': (context) => startApp()});
   }
 }

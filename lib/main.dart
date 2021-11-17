@@ -26,10 +26,11 @@ class MyApp extends StatelessWidget {
           return StreamProvider<UserModel?>.value(
             value: AuthService().user,
             initialData: null,
-            child: Wrapper(),
+            child: MaterialApp(home: Wrapper()),
           );
         }
-        return Text("Loading");
+        return Directionality(
+            textDirection: TextDirection.ltr, child: Text("Loading"));
       },
     );
   }

@@ -8,7 +8,10 @@ class UserModel {
   final int? inches;
   final int? weight;
   final String? sex;
-  bool inGroup = false;
+  final int? benchPR;
+  final int? squatPR;
+  final int? deadliftPR;
+  bool? inGroup;
 
   UserModel(
       {this.id,
@@ -20,7 +23,10 @@ class UserModel {
       this.inches,
       this.weight,
       this.sex,
-      this.inGroup = false});
+      this.benchPR,
+      this.squatPR,
+      this.deadliftPR,
+      this.inGroup});
 
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -34,6 +40,9 @@ class UserModel {
       weight: map['weight'],
       sex: map['sex'],
       inGroup: map['inGroup'],
+      benchPR: map['benchPR'],
+      squatPR: map['squatPR'],
+      deadliftPR: map['deadliftPR'],
     );
   }
 
@@ -49,6 +58,9 @@ class UserModel {
       'weight': weight,
       'sex': sex,
       'inGroup': inGroup,
+      'benchPR': benchPR,
+      'squatPR': squatPR,
+      'deadliftPR': deadliftPR,
     };
   }
 }
