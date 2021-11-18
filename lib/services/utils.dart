@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firstapp/models/user.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
@@ -35,44 +36,55 @@ class DatabaseService {
   Future createGroup(String groupName) async {
     DocumentReference groupDocRef = await groupCollection.add({
       'groupName': groupName,
-      'groupImage': '',
+      'groupImage':
+          'https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultGroupProfileImage.jpg?alt=media&token=ecf67ead-6d9f-46d3-9256-2c3f214f258a',
       'admin': uid,
-      'members': [],
+      //'members': [],
       //'messages': ,
       'groupId': '',
     });
     userCollection.doc(uid).set({'inGroup': true}, SetOptions(merge: true));
 
     await groupDocRef.update({
-      'members': FieldValue.arrayUnion([uid]),
+      //'members': FieldValue.arrayUnion([uid]),
       'groupId': groupDocRef.id
     });
 
+    await groupDocRef.collection('members').doc(uid).set({});
+
     DocumentReference userDocRef = userCollection.doc(uid);
-    return await userDocRef.update({
-      'groups': FieldValue.arrayUnion([groupDocRef.id])
-    });
+    await userDocRef.collection('groups').doc(groupDocRef.id).set({});
   }
 
-  getUserGroup() async {
-    return FirebaseFirestore.instance.collection('groups').id;
-  }
-/*
-  Future<bool> isUserInGroup() async {
-    DocumentReference userDocRef = userCollection.doc(uid);
-    DocumentSnapshot userDocSnapshot = await userDocRef.get();
-
-    if (FirebaseFirestore.instance
-            .collection("users")
+  Future<List<DocumentSnapshot>> getUserGroups() async {
+    final QuerySnapshot<Map<String, dynamic>> userGroups =
+        await FirebaseFirestore.instance
+            .collection('users')
             .doc(uid)
-            .snapshots()
-            .isEmpty ==
-        true) {
-      return false;
-    }
-    return true;
+            .collection('groups')
+            .get();
+    List<DocumentSnapshot> documents = userGroups.docs;
+    return documents;
+    //return FirebaseFirestore.instance.collection('groups').id;
   }
-  */
+
+  Stream<List<DocumentSnapshot>> getUserGroupsStream(uid) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('groups')
+        .get() as Stream<List<DocumentSnapshot>>;
+  }
+
+  Future<List<DocumentSnapshot>> getGroups3() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .document('uid')
+        .collection('groups')
+        .get();
+    final groupData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    List<DocumentSnapshot> documentList = groupData;
+  }
 }
 
 /// Example event class.
@@ -119,4 +131,5 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month - 3, kToday.day);
+
 final kLastDay = DateTime(kToday.year, kToday.month + 3, kToday.day);

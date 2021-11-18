@@ -43,10 +43,9 @@ class AuthService {
         'squatPR': 0,
         'deadliftPR': 0,
       });
-      String profileImageDownloadUrl = await FirebaseStorage.instance
-          .ref()
-          .child("defaultUserProfileImage.jpg")
-          .getDownloadURL();
+      String profileImageDownloadUrl =
+          "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultUserProfileImage.jpg?alt=media&token=119e1aa6-c914-4a51-8ee0-32af4da2a45c";
+
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.user!.uid)

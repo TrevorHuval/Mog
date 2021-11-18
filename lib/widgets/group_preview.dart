@@ -1,6 +1,16 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/models/group.dart';
+import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/group.dart';
+import 'package:firstapp/services/group.dart';
+import 'package:firstapp/services/user.dart';
+import 'package:firstapp/services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class groupPreview extends StatefulWidget {
   const groupPreview({Key? key}) : super(key: key);
@@ -22,7 +32,24 @@ class _groupPreview extends State<groupPreview> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    User? user = FirebaseAuth.instance.currentUser;
+    final uid = FirebaseAuth.instance.currentUser!.uid;
+    Future<List<DocumentSnapshot>> documents =
+        DatabaseService(uid: uid).getUserGroups();
+    String groupid = documents[0].id;
+
+    return MultiProvider(
+      providers: [
+        StreamProvider<UserModel?>.value(
+          value: UserService(uid: uid).getUserInfo(uid),
+          initialData: null,
+        ),
+        // StreamProvider<GroupModel?>.value(
+        //   value: GroupService(uid: uid).getGroupInfo(uid),
+        //   initialData: null,
+        // )
+      ],
+      child: Container(
         height: 200,
         color: Colors.transparent,
         child: Card(
@@ -58,14 +85,7 @@ class _groupPreview extends State<groupPreview> {
                               image: AssetImage(
                                   'assets/images/gooberGroupPFP.jpg')))),
                   // Group Name
-                  Container(
-                    width: 175,
-                    height: 75,
-                    child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text("Goober",
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                  ),
+                  groupName(),
                 ])),
                 Expanded(
                     child: ListView.separated(
@@ -78,6 +98,30 @@ class _groupPreview extends State<groupPreview> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
+
+class groupName extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    UserModel? user = Provider.of<UserModel?>(context);
+    GroupModel? group = Provider.of<GroupModel?>(context);
+    return Container(
+      width: 175,
+      height: 75,
+      child: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text("${user!.firstName} ${user.lastName}",
+              style: TextStyle(fontWeight: FontWeight.bold))),
+    );
+  }
+}
+
+
+// USEFUL CODE TO GET DOCIDS OF GROUPS INSIDE USER
+/*List<DocumentSnapshot> documents =
+                                  await DatabaseService(uid: uid)
+                                      .getUserGroups();*/

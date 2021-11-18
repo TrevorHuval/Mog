@@ -152,12 +152,16 @@ class _Home extends State<Home> {
                                 shape: new RoundedRectangleBorder(
                                     borderRadius:
                                         new BorderRadius.circular(15))),
-                            onPressed: () {
+                            onPressed: () async {
                               print(userData.firstName! +
                                   " " +
                                   userData.lastName!);
                               print("is in group? " +
                                   userData.inGroup.toString());
+                              List<DocumentSnapshot> documents =
+                                  await DatabaseService(uid: uid)
+                                      .getUserGroups();
+                              print(documents[0].id);
                             },
                             child: Text(
                               'Test',
