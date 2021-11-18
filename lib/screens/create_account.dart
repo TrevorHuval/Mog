@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,8 +54,9 @@ class _CreateAccount extends State<CreateAccount> {
   String? weight;
   String? feet;
   String? inches;
+  String sex = "Select your sex";
   String errorMessage = "";
-  File? profileImage;
+  String? profileImageURL;
   final picker = ImagePicker();
 
   bool firstNameEmpty = true;
@@ -130,15 +132,6 @@ class _CreateAccount extends State<CreateAccount> {
     });
   }
 
-  Future getImage() async {
-    final PickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (PickedFile != null) {
-        profileImage = File(PickedFile.path);
-      }
-    });
-  }
-
   final List<DropdownMenuItem<String>> _dropDownMenuItems = userSex
       .map(
         (String value) => DropdownMenuItem<String>(
@@ -147,10 +140,6 @@ class _CreateAccount extends State<CreateAccount> {
         ),
       )
       .toList();
-
-  String? _firstName;
-  String? _lastName;
-  String sex = "Select your sex";
 
   String? _validateName(String? value) {
     if (value?.isEmpty ?? false) {
@@ -382,7 +371,7 @@ class _CreateAccount extends State<CreateAccount> {
                               child: Focus(
                                 child: PasswordField(
                                   fieldKey: _passwordFieldKey,
-                                  onFieldSubmitted: (String value) {
+                                  onChanged: (String value) {
                                     setState(() {
                                       password = value;
                                     });
@@ -419,7 +408,7 @@ class _CreateAccount extends State<CreateAccount> {
                                       hintText: "Re-type password",
                                     ),
                                     obscureText: true,
-                                    onFieldSubmitted: (String value) {
+                                    onChanged: (String value) {
                                       setState(() {
                                         retypedPassword = value;
                                       });
@@ -638,29 +627,22 @@ class _CreateAccount extends State<CreateAccount> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20))),
                           onPressed: createAccountButtonActive
-                              ? () {
-                                  print(firstName);
-                                  print(lastName);
-                                  print(email);
-                                  print(password);
-                                  print(retypedPassword);
-                                  print(sex);
-                                  print(weight);
-                                  print(feet);
-                                  print(inches);
+                              ? () async {
                                   int weightInt = int.parse(weight!);
                                   int feetInt = int.parse(feet!);
                                   int inchesInt = int.parse(inches!);
+                                  print("I'M GOING IN");
 
                                   AuthService().signUp(
-                                      firstName,
-                                      lastName,
-                                      email,
-                                      password,
-                                      sex,
-                                      weightInt,
-                                      feetInt,
-                                      inchesInt);
+                                    firstName,
+                                    lastName,
+                                    email,
+                                    password,
+                                    sex,
+                                    weightInt,
+                                    feetInt,
+                                    inchesInt,
+                                  );
                                 }
                               : null,
                         )
@@ -678,15 +660,14 @@ class _CreateAccount extends State<CreateAccount> {
 }
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({
-    this.fieldKey,
-    this.hintText,
-    this.labelText,
-    this.helperText,
-    this.onSaved,
-    this.validator,
-    this.onFieldSubmitted,
-  });
+  const PasswordField(
+      {this.fieldKey,
+      this.hintText,
+      this.labelText,
+      this.helperText,
+      this.onSaved,
+      this.validator,
+      this.onChanged});
 
   final Key? fieldKey;
   final String? hintText;
@@ -694,7 +675,7 @@ class PasswordField extends StatefulWidget {
   final String? helperText;
   final FormFieldSetter<String>? onSaved;
   final FormFieldValidator<String>? validator;
-  final ValueChanged<String>? onFieldSubmitted;
+  final ValueChanged<String>? onChanged;
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
@@ -712,7 +693,7 @@ class _PasswordFieldState extends State<PasswordField> {
         onSaved: widget.onSaved,
         textAlign: TextAlign.end,
         validator: widget.validator,
-        onFieldSubmitted: widget.onFieldSubmitted,
+        onChanged: widget.onChanged,
         decoration: const InputDecoration.collapsed(
           border: InputBorder.none,
           hintText: "Create your password",

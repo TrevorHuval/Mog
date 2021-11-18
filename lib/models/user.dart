@@ -1,6 +1,6 @@
 class UserModel {
   final String? id;
-  final String? profileImageUrl;
+  final String profileImageUrl;
   final String? firstName;
   final String? lastName;
   final String? email;
@@ -15,7 +15,7 @@ class UserModel {
 
   UserModel(
       {this.id,
-      this.profileImageUrl,
+      required this.profileImageUrl,
       this.firstName,
       this.lastName,
       this.email,

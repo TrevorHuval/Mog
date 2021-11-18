@@ -12,11 +12,9 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-    print("test inside wrapper.dart");
     if (user == null) {
       return Login();
     }
-    print("passing up login, user is there");
     return MaterialApp(
         initialRoute: '/', routes: {'/': (context) => startApp()});
   }

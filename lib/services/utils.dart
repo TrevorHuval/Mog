@@ -32,8 +32,7 @@ class DatabaseService {
   final CollectionReference groupCollection =
       FirebaseFirestore.instance.collection('groups');
 
-  Future createGroup(
-      String? firstName, String? lastName, String groupName) async {
+  Future createGroup(String groupName) async {
     DocumentReference groupDocRef = await groupCollection.add({
       'groupName': groupName,
       'groupImage': '',
@@ -45,13 +44,13 @@ class DatabaseService {
     userCollection.doc(uid).set({'inGroup': true}, SetOptions(merge: true));
 
     await groupDocRef.update({
-      'members': FieldValue.arrayUnion([uid + '_' + firstName! + lastName!]),
+      'members': FieldValue.arrayUnion([uid]),
       'groupId': groupDocRef.id
     });
 
     DocumentReference userDocRef = userCollection.doc(uid);
     return await userDocRef.update({
-      'groups': FieldValue.arrayUnion([groupDocRef.id + '_' + groupName])
+      'groups': FieldValue.arrayUnion([groupDocRef.id])
     });
   }
 

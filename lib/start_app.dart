@@ -71,7 +71,6 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   String _title = "default";
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
   final AuthService _atuhService = AuthService();
 
   @override

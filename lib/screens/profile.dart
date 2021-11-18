@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,8 +11,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/screens/group.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -57,14 +62,38 @@ class _Profile extends State<Profile> {
   ),
 */
 
+  final picker = ImagePicker();
+  late File _imageFile;
+
+  Future pickImage() async {
+    print("first line of pickImage()");
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _imageFile = File(pickedFile!.path);
+    });
+    print(_imageFile.toString() + " newly selected profile pic");
+  }
+
+  Future uploadImageToFirebase(BuildContext context) async {
+    print(_imageFile.toString() + "in upload function");
+    await FirebaseStorage.instance
+        .ref()
+        .child('userProfileImages/$uid')
+        .putFile(_imageFile);
+    String imageDownloadUrl = await FirebaseStorage.instance
+        .ref()
+        .child('userProfileImages/$uid')
+        .getDownloadURL();
+
+    await UserService(uid: uid).updateUserProfileImage(uid, imageDownloadUrl);
+  }
+
   int getTotal(int benchPR, int squatPR, int deadliftPR) {
     return total = benchPR + squatPR + deadliftPR;
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
-
     return StreamBuilder<UserModel?>(
         stream: UserService(uid: uid).getUserInfo(uid),
         builder: (context, snapshot) {
@@ -105,21 +134,52 @@ class _Profile extends State<Profile> {
                                   children: <Widget>[
                                     Expanded(
                                       child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Container(
-                                            width: 100,
-                                            height: 100,
-                                            margin: EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.white,
-                                              image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: AssetImage(
-                                                    'assets/images/defaultUserProfileImage.jpg'),
-                                              ),
-                                            ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await pickImage();
+                                              await uploadImageToFirebase(
+                                                  context);
+                                              setState(() {});
+                                            },
+                                            child: userData!.profileImageUrl ==
+                                                    "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultUserProfileImage.jpg?alt=media&token=b4da1c1b-7bf4-4b88-ad07-946044b7d295"
+                                                ? Container(
+                                                    width: 100,
+                                                    height: 50,
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20),
+                                                    child: Column(
+                                                      children: [
+                                                        Icon(Icons
+                                                            .camera_alt_rounded),
+                                                        Text(
+                                                            "Edit Profile Image",
+                                                            style: TextStyle(
+                                                                fontSize: 12))
+                                                      ],
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20),
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: Colors.white,
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: NetworkImage(
+                                                            userData
+                                                                .profileImageUrl),
+                                                      ),
+                                                    ),
+                                                  ),
                                           ),
                                           Column(
                                             mainAxisAlignment:
@@ -133,7 +193,7 @@ class _Profile extends State<Profile> {
                                                 child: FittedBox(
                                                   fit: BoxFit.contain,
                                                   child: Text(
-                                                    "${userData!.firstName} ${userData.lastName}",
+                                                    "${userData.firstName} ${userData.lastName}",
                                                     style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,

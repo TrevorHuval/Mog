@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/services/utils.dart';
 import '/models/user.dart';
@@ -158,5 +159,12 @@ class UserService {
         .collection('friends')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
+  }
+
+  Future<void> updateUserProfileImage(uid, profileImageUrl) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .set({'profileImageUrl': profileImageUrl}, SetOptions(merge: true));
   }
 }

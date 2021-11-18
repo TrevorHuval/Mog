@@ -90,7 +90,7 @@ class _Login extends State<Login> {
                               child: PasswordField(
                                 fieldKey: _passwordFieldKey,
                                 labelText: 'Password',
-                                onFieldSubmitted: (String value) {
+                                onChanged: (String value) {
                                   setState(() {
                                     password = value;
                                   });
@@ -159,6 +159,7 @@ class PasswordField extends StatefulWidget {
     this.onSaved,
     this.validator,
     this.onFieldSubmitted,
+    this.onChanged,
   });
 
   final Key? fieldKey;
@@ -168,6 +169,7 @@ class PasswordField extends StatefulWidget {
   final FormFieldSetter<String>? onSaved;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onFieldSubmitted;
+  final ValueChanged<String>? onChanged;
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
@@ -183,7 +185,7 @@ class _PasswordFieldState extends State<PasswordField> {
       obscureText: _obscureText,
       onSaved: widget.onSaved,
       validator: widget.validator,
-      onFieldSubmitted: widget.onFieldSubmitted,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         icon: const Icon(Icons.lock_rounded),
         border: const UnderlineInputBorder(),

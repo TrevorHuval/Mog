@@ -155,10 +155,8 @@ class _CreateGroup extends State<CreateGroup> {
                                             BorderRadius.circular(20))),
                                 onPressed: createGroupButtonActive
                                     ? () {
-                                        DatabaseService(uid: uid).createGroup(
-                                            userData!.firstName,
-                                            userData.lastName,
-                                            groupName!);
+                                        DatabaseService(uid: uid)
+                                            .createGroup(groupName!);
                                         Navigator.pop(context);
                                       }
                                     : null,

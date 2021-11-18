@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import '/models/user.dart';
 
@@ -8,7 +9,7 @@ class AuthService {
 
   UserModel? _userFromFirebaseUser(User? user) {
     if (user != null) {
-      return UserModel(id: user.uid);
+      return UserModel(id: user.uid, profileImageUrl: "");
     } else {
       return null;
     }
@@ -17,6 +18,8 @@ class AuthService {
   Stream<UserModel?> get user {
     return auth.authStateChanges().map(_userFromFirebaseUser);
   }
+
+  assignProfileImage() async {}
 
   Future signUp(
       firstName, lastName, email, password, sex, weight, feet, inches) async {
@@ -36,7 +39,19 @@ class AuthService {
         'feet': feet,
         'inches': inches,
         'inGroup': false,
+        'benchPR': 0,
+        'squatPR': 0,
+        'deadliftPR': 0,
       });
+      String profileImageDownloadUrl = await FirebaseStorage.instance
+          .ref()
+          .child("defaultUserProfileImage.jpg")
+          .getDownloadURL();
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.user!.uid)
+          .set({'profileImageUrl': profileImageDownloadUrl},
+              SetOptions(merge: true));
       _userFromFirebaseUser(user.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
