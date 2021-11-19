@@ -5,11 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
+import 'package:firstapp/widgets/group_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:firstapp/screens/group.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -25,15 +27,6 @@ class _Profile extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   int total = 0;
-  Widget buildProfilePics() => Container(
-      width: 37,
-      height: 37,
-      decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          image: DecorationImage(
-              fit: BoxFit.contain,
-              image: AssetImage('assets/images/blakeProfilePic.jpg'))));
 
   /*
   ADD PROFILE IMAGE TO USER STARTER
@@ -66,16 +59,13 @@ class _Profile extends State<Profile> {
   late File _imageFile;
 
   Future pickImage() async {
-    print("first line of pickImage()");
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _imageFile = File(pickedFile!.path);
     });
-    print(_imageFile.toString() + " newly selected profile pic");
   }
 
   Future uploadImageToFirebase(BuildContext context) async {
-    print(_imageFile.toString() + "in upload function");
     await FirebaseStorage.instance
         .ref()
         .child('userProfileImages/$uid')
@@ -399,74 +389,9 @@ class _Profile extends State<Profile> {
                                     fontSize: 25, fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.left),
                           ),
-                          Container(
-                              height: 200,
-                              width: 500,
-                              color: Colors.transparent,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
-                              child: Card(
-                                elevation: 0,
-                                color: Colors.grey.shade100,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: InkWell(
-                                  splashFactory: NoSplash.splashFactory,
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Group()));
-                                  },
-                                  child: Column(
-                                    children: <Widget>[
-                                      const SizedBox(
-                                        height:
-                                            15, // Creates margin inside the card for the group pic and name
-                                      ),
-                                      Expanded(
-                                          child: Row(children: <Widget>[
-                                        // Group Image
-                                        Container(
-                                            width: 125,
-                                            height: 125,
-                                            margin: EdgeInsets.fromLTRB(
-                                                10, 0, 15, 0),
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.white,
-                                                image: DecorationImage(
-                                                    fit: BoxFit.contain,
-                                                    image: AssetImage(
-                                                        'assets/images/gooberGroupPFP.jpg')))),
-                                        // Group Name
-                                        Container(
-                                          width: 175,
-                                          height: 75,
-                                          child: FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text("Goober",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold))),
-                                        ),
-                                      ])),
-                                      Expanded(
-                                          child: ListView.separated(
-                                        padding:
-                                            EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: 20,
-                                        separatorBuilder: (context, _) =>
-                                            SizedBox(width: 12),
-                                        itemBuilder: (context, index) =>
-                                            buildProfilePics(),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              )),
+                          userData.inGroup == false
+                              ? Container(child: Text("User is not in a group"))
+                              : groupPreview(),
                         ],
                       ),
                     ),

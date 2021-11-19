@@ -6,7 +6,18 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import '../widgets/group_profile.dart';
 
-class Group extends StatelessWidget {
+class Group extends StatefulWidget {
+  String groupid;
+  Group({required this.groupid});
+
+  @override
+  _Group createState() => _Group(groupid: groupid);
+}
+
+class _Group extends State<Group> {
+  final String groupid;
+  _Group({required this.groupid});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -41,7 +52,9 @@ class Group extends StatelessWidget {
                       backgroundColor: Colors.grey.shade300,
                       body: Container(
                           child: Center(
-                        child: GroupProfile(),
+                        child: GroupProfile(
+                          groupid: groupid,
+                        ),
                       )),
                     ),
                   ),

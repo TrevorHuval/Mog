@@ -3,16 +3,22 @@ class GroupModel {
   final String? admin;
   final String groupImageUrl;
   final String? groupName;
+  final int? memberCount;
 
   GroupModel(
-      {this.id, this.admin, required this.groupImageUrl, this.groupName});
+      {this.id,
+      this.admin,
+      required this.groupImageUrl,
+      this.groupName,
+      this.memberCount});
 
   factory GroupModel.fromMap(map) {
     return GroupModel(
         id: map['id'],
         admin: map['admin'],
         groupImageUrl: map['groupImageUrl'],
-        groupName: map['groupName']);
+        groupName: map['groupName'],
+        memberCount: map['memberCount']);
   }
 
   Map<String, dynamic> toMap() {
@@ -20,7 +26,8 @@ class GroupModel {
       'id': id,
       'admin': admin,
       'groupImageUrl': groupImageUrl,
-      'groupName': groupName
+      'groupName': groupName,
+      'memberCount': memberCount,
     };
   }
 }

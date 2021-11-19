@@ -76,15 +76,15 @@ class DatabaseService {
         .get() as Stream<List<DocumentSnapshot>>;
   }
 
-  Future<List<DocumentSnapshot>> getGroups3() async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .document('uid')
-        .collection('groups')
-        .get();
-    final groupData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    List<DocumentSnapshot> documentList = groupData;
-  }
+  // Future<List<DocumentSnapshot>> getGroups3() async {
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .document('uid')
+  //       .collection('groups')
+  //       .get();
+  //   final groupData = querySnapshot.docs.map((doc) => doc.data()).toList();
+  //   List<DocumentSnapshot> documentList = groupData;
+  // }
 }
 
 /// Example event class.
