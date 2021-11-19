@@ -4,6 +4,7 @@ import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/create_group.dart';
 import 'package:firstapp/screens/group.dart';
 import 'package:firstapp/services/user.dart';
+import 'package:firstapp/widgets/friend.dart';
 import 'package:firstapp/widgets/group_preview.dart';
 import 'package:firstapp/widgets/group_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,6 +46,8 @@ class _Home extends State<Home> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(height: 20),
+
+                        Container(width: 400, height: 100, child: friend()),
                         userData!.inGroup == false
                             ? Container(
                                 child: Padding(

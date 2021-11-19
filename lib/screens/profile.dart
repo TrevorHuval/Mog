@@ -79,7 +79,11 @@ class _Profile extends State<Profile> {
   }
 
   int getTotal(int benchPR, int squatPR, int deadliftPR) {
-    return total = benchPR + squatPR + deadliftPR;
+    total = benchPR + squatPR + deadliftPR;
+    if (total > 1000) {
+      total = 1000;
+    }
+    return total;
   }
 
   @override
@@ -92,308 +96,299 @@ class _Profile extends State<Profile> {
             return SafeArea(
               child: Scaffold(
                 backgroundColor: Colors.white,
-                body: Center(
-                  child: NotificationListener<OverscrollIndicatorNotification>(
-                    onNotification:
-                        (OverscrollIndicatorNotification overScroll) {
-                      overScroll.disallowGlow();
-                      return false;
-                    },
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          // Container for the profile information
-
-                          Container(
-                            width: 500,
-                            height: 175,
-                            // alignment: Alignment.topCenter,
-                            // padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.grey.shade200,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
+                body: NotificationListener<OverscrollIndicatorNotification>(
+                  onNotification: (OverscrollIndicatorNotification overScroll) {
+                    overScroll.disallowGlow();
+                    return false;
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: 20),
+                        Container(
+                          width: 500,
+                          height: 175,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 5),
+                          child: Card(
+                            elevation: 0,
+                            color: Colors.grey.shade100,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
                               ),
-                              child: Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            onTap: () async {
-                                              await pickImage();
-                                              await uploadImageToFirebase(
-                                                  context);
-                                              setState(() {});
-                                            },
-                                            child: userData!.profileImageUrl ==
-                                                    "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultUserProfileImage.jpg?alt=media&token=b4da1c1b-7bf4-4b88-ad07-946044b7d295"
-                                                ? Container(
-                                                    width: 100,
-                                                    height: 50,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 20),
-                                                    child: Column(
-                                                      children: [
-                                                        Icon(Icons
-                                                            .camera_alt_rounded),
-                                                        Text(
-                                                            "Edit Profile Image",
-                                                            style: TextStyle(
-                                                                fontSize: 12))
-                                                      ],
-                                                    ),
-                                                  )
-                                                : Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 20),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.white,
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            userData
-                                                                .profileImageUrl),
-                                                      ),
-                                                    ),
+                            ),
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          onTap: () async {
+                                            await pickImage();
+                                            await uploadImageToFirebase(
+                                                context);
+                                            setState(() {});
+                                          },
+                                          child: userData!.profileImageUrl ==
+                                                  "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultUserProfileImage.jpg?alt=media&token=b4da1c1b-7bf4-4b88-ad07-946044b7d295"
+                                              ? Container(
+                                                  width: 100,
+                                                  height: 50,
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                                  child: Column(
+                                                    children: [
+                                                      Icon(Icons
+                                                          .camera_alt_rounded),
+                                                      Text("Edit Profile Image",
+                                                          style: TextStyle(
+                                                              fontSize: 12))
+                                                    ],
                                                   ),
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Container(
-                                                width: 185,
-                                                height: 70,
-                                                child: FittedBox(
-                                                  fit: BoxFit.contain,
-                                                  child: Text(
-                                                    "${userData.firstName} ${userData.lastName}",
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                )
+                                              : Container(
+                                                  width: 100,
+                                                  height: 100,
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.white,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(
+                                                          userData
+                                                              .profileImageUrl),
                                                     ),
                                                   ),
                                                 ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Container(
+                                              width: 185,
+                                              height: 70,
+                                              child: FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(
+                                                  "${userData.firstName} ${userData.lastName}",
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
                                               ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        "Height: ${userData.feet}'${userData.inches}",
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                          color: Colors
-                                                              .grey.shade700,
-                                                          fontSize: 15,
-                                                          //fontWeight: FontWeight.bold
-                                                        ),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      "Height: ${userData.feet}'${userData.inches}",
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style: TextStyle(
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                        fontSize: 15,
+                                                        //fontWeight: FontWeight.bold
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        "Weight: ${userData.weight}",
-                                                        style: TextStyle(
-                                                          color: Colors
-                                                              .grey.shade700,
-                                                          fontSize: 15,
-                                                          //fontWeight: FontWeight.bold
-                                                        ),
+                                                ),
+                                                Container(
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      "Weight: ${userData.weight}",
+                                                      style: TextStyle(
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                        fontSize: 15,
+                                                        //fontWeight: FontWeight.bold
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        "Sex: ${userData.sex}",
-                                                        style: TextStyle(
-                                                          color: Colors
-                                                              .grey.shade700,
-                                                          fontSize: 15,
-                                                        ),
+                                                ),
+                                                Container(
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      "Sex: ${userData.sex}",
+                                                      style: TextStyle(
+                                                        color: Colors
+                                                            .grey.shade700,
+                                                        fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                            child: const Text("Max Calculations",
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.left),
-                          ),
-
-                          // Max Calculations container
-                          Container(
-                            // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.grey.shade100,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      SizedBox(
-                                        width: 125,
-                                        height: 25,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Bench:",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    //fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                            Text("${userData.benchPR}",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    //fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 125,
-                                        height: 25,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Squat:",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    //fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                            Text("${userData.squatPR}",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    //fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 125,
-                                        height: 25,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Deadlift:",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    //fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                            Text("${userData.deadliftPR}",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    //fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      )
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      LinearPercentIndicator(
-                                        width: 140,
-                                        lineHeight: 14,
-                                        percent: getTotal(
-                                                userData.benchPR!.toInt(),
-                                                userData.squatPR!.toInt(),
-                                                userData.deadliftPR!.toInt()) /
-                                            1000,
-                                        //center: Text("425 / 1000"),
-                                        backgroundColor: Colors.grey.shade300,
-                                        progressColor:
-                                            Color.fromRGBO(0, 255, 0, 100),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        "$total / 1000",
-                                        style: TextStyle(
-                                            //fontWeight: FontWeight.bold,
-                                            color: Colors.grey.shade700,
-                                            fontSize: 10),
-                                      ),
-                                    ],
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                            child: const Text("Group",
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.left),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                          child: const Text("Max Calculations",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left),
+                        ),
+
+                        // Max Calculations container
+                        Container(
+                          // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 5),
+                          child: Card(
+                            elevation: 0,
+                            color: Colors.grey.shade100,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 125,
+                                      height: 25,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Bench:",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700)),
+                                          Text("${userData.benchPR}",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700)),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 125,
+                                      height: 25,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Squat:",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700)),
+                                          Text("${userData.squatPR}",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700)),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 125,
+                                      height: 25,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Deadlift:",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700)),
+                                          Text("${userData.deadliftPR}",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  //fontWeight: FontWeight.bold,
+                                                  color: Colors.grey.shade700)),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    LinearPercentIndicator(
+                                      width: 140,
+                                      lineHeight: 14,
+                                      percent: getTotal(
+                                              userData.benchPR!.toInt(),
+                                              userData.squatPR!.toInt(),
+                                              userData.deadliftPR!.toInt()) /
+                                          1000,
+                                      //center: Text("425 / 1000"),
+                                      backgroundColor: Colors.grey.shade300,
+                                      progressColor:
+                                          Color.fromRGBO(0, 255, 0, 100),
+                                    ),
+                                    SizedBox(height: 5),
+                                    total < 1000
+                                        ? Text(
+                                            "$total / 1000",
+                                            style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                color: Colors.grey.shade700,
+                                                fontSize: 10),
+                                          )
+                                        : Text(
+                                            "$total / 1000 \n Congratulations on hitting the 1K Club!",
+                                            style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                color: Colors.grey.shade700,
+                                                fontSize: 10),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          userData.inGroup == false
-                              ? Container(child: Text("User is not in a group"))
-                              : groupPreview(),
-                        ],
-                      ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                          child: const Text("Group",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.left),
+                        ),
+                        userData.inGroup == false
+                            ? Container(child: Text("User is not in a group"))
+                            : groupPreview(),
+                      ],
                     ),
                   ),
                 ),

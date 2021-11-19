@@ -96,33 +96,35 @@ class groupImage extends StatelessWidget {
     UserModel? user = Provider.of<UserModel?>(context);
     GroupModel? group = Provider.of<GroupModel?>(context);
     return Container(
-      child: group!.groupImageUrl ==
-              "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultGroupProfileImage.jpg?alt=media&token=ecf67ead-6d9f-46d3-9256-2c3f214f258a"
-          ? Container(
-              width: 100,
-              height: 50,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Icon(Icons.camera_alt_rounded),
-                  Text("Edit Profile Image", style: TextStyle(fontSize: 12))
-                ],
-              ),
-            )
-          : Container(
-              width: 100,
-              height: 100,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(group.groupImageUrl),
-                ),
-              ),
-            ),
-    );
+        child: group == null
+            ? Center(child: CircularProgressIndicator())
+            : (group.groupImageUrl ==
+                    "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultGroupProfileImage.jpg?alt=media&token=ecf67ead-6d9f-46d3-9256-2c3f214f258a"
+                ? Container(
+                    width: 100,
+                    height: 50,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        Icon(Icons.camera_alt_rounded),
+                        Text("Edit Profile Image",
+                            style: TextStyle(fontSize: 12))
+                      ],
+                    ),
+                  )
+                : Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(group.groupImageUrl),
+                      ),
+                    ),
+                  )));
   }
 }
 

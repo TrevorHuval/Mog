@@ -17,6 +17,13 @@ class Group extends StatefulWidget {
 class _Group extends State<Group> {
   final String groupid;
   _Group({required this.groupid});
+  List<String> imageNames = [
+    'assets/images/trevorProfilePic.jpg',
+    'assets/images/blakeProfilePic.jpg',
+    'assets/images/anthonyProfilePic.jpg',
+    'assets/images/horacioProfilePic.jpg',
+    'assets/images/bryanProfilePic.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -115,15 +122,44 @@ class _Group extends State<Group> {
                   ),
                 ),
                 Container(
-                  child: ListView.builder(
-                    itemCount: 20,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        height: 40,
-                        alignment: Alignment.center,
-                        color: Colors.lightBlue[100 * (index % 9)],
-                        child: Text('List Item $index'),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: imageNames.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: new EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage(imageNames[index]),
+                                ),
+                              ),
+                            ),
+                            //child: Image.asset(imageNames[index])),
+                            Text('Checked in'),
+                          ],
+                        ),
                       );
+                      //   return const ListTile(
+                      //     leading: CircleAvatar(
+                      //       backgroundImage:
+                      //           AssetImage('assets/images/' + imageNames[index]),
+                      //     ),
+                      //     title: Text('Trevor Huval'),
+                      //     subtitle: Text('Checked in today at the gym'),
+                      // );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider();
                     },
                   ),
                 ),
