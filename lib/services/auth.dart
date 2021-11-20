@@ -43,6 +43,7 @@ class AuthService {
         'benchPR': 0,
         'squatPR': 0,
         'deadliftPR': 0,
+        'streak': 0,
       });
       String profileImageDownloadUrl =
           "https://firebasestorage.googleapis.com/v0/b/mogdb-f5659.appspot.com/o/defaultUserProfileImage.jpg?alt=media&token=119e1aa6-c914-4a51-8ee0-32af4da2a45c";
