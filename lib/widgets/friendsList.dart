@@ -48,9 +48,9 @@ class _friendList extends State<friendList> {
   }
 
   List<String> friendsList = [
-    "BdM7ZUw5cFVSc5WPxmEy5sFlqqQ2",
-    "SEZST5GBnyTV4BOXT5TWGTsDmae2",
-    "i1RGljxWpBVozLHpyEkbXkK5YdB2",
+    "sldpI3CzUQdwAsDofuTQeaoi46j1",
+    "jaBgmfROxuOSgqtaSgaGKjo7YID3",
+    "GUrKdhn5KmWCsOS2LkZYWOwOkQn1",
   ];
 
   @override
@@ -96,8 +96,6 @@ class friendPreview extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) =>
                                 friendProfile(friendid: friendid)));
-
-                    print("fuck off");
                   },
                   child: Container(
                     height: 70,
