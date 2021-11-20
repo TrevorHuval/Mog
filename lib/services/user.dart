@@ -14,6 +14,7 @@ class UserService {
     return snapshot.docs.map((doc) {
       return UserModel(
         id: doc.id,
+        username: (doc.data() as dynamic)['username'] ?? '',
         firstName: (doc.data() as dynamic)['firstName'] ?? '',
         lastName: (doc.data() as dynamic)['lastName'] ?? '',
         profileImageUrl: (doc.data() as dynamic)['profileImageUrl'] ?? '',
@@ -34,6 +35,7 @@ class UserService {
     if (snapshot != null) {
       return UserModel(
         id: snapshot.id,
+        username: (snapshot.data() as dynamic)['username'] ?? '',
         firstName: (snapshot.data() as dynamic)['firstName'] ?? '',
         lastName: (snapshot.data() as dynamic)['lastName'] ?? '',
         profileImageUrl: (snapshot.data() as dynamic)['profileImageUrl'] ?? '',

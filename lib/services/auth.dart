@@ -21,8 +21,8 @@ class AuthService {
 
   assignProfileImage() async {}
 
-  Future signUp(
-      firstName, lastName, email, password, sex, weight, feet, inches) async {
+  Future signUp(username, firstName, lastName, email, password, sex, weight,
+      feet, inches) async {
     try {
       UserCredential user = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -31,6 +31,7 @@ class AuthService {
           .collection('users')
           .doc(user.user!.uid)
           .set({
+        'username': username,
         'firstName': firstName,
         'lastName': lastName,
         'email': email,

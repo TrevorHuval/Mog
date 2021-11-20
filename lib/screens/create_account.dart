@@ -47,6 +47,7 @@ class _CreateAccount extends State<CreateAccount> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   String? email;
+  String? username;
   String? password;
   String? retypedPassword;
   String? firstName;
@@ -59,6 +60,7 @@ class _CreateAccount extends State<CreateAccount> {
   String? profileImageURL;
   final picker = ImagePicker();
 
+  bool usernameEmpty = true;
   bool firstNameEmpty = true;
   bool lastNameEmpty = true;
   bool emailEmpty = true;
@@ -97,7 +99,8 @@ class _CreateAccount extends State<CreateAccount> {
   void _checkAllFieldsEmpty() {
     setState(() => errorMessage = "");
 
-    if (firstNameEmpty == false &&
+    if (usernameEmpty == false &&
+        firstNameEmpty == false &&
         lastNameEmpty == false &&
         emailEmpty == false &&
         passwordEmpty == false &&
@@ -141,15 +144,15 @@ class _CreateAccount extends State<CreateAccount> {
       )
       .toList();
 
-  String? _validateName(String? value) {
-    if (value?.isEmpty ?? false) {
-      return 'Name is required.';
+  void _validateName(String? firstName, String? lastName) {
+    if ((firstName?.isEmpty ?? false) || (lastName?.isEmpty ?? false)) {
+      errorMessage = 'Name is required.';
     }
     final RegExp nameExp = RegExp(r'^[A-Za-z ]+$');
-    if (!nameExp.hasMatch(value!)) {
-      return 'Please enter only alphabetical characters.';
+    if ((!nameExp.hasMatch(firstName!)) || (!nameExp.hasMatch(lastName!))) {
+      errorMessage = 'Please enter only alphabetical characters.';
     }
-    return null;
+    setState(() {});
   }
 
   Widget buildPickerFeet() => Container(
@@ -241,7 +244,7 @@ class _CreateAccount extends State<CreateAccount> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 15),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SizedBox(
@@ -250,6 +253,42 @@ class _CreateAccount extends State<CreateAccount> {
                     child: ListView(
                       physics: const BouncingScrollPhysics(),
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Username:",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: Focus(
+                                child: TextFormField(
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(color: Colors.red),
+                                  maxLines: 1,
+                                  decoration: InputDecoration.collapsed(
+                                      hintText: 'Enter your username'),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      username = val;
+                                    });
+                                  },
+                                ),
+                                onFocusChange: (hasFocus) {
+                                  if (!hasFocus) {
+                                    if (username != null && username != "") {
+                                      usernameEmpty = false;
+                                      _checkAllFieldsEmpty();
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 40),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -632,8 +671,9 @@ class _CreateAccount extends State<CreateAccount> {
                                   int feetInt = int.parse(feet!);
                                   int inchesInt = int.parse(inches!);
                                   print("I'M GOING IN");
-
+                                  _validateName(firstName, lastName);
                                   AuthService().signUp(
+                                    username,
                                     firstName,
                                     lastName,
                                     email,
