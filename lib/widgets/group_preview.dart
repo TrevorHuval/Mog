@@ -13,10 +13,11 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class groupPreview extends StatefulWidget {
-  const groupPreview({Key? key}) : super(key: key);
+  final String uidForGroup;
+  const groupPreview({Key? key, required this.uidForGroup}) : super(key: key);
 
   @override
-  _groupPreview createState() => _groupPreview();
+  _groupPreview createState() => _groupPreview(uidForGroup: uidForGroup);
 }
 
 class _groupPreview extends State<groupPreview> {
@@ -29,7 +30,10 @@ class _groupPreview extends State<groupPreview> {
   //         image: DecorationImage(
   //             fit: BoxFit.contain,
   //             image: AssetImage('assets/images/blakeProfilePic.jpg'))));
-  User? user = FirebaseAuth.instance.currentUser;
+
+  //User? user = FirebaseAuth.instance.currentUser;
+  String uidForGroup;
+  _groupPreview({required this.uidForGroup});
   final uid = FirebaseAuth.instance.currentUser!.uid;
   List<DocumentSnapshot> userGroups = [];
   bool gotUserGroups = false;
@@ -41,7 +45,7 @@ class _groupPreview extends State<groupPreview> {
   }
 
   void downloadUserGroups() async {
-    userGroups = await DatabaseService(uid: uid).getUserGroups();
+    userGroups = await DatabaseService(uid: uidForGroup).getUserGroups();
     gotUserGroups = true;
     setState(() {});
   }
@@ -55,7 +59,7 @@ class _groupPreview extends State<groupPreview> {
         : MultiProvider(
             providers: [
               StreamProvider<UserModel?>.value(
-                value: UserService(uid: uid).getUserInfo(uid),
+                value: UserService(uid: uidForGroup).getUserInfo(uidForGroup),
                 initialData: null,
               ),
               StreamProvider<GroupModel?>.value(
@@ -74,28 +78,9 @@ class _groupPreview extends State<groupPreview> {
                   color: Colors.grey.shade100,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: InkWell(
-                    splashFactory: NoSplash.splashFactory,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Group(groupid: userGroups[0].id)));
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Expanded(
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                              groupImage(),
-                              groupName(),
-                            ])),
-                      ],
-                    ),
-                  ),
+                  child: uidForGroup == uid
+                      ? createGroupTappable(userGroups: userGroups)
+                      : createGroupNotTappable(),
                 ),
               ),
             ),
@@ -103,10 +88,56 @@ class _groupPreview extends State<groupPreview> {
   }
 }
 
+class createGroupTappable extends StatelessWidget {
+  final List<DocumentSnapshot> userGroups;
+  createGroupTappable({required this.userGroups});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      splashFactory: NoSplash.splashFactory,
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Group(groupid: userGroups[0].id)));
+      },
+      child: Column(
+        children: <Widget>[
+          Expanded(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                groupImage(),
+                groupName(),
+              ])),
+        ],
+      ),
+    );
+  }
+}
+
+class createGroupNotTappable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+              groupImage(),
+              groupName(),
+            ])),
+      ],
+    );
+  }
+}
+
 class groupImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    UserModel? user = Provider.of<UserModel?>(context);
+    //UserModel? user = Provider.of<UserModel?>(context);
     GroupModel? group = Provider.of<GroupModel?>(context);
     return group == null
         ? Center(child: CircularProgressIndicator())
@@ -125,7 +156,7 @@ class groupImage extends StatelessWidget {
 class groupName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    UserModel? user = Provider.of<UserModel?>(context);
+    //UserModel? user = Provider.of<UserModel?>(context);
     GroupModel? group = Provider.of<GroupModel?>(context);
     return group == null
         ? Center(child: CircularProgressIndicator())
