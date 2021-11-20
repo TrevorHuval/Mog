@@ -4,7 +4,7 @@ import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/create_group.dart';
 import 'package:firstapp/screens/group.dart';
 import 'package:firstapp/services/user.dart';
-import 'package:firstapp/widgets/friend.dart';
+import 'package:firstapp/widgets/friendsList.dart';
 import 'package:firstapp/widgets/group_preview.dart';
 import 'package:firstapp/widgets/group_profile.dart';
 import 'package:flutter/cupertino.dart';
@@ -46,8 +46,7 @@ class _Home extends State<Home> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(height: 20),
-
-                        Container(width: 400, height: 100, child: friend()),
+                        Container(width: 400, height: 100, child: friendList()),
                         userData!.inGroup == false
                             ? Container(
                                 child: Padding(
@@ -87,6 +86,7 @@ class _Home extends State<Home> {
                                                         CreateGroup(),
                                                   ),
                                                 );
+                                                setState(() {});
                                               },
                                             ),
                                           ),
@@ -131,37 +131,37 @@ class _Home extends State<Home> {
                                   ),
                                 ),
                               )
-                            : groupPreview(),
+                            : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
-                        // SizedBox(
-                        //   height: 40,
-                        //   child: ElevatedButton(
-                        //     style: ElevatedButton.styleFrom(
-                        //         primary: Colors.grey.shade200,
-                        //         elevation: 0,
-                        //         shape: new RoundedRectangleBorder(
-                        //             borderRadius:
-                        //                 new BorderRadius.circular(15))),
-                        //     onPressed: () async {
-                        //       print(userData.firstName! +
-                        //           " " +
-                        //           userData.lastName!);
-                        //       print("is in group? " +
-                        //           userData.inGroup.toString());
-                        //       List<DocumentSnapshot> documents =
-                        //           await DatabaseService(uid: uid)
-                        //               .getUserGroups();
-                        //       print(documents[0].id);
-                        //     },
-                        //     child: Text(
-                        //       'Test',
-                        //       style: TextStyle(
-                        //           fontSize: 15,
-                        //           fontWeight: FontWeight.bold,
-                        //           color: Colors.red),
-                        //     ),
-                        //   ),
-                        // ),
+                        SizedBox(
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.grey.shade200,
+                                elevation: 0,
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(15))),
+                            onPressed: () async {
+                              print(userData.firstName! +
+                                  " " +
+                                  userData.lastName!);
+                              print("is in group? " +
+                                  userData.inGroup.toString());
+                              List<DocumentSnapshot> documents =
+                                  await DatabaseService(uid: uid)
+                                      .getUserGroups();
+                              print(documents[0].id);
+                            },
+                            child: Text(
+                              'Test',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red),
+                            ),
+                          ),
+                        ),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),

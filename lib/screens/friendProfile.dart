@@ -19,13 +19,16 @@ import 'package:provider/provider.dart';
 import 'package:path/path.dart';
 
 class friendProfile extends StatefulWidget {
+  final String friendid;
+  const friendProfile({Key? key, required this.friendid}) : super(key: key);
   @override
-  _friendProfile createState() => _friendProfile();
+  _friendProfile createState() => _friendProfile(friendid: friendid);
 }
 
 class _friendProfile extends State<friendProfile> {
+  String friendid;
+  _friendProfile({required this.friendid});
   User? user = FirebaseAuth.instance.currentUser;
-  final uid = FirebaseAuth.instance.currentUser!.uid;
   int total = 0;
 
   /*
@@ -68,7 +71,7 @@ class _friendProfile extends State<friendProfile> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UserModel?>(
-        stream: UserService(uid: uid).getUserInfo(uid),
+        stream: UserService(uid: friendid).getUserInfo(friendid),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             UserModel? userData = snapshot.data;
@@ -381,7 +384,9 @@ class _friendProfile extends State<friendProfile> {
                           ),
                           userData.inGroup == false
                               ? Container(child: Text("User is not in a group"))
-                              : groupPreview(),
+                              : groupPreview(
+                                  uidForGroup: friendid,
+                                ),
                         ],
                       ),
                     ),

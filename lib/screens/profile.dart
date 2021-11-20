@@ -387,7 +387,7 @@ class _Profile extends State<Profile> {
                         ),
                         userData.inGroup == false
                             ? Container(child: Text("User is not in a group"))
-                            : groupPreview(),
+                            : groupPreview(uidForGroup: uid),
                       ],
                     ),
                   ),
