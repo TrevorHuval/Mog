@@ -14,7 +14,6 @@ class GroupService {
     if (snapshot != null) {
       return GroupModel(
         id: snapshot.id,
-        admin: (snapshot.data() as dynamic)['admin'] ?? '',
         groupImageUrl: (snapshot.data() as dynamic)['groupImageUrl'] ?? '',
         groupName: (snapshot.data() as dynamic)['groupName'] ?? '',
         memberCount: (snapshot.data() as dynamic)['memberCount'] ?? 0,

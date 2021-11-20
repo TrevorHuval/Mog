@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/group.dart';
 import 'package:firstapp/models/user.dart';
+import 'package:firstapp/screens/friendProfile.dart';
 import 'package:firstapp/screens/group.dart';
 import 'package:firstapp/services/group.dart';
 import 'package:firstapp/services/user.dart';
@@ -87,6 +88,11 @@ class friendPreview extends StatelessWidget {
                 UserModel? friendData = snapshot.data;
                 return GestureDetector(
                   onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => friendProfile()));
+
                     print("fuck off");
                   },
                   child: Container(
