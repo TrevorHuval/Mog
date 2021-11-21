@@ -15,7 +15,8 @@ class diary extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Choose a workout to edit'),
+          title: Text('Choose a workout to edit',
+              style: TextStyle(fontWeight: FontWeight.bold)),
           backgroundColor: Colors.red,
         ),
         body: Center(

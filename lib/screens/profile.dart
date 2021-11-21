@@ -377,17 +377,23 @@ class _Profile extends State<Profile> {
                             ),
                           ),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                          child: const Text("Group",
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left),
-                        ),
+
                         userData.inGroup == false
-                            ? Container(child: Text("User is not in a group"))
-                            : groupPreview(uidForGroup: uid),
+                            ? Container()
+                            : Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
+                                    child: const Text("Group",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.left),
+                                  ),
+                                  groupPreview(uidForGroup: uid),
+                                ],
+                              ),
                       ],
                     ),
                   ),

@@ -31,33 +31,6 @@ class _friendProfile extends State<friendProfile> {
   User? user = FirebaseAuth.instance.currentUser;
   int total = 0;
 
-  /*
-  ADD PROFILE IMAGE TO USER STARTER
-
-  SizedBox(
-    height: 100,
-    width: 100,
-    child: TextButton(
-      onPressed: () => getImage(),
-      child: profileImage == null
-          ? Icon(Icons.camera_alt_rounded)
-          : Container(
-              width: 100,
-              height: 100,
-              margin:
-                  EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: FileImage(profileImage!)),
-              ),
-            ),
-      ),
-  ),
-*/
-
   final picker = ImagePicker();
 
   int getTotal(int benchPR, int squatPR, int deadliftPR) {
@@ -374,18 +347,26 @@ class _friendProfile extends State<friendProfile> {
                               ),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.fromLTRB(25, 15, 0, 0),
-                            child: const Text("Group",
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.left),
-                          ),
                           userData.inGroup == false
-                              ? Container(child: Text("User is not in a group"))
-                              : groupPreview(
-                                  uidForGroup: friendid,
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Container(
+                                          alignment: Alignment.centerLeft,
+                                          margin:
+                                              EdgeInsets.fromLTRB(25, 15, 0, 0),
+                                          child: const Text("Group",
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.left),
+                                        ),
+                                        groupPreview(uidForGroup: friendid),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                         ],
                       ),

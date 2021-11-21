@@ -27,6 +27,7 @@ class UserService {
         squatPR: (doc.data() as dynamic)['squatPR'] ?? 0,
         deadliftPR: (doc.data() as dynamic)['deadliftPR'] ?? 0,
         inGroup: (doc.data() as dynamic)['inGroup'] ?? false,
+        streak: (doc.data() as dynamic)['streak'] ?? 0,
       );
     }).toList();
   }
@@ -48,6 +49,7 @@ class UserService {
         squatPR: (snapshot.data() as dynamic)['squatPR'] ?? 0,
         deadliftPR: (snapshot.data() as dynamic)['deadliftPR'] ?? 0,
         inGroup: (snapshot.data() as dynamic)['inGroup'] ?? false,
+        streak: (snapshot.data() as dynamic)['streak'] ?? 0,
       );
     } else {
       return null;

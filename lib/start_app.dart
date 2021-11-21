@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                     GestureDetector(
                       onTap: () {},
                       child: ListTile(
-                        leading: Icon(Icons.settings_rounded),
+                        leading: Icon(CupertinoIcons.gear_alt_fill),
                         title: Text("Settings",
                             style: TextStyle(
                               fontSize: 20,
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                         _atuhService.logout(context);
                       },
                       child: ListTile(
-                        leading: Icon(Icons.highlight_remove_rounded),
+                        leading: Icon(CupertinoIcons.square_arrow_left),
                         title: Text("Sign Out",
                             style: TextStyle(
                               fontSize: 20,
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                 type: BottomNavigationBarType.fixed,
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home_rounded),
+                    icon: Icon(CupertinoIcons.house_fill),
                     title: Text('Home'),
                   ),
                   BottomNavigationBarItem(
@@ -170,11 +170,11 @@ class _HomePageState extends State<HomePage> {
                     title: Text('Fitness'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.bar_chart_rounded),
+                    icon: Icon(CupertinoIcons.chart_bar_fill),
                     title: Text('Progress'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.person_rounded),
+                    icon: Icon(CupertinoIcons.person_fill),
                     title: Text('Profile'),
                   ),
                   BottomNavigationBarItem(

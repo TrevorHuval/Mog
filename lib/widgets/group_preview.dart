@@ -21,17 +21,6 @@ class groupPreview extends StatefulWidget {
 }
 
 class _groupPreview extends State<groupPreview> {
-  // Widget buildProfilePics() => Container(
-  //     width: 37,
-  //     height: 37,
-  //     decoration: const BoxDecoration(
-  //         shape: BoxShape.circle,
-  //         color: Colors.white,
-  //         image: DecorationImage(
-  //             fit: BoxFit.contain,
-  //             image: AssetImage('assets/images/blakeProfilePic.jpg'))));
-
-  //User? user = FirebaseAuth.instance.currentUser;
   String uidForGroup;
   _groupPreview({required this.uidForGroup});
   final uid = FirebaseAuth.instance.currentUser!.uid;

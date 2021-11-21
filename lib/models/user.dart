@@ -12,6 +12,7 @@ class UserModel {
   final int? benchPR;
   final int? squatPR;
   final int? deadliftPR;
+  final int? streak;
   bool? inGroup;
 
   UserModel(
@@ -28,7 +29,8 @@ class UserModel {
       this.benchPR,
       this.squatPR,
       this.deadliftPR,
-      this.inGroup});
+      this.inGroup,
+      this.streak});
 
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -46,6 +48,7 @@ class UserModel {
       benchPR: map['benchPR'],
       squatPR: map['squatPR'],
       deadliftPR: map['deadliftPR'],
+      streak: map['streak'],
     );
   }
 
@@ -65,6 +68,7 @@ class UserModel {
       'benchPR': benchPR,
       'squatPR': squatPR,
       'deadliftPR': deadliftPR,
+      'streak': streak,
     };
   }
 }

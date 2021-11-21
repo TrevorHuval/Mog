@@ -42,7 +42,17 @@ class GroupService {
             .get();
     List<DocumentSnapshot> members = userGroups.docs;
     return members.length;
-    //return FirebaseFirestore.instance.collection('groups').id;
+  }
+
+  Future<List<DocumentSnapshot>> getGroupMemberIDs() async {
+    final QuerySnapshot<Map<String, dynamic>> groupMembers =
+        await FirebaseFirestore.instance
+            .collection('groups')
+            .doc(groupid)
+            .collection('members')
+            .get();
+    List<DocumentSnapshot> documents = groupMembers.docs;
+    return documents;
   }
 
   Stream<GroupModel?> getGroupInfo(groupid) {

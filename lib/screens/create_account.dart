@@ -248,11 +248,12 @@ class _CreateAccount extends State<CreateAccount> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SizedBox(
-                    height: 550,
+                    height: MediaQuery.of(context).size.height - 125,
                     width: 500,
                     child: ListView(
                       physics: const BouncingScrollPhysics(),
                       children: [
+                        SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

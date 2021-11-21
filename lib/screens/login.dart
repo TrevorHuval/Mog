@@ -187,7 +187,7 @@ class _PasswordFieldState extends State<PasswordField> {
       validator: widget.validator,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
-        icon: const Icon(Icons.lock_rounded),
+        icon: const Icon(CupertinoIcons.lock_fill),
         border: const UnderlineInputBorder(),
         hintText: widget.hintText,
         labelText: widget.labelText,
@@ -198,7 +198,9 @@ class _PasswordFieldState extends State<PasswordField> {
               _obscureText = !_obscureText;
             });
           },
-          child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+          child: Icon(_obscureText
+              ? CupertinoIcons.eye_fill
+              : CupertinoIcons.eye_slash_fill),
         ),
       ),
     );

@@ -66,7 +66,7 @@ class _GroupProfile extends State<GroupProfile> {
       ],
       child: Scaffold(
         body: Container(
-          color: Colors.grey.shade100,
+          color: Colors.red,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -107,8 +107,10 @@ class groupImage extends StatelessWidget {
                     child: Column(
                       children: [
                         Icon(Icons.camera_alt_rounded),
-                        Text("Edit Profile Image",
-                            style: TextStyle(fontSize: 12))
+                        Text(
+                          "Edit Profile Image",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        )
                       ],
                     ),
                   )
@@ -141,7 +143,8 @@ class groupName extends StatelessWidget {
             child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text("${group.groupName}",
-                    style: TextStyle(fontWeight: FontWeight.bold))),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white))),
           );
   }
 }

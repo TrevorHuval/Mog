@@ -46,12 +46,16 @@ class _Home extends State<Home> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(height: 20),
-                        Container(width: 400, height: 100, child: friendList()),
+                        Container(
+                          width: 400,
+                          height: 100,
+                          child: friendList(),
+                        ),
                         userData!.inGroup == false
                             ? Container(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 20.0),
+                                      horizontal: 20.0, vertical: 20),
                                   child: Container(
                                     width: 500,
                                     child: Row(
@@ -133,35 +137,36 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
-                        SizedBox(
-                          height: 40,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.grey.shade200,
-                                elevation: 0,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15))),
-                            onPressed: () async {
-                              print(userData.firstName! +
-                                  " " +
-                                  userData.lastName!);
-                              print("is in group? " +
-                                  userData.inGroup.toString());
-                              List<DocumentSnapshot> documents =
-                                  await DatabaseService(uid: uid)
-                                      .getUserGroups();
-                              print(documents[0].id);
-                            },
-                            child: Text(
-                              'Test',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red),
-                            ),
-                          ),
-                        ),
+                        // Test Button //
+                        // SizedBox(
+                        //   height: 40,
+                        //   child: ElevatedButton(
+                        //     style: ElevatedButton.styleFrom(
+                        //         primary: Colors.grey.shade200,
+                        //         elevation: 0,
+                        //         shape: new RoundedRectangleBorder(
+                        //             borderRadius:
+                        //                 new BorderRadius.circular(15))),
+                        //     onPressed: () async {
+                        //       print(userData.firstName! +
+                        //           " " +
+                        //           userData.lastName!);
+                        //       print("is in group? " +
+                        //           userData.inGroup.toString());
+                        //       List<DocumentSnapshot> documents =
+                        //           await DatabaseService(uid: uid)
+                        //               .getUserGroups();
+                        //       print(documents[0].id);
+                        //     },
+                        //     child: Text(
+                        //       'Test',
+                        //       style: TextStyle(
+                        //           fontSize: 15,
+                        //           fontWeight: FontWeight.bold,
+                        //           color: Colors.red),
+                        //     ),
+                        //   ),
+                        // ),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),

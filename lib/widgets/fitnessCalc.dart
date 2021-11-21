@@ -21,7 +21,8 @@ class fitnessCalc extends StatelessWidget {
       length: _kTabs.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Weightlifting Calculator'),
+          title: const Text('Weightlifting Calculator',
+              style: TextStyle(fontWeight: FontWeight.bold)),
           backgroundColor: Colors.red,
           bottom: TabBar(
             tabs: _kTabs,
