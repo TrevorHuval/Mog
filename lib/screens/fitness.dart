@@ -108,7 +108,7 @@ class _Fitness extends State<Fitness> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                   builder: (context) => diary(),
                                 ),
                               );
@@ -178,7 +178,7 @@ class _Fitness extends State<Fitness> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                   builder: (context) => fitnessCalc(),
                                 ),
                               );

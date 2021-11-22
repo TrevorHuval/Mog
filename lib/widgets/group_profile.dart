@@ -71,7 +71,7 @@ class _GroupProfile extends State<GroupProfile> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 75),
+                SizedBox(height: 50),
                 GestureDetector(
                   onTap: () async {
                     await pickImage();
@@ -115,8 +115,8 @@ class groupImage extends StatelessWidget {
                     ),
                   )
                 : Container(
-                    width: 100,
-                    height: 100,
+                    width: 150,
+                    height: 150,
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

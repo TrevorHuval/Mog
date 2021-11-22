@@ -132,7 +132,7 @@ class _Login extends State<Login> {
                           onTap: () {
                             Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                     builder: (context) =>
                                         const CreateAccount()));
                           },

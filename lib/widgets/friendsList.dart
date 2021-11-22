@@ -35,11 +35,14 @@ class _friendList extends State<friendList> {
   User? user = FirebaseAuth.instance.currentUser;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   List<DocumentSnapshot> userGroups = [];
+  List<DocumentSnapshot> friends = [];
   bool gotUserGroups = false;
+  bool gotFriends = false;
 
   @override
   void initState() {
     downloadUserGroups();
+    getFriends();
     super.initState();
   }
 
@@ -49,12 +52,11 @@ class _friendList extends State<friendList> {
     setState(() {});
   }
 
-  List<String> friendsList = [
-    "sldpI3CzUQdwAsDofuTQeaoi46j1",
-    "jaBgmfROxuOSgqtaSgaGKjo7YID3",
-    "GUrKdhn5KmWCsOS2LkZYWOwOkQn1",
-    "DpKthRxuAcZqykaiJufjdbOW3zQ2",
-  ];
+  void getFriends() async {
+    friends = await UserService(uid: uid).getUserFriends();
+    gotFriends = true;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,18 +68,61 @@ class _friendList extends State<friendList> {
             value: UserService(uid: uid).getUserInfo(uid),
             initialData: null,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                    child: ListView.separated(
-                        padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: friendsList.length,
-                        separatorBuilder: (context, _) => SizedBox(width: 12),
-                        itemBuilder: (context, index) {
-                          return friendPreview(
-                              friendid: friendsList[index], index: index);
-                        })),
+                friends.length == 0
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => AddFriends()));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.red,
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      CupertinoIcons.person_add_solid,
+                                      size: 35,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                    width: 80,
+                                    height: 20,
+                                    child: Text("Add A Friend",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center))
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: ListView.separated(
+                            padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: friends.length,
+                            separatorBuilder: (context, _) =>
+                                SizedBox(width: 12),
+                            itemBuilder: (context, index) {
+                              return friendPreview(
+                                  friendid: friends[index].id, index: index);
+                            })),
               ],
             ));
   }
@@ -106,7 +151,7 @@ class friendPreview extends StatelessWidget {
                             onTap: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(
+                                  CupertinoPageRoute(
                                       builder: (context) => AddFriends()));
                             },
                             child: Container(
@@ -145,7 +190,7 @@ class friendPreview extends StatelessWidget {
                             onTap: () {
                               Navigator.push(
                                   context,
-                                  MaterialPageRoute(
+                                  CupertinoPageRoute(
                                       builder: (context) =>
                                           friendProfile(friendid: friendid)));
                             },
@@ -184,7 +229,7 @@ class friendPreview extends StatelessWidget {
                         onTap: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(
+                              CupertinoPageRoute(
                                   builder: (context) =>
                                       friendProfile(friendid: friendid)));
                         },

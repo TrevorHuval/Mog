@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/screens/notifications.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _startApp extends State<startApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Mog',
       theme: ThemeData(
         fontFamily: 'SanFran',
@@ -84,7 +86,6 @@ class _HomePageState extends State<HomePage> {
         Fitness(),
         Progress(),
         Profile(),
-        Test(),
       ];
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
@@ -110,6 +111,17 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 backgroundColor: Colors.red,
+                actions: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => Notifications()));
+                      },
+                      child: Icon(CupertinoIcons.bell_fill)),
+                  SizedBox(width: 10),
+                ],
               ),
               body: children[_currentIndex],
               endDrawer: Drawer(
@@ -177,16 +189,15 @@ class _HomePageState extends State<HomePage> {
                     icon: Icon(CupertinoIcons.person_fill),
                     title: Text('Profile'),
                   ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.text_snippet_rounded),
-                    title: Text('Test'),
-                  ),
                 ],
               ),
             );
           } else {
-            return Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              color: Colors.white,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
         });

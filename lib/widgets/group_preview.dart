@@ -8,6 +8,7 @@ import 'package:firstapp/screens/group.dart';
 import 'package:firstapp/services/group.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/services/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +89,7 @@ class createGroupTappable extends StatelessWidget {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(
+            CupertinoPageRoute(
                 builder: (context) => Group(groupid: userGroups[0].id)));
       },
       child: Column(

@@ -64,22 +64,32 @@ class UserService {
         .map(_userFromFirebaseSnapshot);
   }
 
-  Stream<List<UserModel>> queryByUsername(search) {
-    return FirebaseFirestore.instance
-        .collection("users")
-        .orderBy("username")
-        .startAt([search])
-        .endAt([search + '\uf8ff'])
-        .limit(10)
-        .snapshots()
-        .map(_userListFromQuerySnapshot);
+  Future<List<DocumentSnapshot>> queryByUsername(search) async {
+    final QuerySnapshot<Map<String, dynamic>> list = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .where('username', isEqualTo: search)
+        .get();
+    List<DocumentSnapshot> documentsOfUsers = list.docs;
+    return documentsOfUsers;
+  }
+
+  Future<List<DocumentSnapshot>> getUserFriends() async {
+    final QuerySnapshot<Map<String, dynamic>> userFriends =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('friends')
+            .get();
+    List<DocumentSnapshot> documents = userFriends.docs;
+    return documents;
   }
 
   Future<void> sendFriendRequest(uid) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('sentFriendRequests')
+        .collection("sentFriendRequests")
         .doc(uid)
         .set({});
 
@@ -106,16 +116,17 @@ class UserService {
   Future<void> declineFriendRequest(uid) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('sentFriendRequests')
         .doc(uid)
+        .collection('sentFriendRequests')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
+    print("get the fuck");
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
-        .collection('friendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('friendRequests')
+        .doc(uid)
         .delete();
   }
 
@@ -136,16 +147,16 @@ class UserService {
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('sentFriendRequests')
         .doc(uid)
+        .collection('sentFriendRequests')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
-        .collection('friendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('friendRequests')
+        .doc(uid)
         .delete();
   }
 
@@ -170,5 +181,27 @@ class UserService {
         .collection('users')
         .doc(uid)
         .set({'profileImageUrl': profileImageUrl}, SetOptions(merge: true));
+  }
+
+  Future<int> getNumFriendRequests() async {
+    final QuerySnapshot<Map<String, dynamic>> friendRequests =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('friendRequests')
+            .get();
+    List<DocumentSnapshot> requests = friendRequests.docs;
+    return requests.length;
+  }
+
+  Future<List<DocumentSnapshot>> getFriendRequests() async {
+    final QuerySnapshot<Map<String, dynamic>> friendRequests =
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('friendRequests')
+            .get();
+    List<DocumentSnapshot> documents = friendRequests.docs;
+    return documents;
   }
 }

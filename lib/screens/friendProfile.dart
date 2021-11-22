@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/widgets/group_preview.dart';
@@ -11,12 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:firstapp/screens/group.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:provider/provider.dart';
-import 'package:path/path.dart';
 
 class friendProfile extends StatefulWidget {
   final String friendid;
@@ -29,6 +23,8 @@ class _friendProfile extends State<friendProfile> {
   String friendid;
   _friendProfile({required this.friendid});
   User? user = FirebaseAuth.instance.currentUser;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+
   int total = 0;
 
   final picker = ImagePicker();
@@ -49,7 +45,52 @@ class _friendProfile extends State<friendProfile> {
           if (snapshot.hasData) {
             UserModel? userData = snapshot.data;
             return Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(
+                actions: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 15),
+                    child: GestureDetector(
+                      onTap: () {
+                        showCupertinoDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              CupertinoAlertDialog(
+                            title: Text(
+                              "Remove friend",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            content: Text(
+                              "Are you sure you want to remove \n ${userData!.firstName} ${userData.lastName} as a friend?",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, "Cancel"),
+                                  child: const Text("Cancel")),
+                              TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, "Remove"),
+                                  child: const Text("Remove")),
+                            ],
+                          ),
+                        ).then((returnVal) async {
+                          if (returnVal != null) {
+                            if (returnVal == "Remove") {
+                              await UserService(uid: uid)
+                                  .removeFriend(friendid);
+                              Navigator.pop(context);
+                            }
+                          }
+                        });
+                      },
+                      child: Icon(
+                          CupertinoIcons.person_crop_circle_fill_badge_xmark,
+                          size: 30),
+                    ),
+                  )
+                ],
+              ),
               body: Scaffold(
                 backgroundColor: Colors.white,
                 body: NotificationListener<OverscrollIndicatorNotification>(
@@ -127,7 +168,6 @@ class _friendProfile extends State<friendProfile> {
                                         children: <Widget>[
                                           Container(
                                             width: 185,
-                                            height: 70,
                                             child: FittedBox(
                                               fit: BoxFit.contain,
                                               child: Text(
@@ -137,6 +177,13 @@ class _friendProfile extends State<friendProfile> {
                                                 ),
                                               ),
                                             ),
+                                          ),
+                                          Text(userData.username!,
+                                              style: TextStyle(
+                                                  fontStyle: FontStyle.italic,
+                                                  color: Colors.grey)),
+                                          Divider(
+                                            height: 15,
                                           ),
                                           Column(
                                             crossAxisAlignment:
@@ -329,7 +376,29 @@ class _friendProfile extends State<friendProfile> {
                         ),
                       ),
                       userData.inGroup == false
-                          ? Container()
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
+                              child: SizedBox(
+                                height: 40,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Invite To Group",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ),
+                            )
                           : Column(
                               children: [
                                 Column(

@@ -28,33 +28,6 @@ class _Profile extends State<Profile> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
   int total = 0;
 
-  /*
-  ADD PROFILE IMAGE TO USER STARTER
-
-  SizedBox(
-    height: 100,
-    width: 100,
-    child: TextButton(
-      onPressed: () => getImage(),
-      child: profileImage == null
-          ? Icon(Icons.camera_alt_rounded)
-          : Container(
-              width: 100,
-              height: 100,
-              margin:
-                  EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: FileImage(profileImage!)),
-              ),
-            ),
-      ),
-  ),
-*/
-
   final picker = ImagePicker();
   late File _imageFile;
 
@@ -175,7 +148,6 @@ class _Profile extends State<Profile> {
                                           children: <Widget>[
                                             Container(
                                               width: 185,
-                                              height: 70,
                                               child: FittedBox(
                                                 fit: BoxFit.contain,
                                                 child: Text(
@@ -186,9 +158,18 @@ class _Profile extends State<Profile> {
                                                 ),
                                               ),
                                             ),
+                                            Text(userData.username!,
+                                                style: TextStyle(
+                                                    fontStyle: FontStyle.italic,
+                                                    color: Colors.grey)),
+                                            Divider(
+                                              height: 15,
+                                            ),
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Container(
                                                   child: FittedBox(

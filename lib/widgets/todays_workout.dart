@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/screens/diary.dart';
 import 'package:intl/intl.dart';
-
 
 class todaysWorkout extends StatefulWidget {
   const todaysWorkout({Key? key}) : super(key: key);
@@ -12,7 +12,6 @@ class todaysWorkout extends StatefulWidget {
 }
 
 class _todaysWorkout extends State<todaysWorkout> {
-
   DateTime day = DateTime.now();
   String? userSet;
 
@@ -58,9 +57,9 @@ class _todaysWorkout extends State<todaysWorkout> {
   //               ),
   //         );
   //         }
-          
+
   //       }
-  //     } 
+  //     }
   //     else if (dayFormat == 'Tuesday'){
   //       return Text('Tuesday');
   //     }
@@ -81,8 +80,6 @@ class _todaysWorkout extends State<todaysWorkout> {
 
   //   });
   // }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +103,7 @@ class _todaysWorkout extends State<todaysWorkout> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) => diary(),
                 ),
               );
@@ -114,10 +111,9 @@ class _todaysWorkout extends State<todaysWorkout> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                
                 // Row(
                 //   children: [
-                    
+
                 //     Container(
                 //         width: 75,
                 //         height: 75,

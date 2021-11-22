@@ -85,7 +85,7 @@ class _Home extends State<Home> {
                                               onPressed: () {
                                                 Navigator.push(
                                                   context,
-                                                  MaterialPageRoute(
+                                                  CupertinoPageRoute(
                                                     builder: (context) =>
                                                         CreateGroup(),
                                                   ),
@@ -137,36 +137,6 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
-                        // Test Button //
-                        // SizedBox(
-                        //   height: 40,
-                        //   child: ElevatedButton(
-                        //     style: ElevatedButton.styleFrom(
-                        //         primary: Colors.grey.shade200,
-                        //         elevation: 0,
-                        //         shape: new RoundedRectangleBorder(
-                        //             borderRadius:
-                        //                 new BorderRadius.circular(15))),
-                        //     onPressed: () async {
-                        //       print(userData.firstName! +
-                        //           " " +
-                        //           userData.lastName!);
-                        //       print("is in group? " +
-                        //           userData.inGroup.toString());
-                        //       List<DocumentSnapshot> documents =
-                        //           await DatabaseService(uid: uid)
-                        //               .getUserGroups();
-                        //       print(documents[0].id);
-                        //     },
-                        //     child: Text(
-                        //       'Test',
-                        //       style: TextStyle(
-                        //           fontSize: 15,
-                        //           fontWeight: FontWeight.bold,
-                        //           color: Colors.red),
-                        //     ),
-                        //   ),
-                        // ),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),

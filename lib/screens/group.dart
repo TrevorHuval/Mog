@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/group.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/group.dart';
@@ -128,7 +129,7 @@ class _Group extends State<Group> {
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 20),
                           child: ListView.separated(
-                            shrinkWrap: true,
+                            shrinkWrap: false,
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: imageNames.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -148,7 +149,6 @@ class _Group extends State<Group> {
                                         ),
                                       ),
                                     ),
-                                    //child: Image.asset(imageNames[index])),
                                     Text('Checked in'),
                                   ],
                                 ),
@@ -173,28 +173,33 @@ class _Group extends State<Group> {
 class displayMember extends StatelessWidget {
   String memberid;
   displayMember({required this.memberid});
+  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
     GroupModel? group = Provider.of<GroupModel?>(context);
 
     return group == null
-        ? Center(
-            child: ElevatedButton(
-            onPressed: () {
-              print(memberid);
-            },
-            child: Text("button"),
-          )
-            //child: CircularProgressIndicator(),
-            )
+        ? Container(
+            color: Colors.white,
+            child: Center(child: CircularProgressIndicator()))
         : StreamBuilder<UserModel?>(
             stream: UserService(uid: memberid).getUserInfo(memberid),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 UserModel? memberData = snapshot.data;
                 return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      if (uid == memberid) {
+                        null;
+                      } else {
+                        Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) =>
+                                    friendProfile(friendid: memberid)));
+                      }
+                    },
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundImage:
