@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/group.dart';
 import 'package:firstapp/models/user.dart';
+import 'package:firstapp/screens/add_friend.dart';
 import 'package:firstapp/screens/friendProfile.dart';
 import 'package:firstapp/screens/group.dart';
 import 'package:firstapp/services/group.dart';
@@ -67,39 +68,6 @@ class _friendList extends State<friendList> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(bottom: 5),
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              CupertinoIcons.person_add_solid,
-                              size: 35,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Container(
-                            width: 80,
-                            height: 20,
-                            child: Text("Add A Friend",
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center))
-                      ],
-                    ),
-                  ),
-                ),
                 Expanded(
                     child: ListView.separated(
                         padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
@@ -107,7 +75,8 @@ class _friendList extends State<friendList> {
                         itemCount: friendsList.length,
                         separatorBuilder: (context, _) => SizedBox(width: 12),
                         itemBuilder: (context, index) {
-                          return friendPreview(friendid: friendsList[index]);
+                          return friendPreview(
+                              friendid: friendsList[index], index: index);
                         })),
               ],
             ));
@@ -115,8 +84,9 @@ class _friendList extends State<friendList> {
 }
 
 class friendPreview extends StatelessWidget {
+  int index;
   String friendid;
-  friendPreview({required this.friendid});
+  friendPreview({required this.friendid, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -129,44 +99,124 @@ class friendPreview extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 UserModel? friendData = snapshot.data;
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                friendProfile(friendid: friendid)));
-                  },
-                  child: Container(
-                    height: 90,
-                    width: 80,
-                    child: Column(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            width: 70,
-                            height: 70,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        friendData!.profileImageUrl)))),
-                        Container(
-                            width: 80,
-                            height: 20,
-                            child: Text(
-                                "${friendData.firstName} ${friendData.lastName}",
-                                overflow: TextOverflow.fade,
-                                softWrap: false,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center))
-                      ],
-                    ),
-                  ),
-                );
+                return index == 0
+                    ? Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddFriends()));
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 5),
+                                    width: 70,
+                                    height: 70,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.red,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        CupertinoIcons.person_add_solid,
+                                        size: 35,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                      width: 80,
+                                      height: 20,
+                                      child: Text("Add A Friend",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center))
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          friendProfile(friendid: friendid)));
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(bottom: 5),
+                                      width: 70,
+                                      height: 70,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(friendData!
+                                                  .profileImageUrl)))),
+                                  Container(
+                                      width: 80,
+                                      height: 15,
+                                      child: Text(
+                                          "${friendData.firstName} ${friendData.lastName}",
+                                          overflow: TextOverflow.fade,
+                                          softWrap: false,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      friendProfile(friendid: friendid)));
+                        },
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              friendData!.profileImageUrl)))),
+                              Container(
+                                  width: 80,
+                                  height: 20,
+                                  child: Text(
+                                      "${friendData.firstName} ${friendData.lastName}",
+                                      overflow: TextOverflow.fade,
+                                      softWrap: false,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center))
+                            ],
+                          ),
+                        ),
+                      );
               } else {
                 return Center(child: CircularProgressIndicator());
               }

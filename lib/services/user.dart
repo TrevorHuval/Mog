@@ -64,10 +64,10 @@ class UserService {
         .map(_userFromFirebaseSnapshot);
   }
 
-  Stream<List<UserModel>> queryByName(search) {
+  Stream<List<UserModel>> queryByUsername(search) {
     return FirebaseFirestore.instance
         .collection("users")
-        .orderBy("name") //need unique single field to query for ie username
+        .orderBy("username")
         .startAt([search])
         .endAt([search + '\uf8ff'])
         .limit(10)

@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                     title: Text('Fitness'),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.chart_bar_fill),
+                    icon: Icon(CupertinoIcons.graph_circle_fill),
                     title: Text('Progress'),
                   ),
                   BottomNavigationBarItem(
