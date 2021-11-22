@@ -1,32 +1,44 @@
+import 'package:firstapp/models/user.dart';
 import 'package:flutter/material.dart';
+import '../widgets/squat.dart';
+import 'bench.dart';
+import 'deadlift.dart';
+//import '../widgets/bench.dart';
+//import '../widgets/deadlift.dart';
 
-class fitnessCalc extends StatelessWidget {
-  fitnessCalc({Key? key}) : super(key: key);
-  Widget builtSquat() => TextFormField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-        ),
-        //onChanged: (value) => setState() => squat = value),
-      );
+class fitnessCalc extends StatefulWidget {
+  UserModel loggedInUser;
+  fitnessCalc(UserModel this.loggedInUser);
 
   @override
+  _fitnessCalc createState() => _fitnessCalc();
+}
+
+class _fitnessCalc extends State<fitnessCalc> {
+  @override
   Widget build(BuildContext context) {
-    ;
-    final _kTabs = <Tab>[
-      const Tab(icon: Icon(Icons.directions_walk), text: 'Squat'),
+    final _TabPages = <Widget>[
+      Squat(),
+      Bench(),
+      Deadlift(),
+    ];
+    final _Tabs = <Tab>[
+      const Tab(icon: Icon(Icons.cloud), text: 'Squat'),
       const Tab(icon: Icon(Icons.alarm), text: 'Bench'),
       const Tab(icon: Icon(Icons.forum), text: 'Deadlift'),
     ];
     return DefaultTabController(
-      length: _kTabs.length,
+      length: _Tabs.length,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Weightlifting Calculator',
               style: TextStyle(fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.red,
           bottom: TabBar(
-            tabs: _kTabs,
+            tabs: _Tabs,
           ),
+        ),
+        body: TabBarView(
+          children: _TabPages,
         ),
       ),
     );

@@ -26,6 +26,11 @@ class _Home extends State<Home> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     //final user = Provider.of<UserModel>(context);
 

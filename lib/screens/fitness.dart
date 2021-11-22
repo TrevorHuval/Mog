@@ -179,7 +179,7 @@ class _Fitness extends State<Fitness> {
                               Navigator.push(
                                 context,
                                 CupertinoPageRoute(
-                                  builder: (context) => fitnessCalc(),
+                                  builder: (context) => fitnessCalc(user),
                                 ),
                               );
                             },

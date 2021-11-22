@@ -68,7 +68,8 @@ class UserService {
     final QuerySnapshot<Map<String, dynamic>> list = await FirebaseFirestore
         .instance
         .collection('users')
-        .where('username', isEqualTo: search)
+        .where('username', isGreaterThanOrEqualTo: search)
+        .where('username', isLessThanOrEqualTo: search + "\uF7FF")
         .get();
     List<DocumentSnapshot> documentsOfUsers = list.docs;
     return documentsOfUsers;
@@ -203,5 +204,18 @@ class UserService {
             .get();
     List<DocumentSnapshot> documents = friendRequests.docs;
     return documents;
+  }
+
+  Future<bool> isFriend(friendid) async {
+    late bool exists;
+    var collectionRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(friendid)
+        .collection("friends");
+
+    var document = await collectionRef.doc(uid).get().then((doc) {
+      exists = doc.exists;
+    });
+    return exists;
   }
 }

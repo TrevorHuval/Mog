@@ -74,10 +74,12 @@ class _HomePageState extends State<HomePage> {
   String _title = "default";
   User? user = FirebaseAuth.instance.currentUser;
   final AuthService _atuhService = AuthService();
+  late List<Widget> children = _children();
 
   @override
   void initState() {
     _title = 'Home';
+
     super.initState();
   }
 
@@ -94,7 +96,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
     //loggedInUser = user;
-    final List<Widget> children = _children();
+    //List<Widget> children = _children();
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
     return StreamBuilder<UserModel?>(
@@ -105,23 +107,25 @@ class _HomePageState extends State<HomePage> {
             return Scaffold(
               key: _scaffoldKey,
               appBar: AppBar(
-                title: Text(
-                  _title,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      _title,
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => Notifications()));
+                        },
+                        child: Icon(CupertinoIcons.bell_fill)),
+                  ],
                 ),
                 backgroundColor: Colors.red,
-                actions: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => Notifications()));
-                      },
-                      child: Icon(CupertinoIcons.bell_fill)),
-                  SizedBox(width: 10),
-                ],
               ),
               body: children[_currentIndex],
               endDrawer: Drawer(

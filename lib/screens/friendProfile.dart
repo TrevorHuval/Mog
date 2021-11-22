@@ -24,10 +24,21 @@ class _friendProfile extends State<friendProfile> {
   _friendProfile({required this.friendid});
   User? user = FirebaseAuth.instance.currentUser;
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  bool? isFriend;
 
   int total = 0;
 
   final picker = ImagePicker();
+
+  void initState() {
+    checkIfFriend();
+    super.initState();
+  }
+
+  void checkIfFriend() async {
+    isFriend = await UserService(uid: uid).isFriend(friendid);
+    setState(() {});
+  }
 
   int getTotal(int benchPR, int squatPR, int deadliftPR) {
     total = benchPR + squatPR + deadliftPR;
@@ -49,45 +60,76 @@ class _friendProfile extends State<friendProfile> {
                 actions: [
                   Padding(
                     padding: EdgeInsets.only(right: 15),
-                    child: GestureDetector(
-                      onTap: () {
-                        showCupertinoDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              CupertinoAlertDialog(
-                            title: Text(
-                              "Remove friend",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            content: Text(
-                              "Are you sure you want to remove \n ${userData!.firstName} ${userData.lastName} as a friend?",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, "Cancel"),
-                                  child: const Text("Cancel")),
-                              TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, "Remove"),
-                                  child: const Text("Remove")),
-                            ],
+                    child: isFriend == true
+                        ? GestureDetector(
+                            onTap: () {
+                              showCupertinoDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    CupertinoAlertDialog(
+                                  title: Text(
+                                    "Remove friend",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  content: Text(
+                                    "Are you sure you want to remove \n ${userData!.firstName} ${userData.lastName} as a friend?",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, "Cancel"),
+                                        child: const Text("Cancel")),
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, "Remove"),
+                                        child: const Text("Remove")),
+                                  ],
+                                ),
+                              ).then((returnVal) async {
+                                if (returnVal != null) {
+                                  if (returnVal == "Remove") {
+                                    await UserService(uid: uid)
+                                        .removeFriend(friendid);
+                                    Navigator.pop(context);
+                                  }
+                                }
+                              });
+                            },
+                            child: Icon(
+                                CupertinoIcons
+                                    .person_crop_circle_fill_badge_xmark,
+                                size: 30),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              showCupertinoDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    CupertinoAlertDialog(
+                                  title: Text(
+                                    "Sent Request",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  content: Text(
+                                    "A friend request has been sent to \n ${userData!.firstName} ${userData.lastName}",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, "OK"),
+                                        child: const Text("OK")),
+                                  ],
+                                ),
+                              );
+                              UserService(uid: uid).sendFriendRequest(friendid);
+                            },
+                            child: Icon(
+                                CupertinoIcons
+                                    .person_crop_circle_fill_badge_plus,
+                                size: 30),
                           ),
-                        ).then((returnVal) async {
-                          if (returnVal != null) {
-                            if (returnVal == "Remove") {
-                              await UserService(uid: uid)
-                                  .removeFriend(friendid);
-                              Navigator.pop(context);
-                            }
-                          }
-                        });
-                      },
-                      child: Icon(
-                          CupertinoIcons.person_crop_circle_fill_badge_xmark,
-                          size: 30),
-                    ),
                   )
                 ],
               ),

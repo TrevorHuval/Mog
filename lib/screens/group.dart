@@ -127,40 +127,44 @@ class _Group extends State<Group> {
                                 separatorBuilder: (context, _) =>
                                     SizedBox(width: 12),
                                 itemCount: memberCount)),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          child: Post(),
-                          // child: ListView.separated(
-                          //   shrinkWrap: false,
-                          //   physics: NeverScrollableScrollPhysics(),
-                          //   itemCount: imageNames.length,
-                          //   itemBuilder: (BuildContext context, int index) {
-                          //     return Padding(
-                          //       padding: new EdgeInsets.symmetric(
-                          //           vertical: 8.0, horizontal: 10.0),
-                          //       child: Column(
-                          //         children: <Widget>[
-                          //           Container(
-                          //             height: 200,
-                          //             width: 200,
-                          //             decoration: BoxDecoration(
-                          //               color: Colors.white,
-                          //               image: DecorationImage(
-                          //                 fit: BoxFit.cover,
-                          //                 image: AssetImage(imageNames[index]),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //           Text('Checked in'),
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          //   separatorBuilder:
-                          //       (BuildContext context, int index) {
-                          //     return Divider();
-                          //   },
-                          // ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 20),
+                              Post(
+                                name: "Anthnoy Duong",
+                                username: "AntTonKnee",
+                                caption: "Checked in @ 9:59 PM",
+                                media: false,
+                                mediaURL: "",
+                                profileImage:
+                                    "assets/images/anthonyProfilePic.jpg",
+                              ),
+                              Divider(height: 20),
+                              Post(
+                                name: "Blake Lalonde",
+                                username: "theblakelalonde",
+                                caption:
+                                    "Thanks, I have struggled for a whole to layout a widget basing on the size of the parent widget, first I was trying to use screen height minus appbar height and bottom bar height, which is stupid and not working on all physical phones",
+                                media: false,
+                                mediaURL: "",
+                                profileImage:
+                                    "assets/images/blakeProfilePic.jpg",
+                              ),
+                              Divider(height: 20),
+                              Post(
+                                name: "Blake Lalonde",
+                                username: "theblakelalonde",
+                                caption: "Checked in @ 7:03 PM",
+                                media: true,
+                                mediaURL: "assets/images/gooberGroupPFP.jpg",
+                                profileImage:
+                                    "assets/images/blakeProfilePic.jpg",
+                              ),
+                              Divider(height: 20),
+                            ],
+                          ),
                         ),
                       ],
                     ),
