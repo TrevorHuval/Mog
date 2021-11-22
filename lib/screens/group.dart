@@ -5,6 +5,7 @@ import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/group.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/widgets/group_profile.dart';
+import 'package:firstapp/widgets/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -128,37 +129,38 @@ class _Group extends State<Group> {
                                 itemCount: memberCount)),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 20),
-                          child: ListView.separated(
-                            shrinkWrap: false,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: imageNames.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: new EdgeInsets.symmetric(
-                                    vertical: 8.0, horizontal: 10.0),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 200,
-                                      width: 200,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(imageNames[index]),
-                                        ),
-                                      ),
-                                    ),
-                                    Text('Checked in'),
-                                  ],
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return Divider();
-                            },
-                          ),
+                          child: Post(),
+                          // child: ListView.separated(
+                          //   shrinkWrap: false,
+                          //   physics: NeverScrollableScrollPhysics(),
+                          //   itemCount: imageNames.length,
+                          //   itemBuilder: (BuildContext context, int index) {
+                          //     return Padding(
+                          //       padding: new EdgeInsets.symmetric(
+                          //           vertical: 8.0, horizontal: 10.0),
+                          //       child: Column(
+                          //         children: <Widget>[
+                          //           Container(
+                          //             height: 200,
+                          //             width: 200,
+                          //             decoration: BoxDecoration(
+                          //               color: Colors.white,
+                          //               image: DecorationImage(
+                          //                 fit: BoxFit.cover,
+                          //                 image: AssetImage(imageNames[index]),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           Text('Checked in'),
+                          //         ],
+                          //       ),
+                          //     );
+                          //   },
+                          //   separatorBuilder:
+                          //       (BuildContext context, int index) {
+                          //     return Divider();
+                          //   },
+                          // ),
                         ),
                       ],
                     ),

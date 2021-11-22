@@ -21,7 +21,6 @@ class _Post extends State<Post> {
           },
           child: SingleChildScrollView(
             child: Container(
-              height: 50,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Column(
@@ -57,7 +56,7 @@ class _Post extends State<Post> {
                                 ],
                               ),
                               Text(
-                                "Checked in @ 6:12 PM",
+                                "Checked in @ 6:58 PM",
                                 textAlign: TextAlign.left,
                               ),
                             ],
@@ -196,7 +195,7 @@ class _Post extends State<Post> {
                                 ],
                               ),
                               Text(
-                                "Checked in @ 6:50 PM",
+                                "Checked in @ 6:23 PM",
                                 textAlign: TextAlign.left,
                               ),
                             ],
