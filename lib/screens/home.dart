@@ -34,7 +34,14 @@ class _Home extends State<Home> {
   Widget build(BuildContext context) {
     //final user = Provider.of<UserModel>(context);
 
-    return StreamBuilder<UserModel?>(
+    return MultiProvider(
+      providers: [
+        StreamProvider<UserModel?>.value(
+          value: UserService(uid: uid).getUserInfo(uid),
+          initialData: null,
+        )
+      ],
+      child: StreamBuilder<UserModel?>(
         stream: UserService(uid: uid).getUserInfo(uid),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -51,11 +58,7 @@ class _Home extends State<Home> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(height: 20),
-                        Container(
-                          width: 400,
-                          height: 100,
-                          child: friendList(),
-                        ),
+                        buildFriendsList(),
                         userData!.inGroup == false
                             ? Container(
                                 child: Padding(
@@ -183,7 +186,21 @@ class _Home extends State<Home> {
               child: CircularProgressIndicator(),
             );
           }
-        });
+        },
+      ),
+    );
+  }
+}
+
+class buildFriendsList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    UserModel? user = Provider.of<UserModel?>(context);
+    return Container(
+      width: 400,
+      height: 100,
+      child: friendList(),
+    );
   }
 }
 

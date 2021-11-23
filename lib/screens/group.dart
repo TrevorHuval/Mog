@@ -127,43 +127,64 @@ class _Group extends State<Group> {
                                 separatorBuilder: (context, _) =>
                                     SizedBox(width: 12),
                                 itemCount: memberCount)),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 20),
-                              Post(
-                                name: "Anthnoy Duong",
-                                username: "AntTonKnee",
-                                caption: "Checked in @ 9:59 PM",
-                                media: false,
-                                mediaURL: "",
-                                profileImage:
-                                    "assets/images/anthonyProfilePic.jpg",
+                        NotificationListener<OverscrollIndicatorNotification>(
+                          onNotification:
+                              (OverscrollIndicatorNotification overscroll) {
+                            overscroll.disallowGlow();
+                            return false;
+                          },
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 20),
+                                  Post(
+                                    name: "Anthnoy Duong",
+                                    username: "AntTonKnee",
+                                    caption: "Checked in @ 9:59 PM",
+                                    media: false,
+                                    mediaURL: "",
+                                    profileImage:
+                                        "assets/images/anthonyProfilePic.jpg",
+                                  ),
+                                  Divider(height: 20),
+                                  Post(
+                                    name: "Blake Lalonde",
+                                    username: "theblakelalonde",
+                                    caption: "I actually despise Bryan Tran",
+                                    media: false,
+                                    mediaURL: "",
+                                    profileImage:
+                                        "assets/images/blakeProfilePic.jpg",
+                                  ),
+                                  Divider(height: 20),
+                                  Post(
+                                    name: "Trevor Huval",
+                                    username: "thuval2",
+                                    caption:
+                                        "Feelin' pretty MOGCHAMP right now",
+                                    media: true,
+                                    mediaURL:
+                                        "assets/images/gooberGroupPFP.jpg",
+                                    profileImage:
+                                        "assets/images/trevorProfilePic.jpg",
+                                  ),
+                                  Divider(height: 20),
+                                  Post(
+                                    name: "Bryan Tran",
+                                    username: "bryantran1",
+                                    caption: "Checked in @ 7:03 PM",
+                                    media: false,
+                                    mediaURL:
+                                        "assets/images/gooberGroupPFP.jpg",
+                                    profileImage:
+                                        "assets/images/bryanProfilePic.jpg",
+                                  ),
+                                ],
                               ),
-                              Divider(height: 20),
-                              Post(
-                                name: "Blake Lalonde",
-                                username: "theblakelalonde",
-                                caption:
-                                    "Thanks, I have struggled for a whole to layout a widget basing on the size of the parent widget, first I was trying to use screen height minus appbar height and bottom bar height, which is stupid and not working on all physical phones",
-                                media: false,
-                                mediaURL: "",
-                                profileImage:
-                                    "assets/images/blakeProfilePic.jpg",
-                              ),
-                              Divider(height: 20),
-                              Post(
-                                name: "Blake Lalonde",
-                                username: "theblakelalonde",
-                                caption: "Checked in @ 7:03 PM",
-                                media: true,
-                                mediaURL: "assets/images/gooberGroupPFP.jpg",
-                                profileImage:
-                                    "assets/images/blakeProfilePic.jpg",
-                              ),
-                              Divider(height: 20),
-                            ],
+                            ),
                           ),
                         ),
                       ],

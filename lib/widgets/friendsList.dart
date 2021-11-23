@@ -74,9 +74,10 @@ class _friendList extends State<friendList> {
                     ? GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => AddFriends()));
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => AddFriends()))
+                              .then((_) => setState(() {}));
                         },
                         child: Padding(
                           padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
