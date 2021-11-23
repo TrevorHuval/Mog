@@ -78,8 +78,12 @@ class _Post extends State<Post> {
                         Radius.circular(15),
                       ),
                       color: Colors.white,
+                      // FittedBox(
+                      //   child: Image.asset(mediaURL),
+                      //   fit: BoxFit.fill,
+                      // ),
                       image: DecorationImage(
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                         image: AssetImage(mediaURL),
                       ),
                     ),
