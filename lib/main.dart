@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
           return StreamProvider<UserModel?>.value(
             value: AuthService().user,
             initialData: null,
-            child: MaterialApp(home: Wrapper()),
+            child:
+                MaterialApp(debugShowCheckedModeBanner: false, home: Wrapper()),
           );
         }
         return Directionality(

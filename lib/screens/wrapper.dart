@@ -16,6 +16,8 @@ class Wrapper extends StatelessWidget {
     }
     UserService(uid: user.id!).init(user.id!);
     return MaterialApp(
-        initialRoute: '/', routes: {'/': (context) => startApp()});
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {'/': (context) => startApp()});
   }
 }

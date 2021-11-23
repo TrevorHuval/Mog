@@ -153,7 +153,8 @@ class _Group extends State<Group> {
                                   Post(
                                     name: "Blake Lalonde",
                                     username: "theblakelalonde",
-                                    caption: "I actually despise Bryan Tran",
+                                    caption:
+                                        "Rice Crispy Treats before the gym are so godly",
                                     media: false,
                                     mediaURL: "",
                                     profileImage:
@@ -164,7 +165,7 @@ class _Group extends State<Group> {
                                     name: "Trevor Huval",
                                     username: "thuval2",
                                     caption:
-                                        "Feelin' pretty MOGCHAMP right now",
+                                        "Feelin' pretty MOGCHAMP right now after that massive pump",
                                     media: true,
                                     mediaURL:
                                         "assets/images/gooberGroupPFP.jpg",
