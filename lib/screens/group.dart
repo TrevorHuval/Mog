@@ -141,7 +141,7 @@ class _Group extends State<Group> {
                                 children: [
                                   SizedBox(height: 20),
                                   Post(
-                                    name: "Anthnoy Duong",
+                                    name: "Anthony Duong",
                                     username: "AntTonKnee",
                                     caption: "Checked in @ 9:59 PM",
                                     media: false,

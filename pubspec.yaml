@@ -41,6 +41,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   firebase_storage: ^10.1.0
   pull_to_refresh: ^2.0.0
+  video_player: ^2.2.7
 
 dev_dependencies:
   flutter_test:

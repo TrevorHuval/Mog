@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors, file_names, prefer_const_literals_to_create_immutables, unnecessary_new
-
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/services/user.dart';
 import 'package:firstapp/widgets/addSet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,14 @@ class setEntry extends StatefulWidget {
 }
 
 class _setEntry extends State<setEntry> {
+  User? user = FirebaseAuth.instance.currentUser;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+
+  int? numOfSets;
+  int? numOfReps;
+  int? weight;
+  String? date = "11_23_2021";
+
   final String exerciseType;
   _setEntry({Key? key, required this.exerciseType});
   int numberOfWidgets = 1;
@@ -55,54 +63,92 @@ class _setEntry extends State<setEntry> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      exerciseType,
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            child: Container(
+              height: 100,
+              child: Scaffold(
+                body: SizedBox(
+                  height: 75,
+                  width: 500,
+                  child: Card(
+                    elevation: 0,
+                    color: Colors.grey.shade200,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            height: 30,
+                            width: 75,
+                            child: TextFormField(
+                              enableInteractiveSelection: false,
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                setState(() {
+                                  numOfSets = int.parse(value);
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ),
+                                  labelText: 'Sets',
+                                  labelStyle: TextStyle(fontSize: 15)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 75,
+                            child: TextFormField(
+                              enableInteractiveSelection: false,
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                setState(() {
+                                  numOfReps = int.parse(value);
+                                });
+                              },
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(10),
+                                  ),
+                                  labelText: 'Reps',
+                                  labelStyle: TextStyle(fontSize: 15)),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            width: 75,
+                            child: TextFormField(
+                                enableInteractiveSelection: false,
+                                textAlign: TextAlign.center,
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {
+                                    weight = int.parse(value);
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(10),
+                                    ),
+                                    labelText: 'Weight',
+                                    labelStyle: TextStyle(fontSize: 15))),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 40,
-                ),
-                Column(
-                  children: exerciseWidgets,
-                ),
-                Container(
-                  height: 40,
-                  width: 150,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      elevation: 0,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(15),
-                      ),
-                    ),
-                    onPressed: canRemove
-                        ? () {
-                            HapticFeedback.lightImpact();
-                            setState(() {
-                              _removeWidget();
-                            });
-                          }
-                        : null,
-                    child: Text(
-                      'Remove',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -151,6 +197,8 @@ class _setEntry extends State<setEntry> {
                   ),
                 ),
                 onPressed: () {
+                  UserService(uid: uid).addExercise(
+                      date, exerciseType, numOfSets, numOfReps, weight);
                   HapticFeedback.lightImpact();
                 },
                 child: Text(

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
@@ -7,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:provider/provider.dart';
 
 class Squat extends StatefulWidget {
   @override
@@ -151,7 +148,9 @@ class warmupSet extends StatelessWidget {
               progressColor: Color.fromRGBO(0, 225, 0, 100),
             ),
             Text(
-              calculateWeightToLift().toString() + " x " + numOfReps.toString(),
+              calculateWeightToLift().toStringAsFixed(0) +
+                  " x " +
+                  numOfReps.toString(),
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             )
           ],
@@ -194,7 +193,9 @@ class workingSet extends StatelessWidget {
               progressColor: Color.fromRGBO(0, 225, 0, 100),
             ),
             Text(
-              calculateWeightToLift().toString() + " x " + numOfReps.toString(),
+              calculateWeightToLift().toStringAsFixed(0) +
+                  " x " +
+                  numOfReps.toString(),
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             )
           ],

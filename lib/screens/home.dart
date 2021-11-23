@@ -1,23 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/create_group.dart';
-import 'package:firstapp/screens/group.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/widgets/friendsList.dart';
 import 'package:firstapp/widgets/group_preview.dart';
-import 'package:firstapp/widgets/group_profile.dart';
 import 'package:firstapp/widgets/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/foundation.dart';
-import 'package:firstapp/services/utils.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
-import '../widgets/videoPlayer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -35,8 +28,6 @@ class _Home extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    //final user = Provider.of<UserModel>(context);
-
     return MultiProvider(
       providers: [
         StreamProvider<UserModel?>.value(
@@ -148,6 +139,12 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
+                        ElevatedButton(
+                            onPressed: () {
+                              UserService(uid: uid).addExercise(
+                                  "11_22_2021", "bench press", 7, 15, 500);
+                            },
+                            child: Text("test")),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -183,7 +180,7 @@ class _Home extends State<Home> {
                               name: "Bryan Tran",
                               username: "bryantran1",
                               caption:
-                                  "every push day, i get closer to boulder shoulders",
+                                  "every push day, i get closer to boulder shoulders.  the grind really don't stop man!",
                               media: true,
                               mediaURL: "assets/images/bryanShoulder.jpg",
                               profileImage: "assets/images/bryanProfilePic.jpg",
@@ -384,7 +381,3 @@ class buildFriendsList extends StatelessWidget {
     );
   }
 }
-
-// child: Text(
-//            "Home Page",
-//           style: TextStyle(fontSize: 20, fontFamily: 'SanFran'),

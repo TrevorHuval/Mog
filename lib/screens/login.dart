@@ -104,8 +104,6 @@ class _Login extends State<Login> {
                                         TextStyle(fontWeight: FontWeight.bold)),
                                 onPressed: () async => {
                                       HapticFeedback.lightImpact(),
-                                      print(email),
-                                      print(password),
                                       AuthService().signIn(email, password),
                                     },
                                 style: ElevatedButton.styleFrom(

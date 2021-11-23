@@ -33,12 +33,11 @@ class _AddFriends extends State<AddFriends> {
 
   void updateSearchList() async {
     if (search.isEmpty == false) {
-      searchedUsers = await UserService(uid: uid).queryByUsername(search);
+      searchedUsers =
+          await UserService(uid: uid).queryByUsername(search.toLowerCase());
       searchedUsersCount = searchedUsers.length;
       gotUsers = true;
       setState(() {});
-      print(searchedUsersCount.toString());
-      print(searchedUsers[0].id);
     }
   }
 
@@ -93,7 +92,6 @@ class _AddFriends extends State<AddFriends> {
                                       top: 8, bottom: 8, left: 8),
                                   border: InputBorder.none,
                                   filled: false,
-                                  //icon: Icon(CupertinoIcons.search),
                                   labelText: 'Search for a username',
                                   floatingLabelBehavior:
                                       FloatingLabelBehavior.never),
@@ -130,22 +128,6 @@ class _AddFriends extends State<AddFriends> {
                     ),
                   ),
                 ),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       List<UserModel>? list = Provider.of<List<UserModel>?>(
-                //           context,
-                //           listen: false);
-                //       if (list == null) {
-                //         print("is null");
-                //       } else {
-                //         print(list[0].firstName);
-                //       }
-                //       // Consumer<List<UserModel>?>(builder: (context, list, _) {
-                //       //   print(list![0].firstName);
-                //       //   return SizedBox();
-                //       // });
-                //     },
-                //     child: Text("test")),
                 gotUsers == false
                     ? submitSearch == false
                         ? SizedBox()
@@ -154,7 +136,6 @@ class _AddFriends extends State<AddFriends> {
                             child: Center(child: CircularProgressIndicator()))
                     : Container(
                         height: 200,
-                        // child: Center(child: Text("Build Test idfk")),
                         child: ListView.separated(
                           separatorBuilder: (context, _) => SizedBox(width: 12),
                           itemBuilder: (context, index) {

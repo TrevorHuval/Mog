@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/models/user.dart';
@@ -11,12 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:firstapp/screens/group.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:provider/provider.dart';
-import 'package:path/path.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -31,7 +26,7 @@ class _Profile extends State<Profile> {
   final picker = ImagePicker();
   late File _imageFile;
 
-  Future pickImage() async {
+  Future pickImageFromPhone() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _imageFile = File(pickedFile!.path);
@@ -101,7 +96,7 @@ class _Profile extends State<Profile> {
                                       children: <Widget>[
                                         GestureDetector(
                                           onTap: () async {
-                                            await pickImage();
+                                            await pickImageFromPhone();
                                             await uploadImageToFirebase(
                                                 context);
                                             setState(() {});
@@ -181,7 +176,6 @@ class _Profile extends State<Profile> {
                                                         color: Colors
                                                             .grey.shade700,
                                                         fontSize: 15,
-                                                        //fontWeight: FontWeight.bold
                                                       ),
                                                     ),
                                                   ),
@@ -194,7 +188,6 @@ class _Profile extends State<Profile> {
                                                         color: Colors
                                                             .grey.shade700,
                                                         fontSize: 15,
-                                                        //fontWeight: FontWeight.bold
                                                       ),
                                                     ),
                                                   ),
@@ -231,10 +224,7 @@ class _Profile extends State<Profile> {
                                   fontSize: 25, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.left),
                         ),
-
-                        // Max Calculations container
                         Container(
-                          // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                           margin: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 5),
                           child: Card(
@@ -264,12 +254,10 @@ class _Profile extends State<Profile> {
                                           Text("Bench:",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  //fontWeight: FontWeight.bold,
                                                   color: Colors.grey.shade700)),
                                           Text("${userData.benchPR}",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  //fontWeight: FontWeight.bold,
                                                   color: Colors.grey.shade700)),
                                         ],
                                       ),
@@ -284,12 +272,10 @@ class _Profile extends State<Profile> {
                                           Text("Squat:",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  //fontWeight: FontWeight.bold,
                                                   color: Colors.grey.shade700)),
                                           Text("${userData.squatPR}",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  //fontWeight: FontWeight.bold,
                                                   color: Colors.grey.shade700)),
                                         ],
                                       ),
@@ -304,12 +290,10 @@ class _Profile extends State<Profile> {
                                           Text("Deadlift:",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  //fontWeight: FontWeight.bold,
                                                   color: Colors.grey.shade700)),
                                           Text("${userData.deadliftPR}",
                                               style: TextStyle(
                                                   fontSize: 15,
-                                                  //fontWeight: FontWeight.bold,
                                                   color: Colors.grey.shade700)),
                                         ],
                                       ),
@@ -330,7 +314,6 @@ class _Profile extends State<Profile> {
                                               userData.squatPR!.toInt(),
                                               userData.deadliftPR!.toInt()) /
                                           1000,
-                                      //center: Text("425 / 1000"),
                                       backgroundColor: Colors.grey.shade300,
                                       progressColor:
                                           Color.fromRGBO(0, 255, 0, 100),
@@ -340,14 +323,12 @@ class _Profile extends State<Profile> {
                                         ? Text(
                                             "$total / 1000",
                                             style: TextStyle(
-                                                //fontWeight: FontWeight.bold,
                                                 color: Colors.grey.shade700,
                                                 fontSize: 10),
                                           )
                                         : Text(
                                             "$total / 1000 \n Congratulations on hitting the 1K Club!",
                                             style: TextStyle(
-                                                //fontWeight: FontWeight.bold,
                                                 color: Colors.grey.shade700,
                                                 fontSize: 10),
                                             textAlign: TextAlign.center,
@@ -358,7 +339,6 @@ class _Profile extends State<Profile> {
                             ),
                           ),
                         ),
-
                         userData.inGroup == false
                             ? Container()
                             : Column(

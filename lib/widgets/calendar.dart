@@ -1,22 +1,24 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
-
+import 'package:firstapp/services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-//import 'utils.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
 
   @override
-  _TableBasicsExampleState createState() => _TableBasicsExampleState();
+  _Calendar createState() => _Calendar();
 }
 
-class _TableBasicsExampleState extends State<Calendar> {
+class _Calendar extends State<Calendar> {
   final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  Map<DateTime, List<dynamic>>? _exercises;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   onDaySelected(date, events, e) {
     setState(() {
@@ -69,6 +71,8 @@ class _TableBasicsExampleState extends State<Calendar> {
           calendarFormat: _calendarFormat,
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {}, label: Text("AddEvent")),
     );
   }
 }

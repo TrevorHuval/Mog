@@ -1,5 +1,3 @@
-//import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:firstapp/services/user.dart';
 
 class Notifications extends StatefulWidget {
   @override
@@ -36,7 +33,6 @@ class _Notifications extends State<Notifications> {
     setState(() {
       gotNotificationCount = true;
     });
-    print(gotNotifications.toString() + " = gotNotificationsCount");
   }
 
   void getNotifications() async {
@@ -45,7 +41,6 @@ class _Notifications extends State<Notifications> {
     setState(() {
       gotNotifications = true;
     });
-    print(gotNotifications.toString() + " = gotNotifications");
   }
 
   @override

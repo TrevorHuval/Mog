@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firstapp/models/group.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/screens/add_friend.dart';
 import 'package:firstapp/screens/friendProfile.dart';
-import 'package:firstapp/screens/group.dart';
-import 'package:firstapp/services/group.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/services/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,9 +11,9 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class friendList extends StatefulWidget {
-  const friendList({
-    Key? key,
-  }) : super(key: key);
+  friendList({
+    Key: UniqueKey,
+  }) : super();
 
   @override
   _friendList createState() => _friendList();
@@ -129,10 +126,19 @@ class _friendList extends State<friendList> {
   }
 }
 
-class friendPreview extends StatelessWidget {
+class friendPreview extends StatefulWidget {
   int index;
   String friendid;
   friendPreview({required this.friendid, required this.index});
+  @override
+  _friendPreview createState() =>
+      _friendPreview(index: index, friendid: friendid);
+}
+
+class _friendPreview extends State<friendPreview> {
+  int index;
+  String friendid;
+  _friendPreview({required this.friendid, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -190,10 +196,11 @@ class friendPreview extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) =>
-                                          friendProfile(friendid: friendid)));
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) => friendProfile(
+                                              friendid: friendid)))
+                                  .then((value) => setState(() {}));
                             },
                             child: Container(
                               child: Column(
@@ -270,8 +277,3 @@ class friendPreview extends StatelessWidget {
           );
   }
 }
-
-// USEFUL CODE TO GET DOCIDS OF GROUPS INSIDE USER
-/*List<DocumentSnapshot> documents =
-                                  await DatabaseService(uid: uid)
-                                      .getUserGroups();*/

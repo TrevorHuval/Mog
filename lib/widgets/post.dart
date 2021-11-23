@@ -70,25 +70,10 @@ class _Post extends State<Post> {
               ? SizedBox()
               : Padding(
                   padding: const EdgeInsets.only(top: 5, bottom: 5, right: 5),
-                  child: Container(
-                    height: 200,
-                    width: 275,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                      color: Colors.white,
-                      // FittedBox(
-                      //   child: Image.asset(mediaURL),
-                      //   fit: BoxFit.fill,
-                      // ),
-                      image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: AssetImage(mediaURL),
-                      ),
-                    ),
-                  ),
-                )
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image(image: AssetImage(mediaURL)),
+                  ))
         ],
       ),
     );

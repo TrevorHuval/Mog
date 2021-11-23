@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import '/models/user.dart';
 
@@ -81,13 +80,4 @@ class AuthService {
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
   }
-
-  //Future signOut() async {
-  //  try {
-  //    return await auth.signOut();
-  //  } catch (e) {
-  //    print(e.toString());
-  //    return null;
-  //  }
-  //}
 }

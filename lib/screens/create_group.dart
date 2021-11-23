@@ -172,7 +172,6 @@ class _CreateGroup extends State<CreateGroup> {
             ),
           );
         } else {
-          print(uid);
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -181,28 +180,3 @@ class _CreateGroup extends State<CreateGroup> {
     );
   }
 }
-
-
-/*DatabaseService(uid: uid).createGroup(
-                                            loggedInUser.firstName,
-                                            loggedInUser.lastName,
-                                            "test");*/
-
-
-
-
-/*onPressed: () => getImage(),
-                                child: profileImage == null
-                                    ? Container(
-                                        child: Icon(Icons.camera_alt_rounded))
-                                    : Container(
-                                        width: 150,
-                                        height: 150,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                          image: DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: FileImage(profileImage!)),
-                                        ),
-                                      ), */

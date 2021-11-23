@@ -1,14 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstapp/models/set.dart';
 import 'package:firstapp/services/utils.dart';
+import 'package:flutter/cupertino.dart';
 import '/models/user.dart';
 
-class UserService {
+class UserService extends ChangeNotifier {
   UtilsService _utilsService = UtilsService();
   final String uid;
   UserService({required this.uid});
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
+  late UserModel _currentUser;
+  UserModel get currentUser => _currentUser;
 
   List<UserModel> _userListFromQuerySnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
@@ -56,6 +60,13 @@ class UserService {
     }
   }
 
+  void init(String uid) async {
+    usersCollection.doc(uid).snapshots().listen((event) {
+      _currentUser = UserModel.fromMap(event.data()!);
+      notifyListeners();
+    });
+  }
+
   Stream<UserModel?> getUserInfo(uid) {
     return FirebaseFirestore.instance
         .collection("users")
@@ -68,8 +79,8 @@ class UserService {
     final QuerySnapshot<Map<String, dynamic>> list = await FirebaseFirestore
         .instance
         .collection('users')
-        .where('username', isGreaterThanOrEqualTo: search)
-        .where('username', isLessThanOrEqualTo: search + "\uF7FF")
+        .where('username'.toLowerCase(), isGreaterThanOrEqualTo: search)
+        .where('username'.toLowerCase(), isLessThanOrEqualTo: search + "\uF7FF")
         .get();
     List<DocumentSnapshot> documentsOfUsers = list.docs;
     return documentsOfUsers;
@@ -175,6 +186,8 @@ class UserService {
         .collection('friends')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
+
+    notifyListeners();
   }
 
   Future<void> updateUserProfileImage(uid, profileImageUrl) async {
@@ -213,9 +226,34 @@ class UserService {
         .doc(friendid)
         .collection("friends");
 
-    var document = await collectionRef.doc(uid).get().then((doc) {
+    await collectionRef.doc(uid).get().then((doc) {
       exists = doc.exists;
     });
     return exists;
+  }
+
+  Future<void> addExercise(
+      date, exerciseType, numOfSets, numOfReps, weight) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('pastWorkouts')
+        .doc(date)
+        .collection(exerciseType)
+        .doc()
+        .set(
+            {'numOfSets': numOfSets, 'numOfReps': numOfReps, 'weight': weight});
+  }
+
+  SetModel? _setFromFirebaseSnapshot(DocumentSnapshot snapshot) {
+    if (snapshot != null) {
+      return SetModel(
+          id: snapshot.id,
+          numOfSets: (snapshot.data() as dynamic)['numOfSets'] ?? 0,
+          numOfReps: (snapshot.data() as dynamic)['numOfReps'] ?? 0,
+          weight: (snapshot.data() as dynamic)['weight'] ?? 0);
+    } else {
+      return null;
+    }
   }
 }

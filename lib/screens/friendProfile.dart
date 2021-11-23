@@ -240,7 +240,6 @@ class _friendProfile extends State<friendProfile> {
                                                       color:
                                                           Colors.grey.shade700,
                                                       fontSize: 15,
-                                                      //fontWeight: FontWeight.bold
                                                     ),
                                                   ),
                                                 ),
@@ -253,7 +252,6 @@ class _friendProfile extends State<friendProfile> {
                                                       color:
                                                           Colors.grey.shade700,
                                                       fontSize: 15,
-                                                      //fontWeight: FontWeight.bold
                                                     ),
                                                   ),
                                                 ),
@@ -293,7 +291,6 @@ class _friendProfile extends State<friendProfile> {
 
                       // Max Calculations container
                       Container(
-                        // padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                         margin: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 5),
                         child: Card(
@@ -399,14 +396,12 @@ class _friendProfile extends State<friendProfile> {
                                       ? Text(
                                           "$total / 1000",
                                           style: TextStyle(
-                                              //fontWeight: FontWeight.bold,
                                               color: Colors.grey.shade700,
                                               fontSize: 10),
                                         )
                                       : Text(
                                           "$total / 1000 \n Congratulations on hitting the 1K Club!",
                                           style: TextStyle(
-                                              //fontWeight: FontWeight.bold,
                                               color: Colors.grey.shade700,
                                               fontSize: 10),
                                           textAlign: TextAlign.center,

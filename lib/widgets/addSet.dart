@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,6 +10,10 @@ class addSet extends StatefulWidget {
 }
 
 class _addSet extends State<addSet> {
+  int? numOfSets;
+  int? numOfReps;
+  int? weight;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,6 +43,11 @@ class _addSet extends State<addSet> {
                       enableInteractiveSelection: false,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          numOfSets = int.parse(value);
+                        });
+                      },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(10),
@@ -53,6 +63,11 @@ class _addSet extends State<addSet> {
                       enableInteractiveSelection: false,
                       textAlign: TextAlign.center,
                       keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          numOfReps = int.parse(value);
+                        });
+                      },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(10),
@@ -68,6 +83,11 @@ class _addSet extends State<addSet> {
                         enableInteractiveSelection: false,
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          setState(() {
+                            weight = int.parse(value);
+                          });
+                        },
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: new BorderRadius.circular(10),

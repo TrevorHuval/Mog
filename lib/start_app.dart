@@ -1,13 +1,9 @@
-// ignore_for_file: deprecated_member_use, prefer_const_literals_to_create_immutables, prefer_const_constructors
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/screens/notifications.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:provider/provider.dart';
 import 'models/user.dart';
 import 'screens/all.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +24,6 @@ class startApp extends StatefulWidget {
 
 class _startApp extends State<startApp> {
   final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -79,7 +74,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _title = 'Home';
-
     super.initState();
   }
 
@@ -94,9 +88,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
-    //loggedInUser = user;
-    //List<Widget> children = _children();
     final uid = FirebaseAuth.instance.currentUser!.uid;
 
     return StreamBuilder<UserModel?>(

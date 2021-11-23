@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstapp/models/group.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/services/utils.dart';
 
 class GroupService {
@@ -69,16 +66,4 @@ class GroupService {
         .doc(groupid)
         .set({'groupImageUrl': groupImageUrl}, SetOptions(merge: true));
   }
-
-  /*Stream<List<GroupModel>> queryByName(search) {
-    return FirebaseFirestore.instance
-        .collection("users")
-        .orderBy("name")
-        .startAt([search])
-        .endAt([search + '\uf8ff'])
-        .limit(10)
-        .snapshots()
-        .map(_userListFromQuerySnapshot);
-  }*/
-
 }

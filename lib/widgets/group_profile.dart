@@ -24,13 +24,12 @@ class GroupProfile extends StatefulWidget {
 class _GroupProfile extends State<GroupProfile> {
   String groupid;
   _GroupProfile({required this.groupid});
-  //required String groupid;
   User? user = FirebaseAuth.instance.currentUser;
   final uid = FirebaseAuth.instance.currentUser!.uid;
   final picker = ImagePicker();
   late File _imageFile;
 
-  Future pickImage() async {
+  Future pickImageFromPhone() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _imageFile = File(pickedFile!.path);
@@ -74,7 +73,7 @@ class _GroupProfile extends State<GroupProfile> {
                 SizedBox(height: 50),
                 GestureDetector(
                   onTap: () async {
-                    await pickImage();
+                    await pickImageFromPhone();
                     await uploadGroupImageToFirebase(context);
                     setState(() {});
                   },

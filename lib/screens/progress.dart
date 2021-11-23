@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:firstapp/widgets/calendar.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/widgets/graph.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Progress extends StatefulWidget {
   @override
@@ -15,12 +14,23 @@ class Progress extends StatefulWidget {
 class _Progress extends State<Progress> {
   var selectedDateMessage = "Select a date";
   String graphType = "Weight";
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  Map<DateTime, List<dynamic>>? _exercises;
 
   void _setGraphType(String selectedGraphType) {
     Navigator.pop(context);
     setState(() {
       graphType = selectedGraphType;
     });
+  }
+
+  @override
+  void initState() {
+    _exercises = {};
+
+    super.initState();
   }
 
   @override
@@ -43,7 +53,49 @@ class _Progress extends State<Progress> {
                       color: Colors.transparent,
                       height: 400,
                       width: 500,
-                      child: const Calendar(),
+                      child: Card(
+                        elevation: 0,
+                        color: Colors.grey.shade100,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: TableCalendar(
+                          headerStyle: const HeaderStyle(
+                            titleCentered: true,
+                            formatButtonVisible: false,
+                          ),
+                          focusedDay: _focusedDay,
+                          firstDay: DateTime(DateTime.now().year,
+                              DateTime.now().month - 12, DateTime.now().day),
+                          lastDay: DateTime(DateTime.now().year,
+                              DateTime.now().month, DateTime.now().day),
+                          startingDayOfWeek: StartingDayOfWeek.monday,
+                          calendarStyle: CalendarStyle(
+                            selectedDecoration: const BoxDecoration(
+                                color: Colors.red, shape: BoxShape.circle),
+                            todayDecoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                shape: BoxShape.circle),
+                          ),
+                          selectedDayPredicate: (day) {
+                            return isSameDay(_selectedDay, day);
+                          },
+                          onDaySelected: (selectedDay, focusedDay) {
+                            if (!isSameDay(_selectedDay, selectedDay)) {
+                              setState(
+                                () {
+                                  _selectedDay = selectedDay;
+                                  _focusedDay = focusedDay;
+                                },
+                              );
+                            }
+                          },
+                          onPageChanged: (focusedDay) {
+                            focusedDay = focusedDay;
+                          },
+                          calendarFormat: _calendarFormat,
+                        ),
+                      ),
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -87,9 +139,7 @@ class _Progress extends State<Progress> {
                             margin: const EdgeInsets.symmetric(vertical: 10),
                             child: Column(children: const <Widget>[
                               Text("Please select a date to view its workout",
-                                  style: TextStyle(
-                                      //fontWeight: FontWeight.bold,
-                                      color: Colors.grey))
+                                  style: TextStyle(color: Colors.grey))
                             ]),
                           ),
                         ),

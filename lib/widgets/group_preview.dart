@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/group.dart';
@@ -127,7 +125,6 @@ class createGroupNotTappable extends StatelessWidget {
 class groupImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //UserModel? user = Provider.of<UserModel?>(context);
     GroupModel? group = Provider.of<GroupModel?>(context);
     return group == null
         ? Center(child: CircularProgressIndicator())
@@ -146,7 +143,6 @@ class groupImage extends StatelessWidget {
 class groupName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //UserModel? user = Provider.of<UserModel?>(context);
     GroupModel? group = Provider.of<GroupModel?>(context);
     return group == null
         ? Center(child: CircularProgressIndicator())
@@ -160,10 +156,3 @@ class groupName extends StatelessWidget {
           );
   }
 }
-
-
-
-// USEFUL CODE TO GET DOCIDS OF GROUPS INSIDE USER
-/*List<DocumentSnapshot> documents =
-                                  await DatabaseService(uid: uid)
-                                      .getUserGroups();*/

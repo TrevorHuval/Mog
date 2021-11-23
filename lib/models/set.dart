@@ -1,20 +1,25 @@
 class SetModel {
   final String? id;
-  final String? sets;
-  final String? reps;
-  final String? weight;
+  final int? numOfSets;
+  final int? numOfReps;
+  final int? weight;
 
-  SetModel({this.id, this.sets, this.reps, this.weight});
+  SetModel({this.id, this.numOfSets, this.numOfReps, this.weight});
 
   factory SetModel.fromMap(map) {
     return SetModel(
         id: map['id'],
-        sets: map['sets'],
-        reps: map['reps'],
+        numOfSets: map['numOfSets'],
+        numOfReps: map['numOfReps'],
         weight: map['weight']);
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'sets': sets, 'reps': reps, 'weight': weight};
+    return {
+      'id': id,
+      'numOfSets': numOfSets,
+      'numOfReps': numOfReps,
+      'weight': weight
+    };
   }
 }
