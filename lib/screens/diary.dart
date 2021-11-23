@@ -36,16 +36,33 @@ class diary extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  'Iso-Lateral Pulldowns',
+                  'Deadlift',
                   style: TextStyle(fontSize: 20),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Iso-Lateral Pulldowns',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Deadlift',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Dumbbell Lateral Raises',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Dumbbell Lateral Raises',
+                      ),
+                    ),
                   );
                 },
               ),
@@ -57,10 +74,43 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Iso-Lateral High Rows',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Iso-Lateral High Rows',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Iso-Lateral Pulldowns',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Iso-Lateral Pulldowns',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Pull-Ups',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Pull-Ups',
+                      ),
+                    ),
                   );
                 },
               ),
@@ -72,14 +122,14 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Seated Rows',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Seated Rows',
+                      ),
+                    ),
                   );
                 },
               ),
-              //
               // Spacer
               ListTile(
                 title: Text(
@@ -89,31 +139,17 @@ class diary extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  'Seated Bicep Curl',
+                  'Alternate Dumbbell Curls',
                   style: TextStyle(fontSize: 20),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Seated Bicep Curl',
-                            )),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Hammer Heads',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Hammer Heads',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Alternate Dumbell Curls',
+                      ),
+                    ),
                   );
                 },
               ),
@@ -125,14 +161,62 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Curling Bar',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Curling Bar',
+                      ),
+                    ),
                   );
                 },
               ),
-              //
+              ListTile(
+                title: Text(
+                  'Hammer Heads',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Hammer Heads',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Inclined Hammer Curls',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Inclined Hammer Curls',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Seated Bicep Curl',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Seated Bicep Curl',
+                      ),
+                    ),
+                  );
+                },
+              ),
               // Spacer
               ListTile(
                 title: Text(
@@ -148,25 +232,11 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Bench Press',
-                            )),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Inclined Dumbbell Press',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Inclined Dumbbell Press',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Bench Press',
+                      ),
+                    ),
                   );
                 },
               ),
@@ -178,10 +248,186 @@ class diary extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
-                        builder: (context) => setEntry(
-                              exerciseType: 'Cable Flies',
-                            )),
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Cable Flies',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Dip Machine',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Dip Machine',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Inclined Dumbbell Press',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Inclined Dumbbell Press',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              //Spacer
+              ListTile(
+                title: Text(
+                  'Leg Workouts:',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Dumbbell Lunges',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Dumbbell Lunges',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Leg Extensions',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Leg Extensions',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Leg Press',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Leg Press',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Squats',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Squats',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              // Spacer
+              ListTile(
+                title: Text(
+                  'Tricep Workouts:',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+
+              ListTile(
+                title: Text(
+                  'Overhead Dumbbell Extensions',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Overhead Dumbbell Extensions',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Overhead Rope Extensions',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Overhead Rope Extensions',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Pushdowns',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Pushdowns',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Skull Crushers',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => setEntry(
+                        exerciseType: 'Skull Crushers',
+                      ),
+                    ),
                   );
                 },
               ),
