@@ -7,6 +7,7 @@ import 'package:firstapp/services/user.dart';
 import 'package:firstapp/widgets/friendsList.dart';
 import 'package:firstapp/widgets/group_preview.dart';
 import 'package:firstapp/widgets/group_profile.dart';
+import 'package:firstapp/widgets/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -15,6 +16,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firstapp/services/utils.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
+import '../widgets/videoPlayer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -153,28 +156,206 @@ class _Home extends State<Home> {
                                   fontSize: 25, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.left),
                         ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: 20,
-                            itemBuilder: (BuildContext context, int index) {
-                              return const ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      'assets/images/trevorProfilePic.jpg'),
-                                ),
-                                title: Text('Trevor Huval'),
-                                subtitle: Text('Checked in today at the gym'),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return Divider();
-                            },
-                          ),
-                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: 20),
+                            Post(
+                              name: "Anthony Duong",
+                              username: "AntTonKnee",
+                              caption: "Checked in @ 9:59 PM",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/anthonyProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Kathleen Dinh",
+                              username: "klean",
+                              caption: "amazing leg day!!",
+                              media: true,
+                              mediaURL: "assets/images/kathleenFlex.jpg",
+                              profileImage:
+                                  "assets/images/kathleenProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Bryan Tran",
+                              username: "bryantran1",
+                              caption:
+                                  "every push day, i get closer to boulder shoulders",
+                              media: true,
+                              mediaURL: "assets/images/bryanShoulder.jpg",
+                              profileImage: "assets/images/bryanProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Trevor Huval",
+                              username: "thuval2",
+                              caption: "Sniffing around the gym",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/trevorProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                                name: "Horacio Medina",
+                                username: "hmedina",
+                                caption: "big lifter guy",
+                                media: false,
+                                mediaURL: "",
+                                profileImage:
+                                    "assets/images/horacioProfilePic.jpg"),
+                            Divider(height: 20),
+                            Post(
+                              name: "Blake Lalonde",
+                              username: "theblakelalonde",
+                              caption: "Just PR'd for 500 squat!",
+                              media: false,
+                              mediaURL: "",
+                              profileImage: "assets/images/blakeProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Anthony Duong",
+                              username: "AntTonKnee",
+                              caption:
+                                  "Checked in @ 5:30 PM, got a good leg day in",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/anthonyProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Abigail Glass",
+                              username: "abigailGlass",
+                              caption: "Squats go harddd",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/abigailProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Bryan Tran",
+                              username: "bryantran1",
+                              caption: "I literally hate legs omg",
+                              media: false,
+                              mediaURL: "",
+                              profileImage: "assets/images/bryanProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Kathleen",
+                              username: "klean",
+                              caption: "an insane pull day pump",
+                              media: true,
+                              mediaURL: "assets/images/kathleenBack.jpg",
+                              profileImage:
+                                  "assets/images/kathleenProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Bryan Tran",
+                              username: "bryantran1",
+                              caption: "Checked in @ 9:59 PM",
+                              media: true,
+                              mediaURL: "assets/images/bryanTricep.jpg",
+                              profileImage: "assets/images/bryanProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Trevor Huval",
+                              username: "thuval2",
+                              caption:
+                                  "got a good at home workout in, no skips for me",
+                              media: true,
+                              mediaURL: "assets/images/trevorAtHome.jpg",
+                              profileImage:
+                                  "assets/images/trevorProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Horacio Medina",
+                              username: "zer0score",
+                              caption: "gym boutta go dummy hard",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/horacioProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Blake Lalonde",
+                              username: "theblakelalonde",
+                              caption: "Tris for Guys",
+                              media: false,
+                              mediaURL: "",
+                              profileImage: "assets/images/blakeProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Anthony Duong",
+                              username: "AntTonKnee",
+                              caption: "Big Pump today :p",
+                              media: true,
+                              mediaURL: "assets/images/antFlex.jpg",
+                              profileImage:
+                                  "assets/images/anthonyProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Bryan Tran",
+                              username: "bryantran1",
+                              caption: "Deadlifting demon you already know",
+                              media: false,
+                              mediaURL: "",
+                              profileImage: "assets/images/bryanProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Trevor Huval",
+                              username: "thuval2",
+                              caption: "The grind don't stop",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/trevorProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Anthony Duong",
+                              username: "AntTonKnee",
+                              caption: "Checked in @ 7:14 PM",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/anthonyProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Blake Lalonde",
+                              username: "theblakelalonde",
+                              caption: "Let's get this shit",
+                              media: false,
+                              mediaURL: "",
+                              profileImage: "assets/images/blakeProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Horacio",
+                              username: "hmedin2",
+                              caption: "Possible PR day??",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/horacioProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                          ],
+                        )
                       ],
                     ),
                   ),
