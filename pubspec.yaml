@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^10.1.0
   pull_to_refresh: ^2.0.0
   video_player: ^2.2.7
+  modal_bottom_sheet: ^2.0.0
 
 dev_dependencies:
   flutter_test:
