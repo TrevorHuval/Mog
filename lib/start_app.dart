@@ -121,20 +121,21 @@ class _HomePageState extends State<HomePage> {
               body: children[_currentIndex],
               endDrawer: Drawer(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 88,
-                      width: 500,
+                    Container(
+                      height: 85,
                       child: DrawerHeader(
                         child: Text(
                           "${userData!.firstName} ${userData.lastName}",
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
+                          textAlign: TextAlign.start,
                         ),
-                        decoration: BoxDecoration(color: Colors.red),
+                        //decoration: BoxDecoration(color: Colors.red),
                       ),
                     ),
                     GestureDetector(

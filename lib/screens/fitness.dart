@@ -181,11 +181,18 @@ class _Fitness extends State<Fitness> {
                             decoration: BoxDecoration(
                                 color: Colors.grey.shade100,
                                 borderRadius: BorderRadius.circular(20)),
-                            child: Center(
-                              child: Text("Weightlifting Calculator",
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(Icons.calculate_rounded,
+                                    size: 50, color: Colors.red),
+                                Text(
+                                  "Weightlifting\nCalculator",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
+                                      fontSize: 20),
+                                ),
+                              ],
                             ),
                           ),
                         ),

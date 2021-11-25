@@ -139,12 +139,12 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
-                        ElevatedButton(
-                            onPressed: () {
-                              UserService(uid: uid).addExercise(
-                                  "11_22_2021", "bench press", 7, 15, 500);
-                            },
-                            child: Text("test")),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       UserService(uid: uid).addExercise(
+                        //           "11_22_2021", "bench press", 7, 15, 500);
+                        //     },
+                        //     child: Text("test")),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -184,16 +184,6 @@ class _Home extends State<Home> {
                               media: true,
                               mediaURL: "assets/images/bryanShoulder.jpg",
                               profileImage: "assets/images/bryanProfilePic.jpg",
-                            ),
-                            Divider(height: 20),
-                            Post(
-                              name: "Trevor Huval",
-                              username: "thuval2",
-                              caption: "Sniffing around the gym",
-                              media: false,
-                              mediaURL: "",
-                              profileImage:
-                                  "assets/images/trevorProfilePic.jpg",
                             ),
                             Divider(height: 20),
                             Post(

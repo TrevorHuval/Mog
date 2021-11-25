@@ -245,6 +245,20 @@ class UserService extends ChangeNotifier {
             {'numOfSets': numOfSets, 'numOfReps': numOfReps, 'weight': weight});
   }
 
+  Future<void> updateUserInformation(
+      String firstName, String lastName, String userName) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).set(
+        {'firstName': firstName, 'lastName': lastName, 'userName': userName},
+        SetOptions(merge: true));
+  }
+
+  Future<void> updateMaxCalculations(
+      int benchPR, int squatPR, int deadliftPR) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).set(
+        {'benchPR': benchPR, 'squatPR': squatPR, 'deadliftPR': deadliftPR},
+        SetOptions(merge: true));
+  }
+
   SetModel? _setFromFirebaseSnapshot(DocumentSnapshot snapshot) {
     if (snapshot != null) {
       return SetModel(
