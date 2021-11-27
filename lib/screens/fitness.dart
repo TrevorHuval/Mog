@@ -198,64 +198,110 @@ class _Fitness extends State<Fitness> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(width: 20, height: 80),
-                          Expanded(
-                            child: SizedBox(
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    shape: new RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(15))),
-                                onPressed: () {},
-                                child: Text(
-                                  'CHECK IN',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                      userData!.checkedIn == false
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(width: 20, height: 80),
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 40,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          shape: new RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      15))),
+                                      onPressed: () async {
+                                        await UserService(uid: uid)
+                                            .checkIn(uid);
+                                        setState(() {});
+                                      },
+                                      child: Text(
+                                        'CHECK IN',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              "OR",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey.shade700,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 40,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.grey.shade200,
-                                    elevation: 0,
-                                    shape: new RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(15))),
-                                onPressed: () {},
-                                child: Text(
-                                  'REST DAY',
-                                  style: TextStyle(
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Text(
+                                    "OR",
+                                    style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red),
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 40,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.grey.shade200,
+                                          elevation: 0,
+                                          shape: new RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      15))),
+                                      onPressed: () {},
+                                      child: Text(
+                                        'REST DAY',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 20)
+                              ],
+                            )
+                          : Column(
+                              children: [
+                                SizedBox(height: 20),
+                                Text(
+                                  "You've successfully checked in today.",
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                  height: 60,
+                                  width: 300,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.red,
+                                        elevation: 0,
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(15))),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => diary(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'EDIT WORKOUT',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(width: 20)
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -263,8 +309,11 @@ class _Fitness extends State<Fitness> {
             ),
           );
         } else {
-          return Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            color: Colors.white,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         }
       },

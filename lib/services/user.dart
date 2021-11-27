@@ -32,6 +32,7 @@ class UserService extends ChangeNotifier {
         deadliftPR: (doc.data() as dynamic)['deadliftPR'] ?? 0,
         inGroup: (doc.data() as dynamic)['inGroup'] ?? false,
         streak: (doc.data() as dynamic)['streak'] ?? 0,
+        checkedIn: (doc.data() as dynamic)['checkedIn'] ?? false,
       );
     }).toList();
   }
@@ -54,6 +55,7 @@ class UserService extends ChangeNotifier {
         deadliftPR: (snapshot.data() as dynamic)['deadliftPR'] ?? 0,
         inGroup: (snapshot.data() as dynamic)['inGroup'] ?? false,
         streak: (snapshot.data() as dynamic)['streak'] ?? 0,
+        checkedIn: (snapshot.data() as dynamic)['checkedIn'] ?? false,
       );
     } else {
       return null;
@@ -73,6 +75,13 @@ class UserService extends ChangeNotifier {
         .doc(uid)
         .snapshots()
         .map(_userFromFirebaseSnapshot);
+  }
+
+  Future<void> checkIn(uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .set({'checkedIn': true}, SetOptions(merge: true));
   }
 
   Future<List<DocumentSnapshot>> queryByUsername(search) async {

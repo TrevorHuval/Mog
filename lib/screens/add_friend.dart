@@ -153,10 +153,18 @@ class _AddFriends extends State<AddFriends> {
   }
 }
 
-class listUsers extends StatelessWidget {
+class listUsers extends StatefulWidget {
   String userid;
   listUsers({required this.userid});
+  @override
+  _listUsers createState() => _listUsers(userid: userid);
+}
+
+class _listUsers extends State<listUsers> {
+  String userid;
+  _listUsers({required this.userid});
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  bool inviteSent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -176,16 +184,29 @@ class listUsers extends StatelessWidget {
                 trailing: SizedBox(
                   width: 30,
                   height: 30,
-                  child: GestureDetector(
-                      onTap: () {
-                        UserService(uid: uid).sendFriendRequest(userid);
-                      },
-                      child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.red),
-                          child: Center(
-                              child: Icon(CupertinoIcons.add,
-                                  size: 18, color: Colors.white)))),
+                  child: inviteSent == false
+                      ? GestureDetector(
+                          onTap: () {
+                            UserService(uid: uid).sendFriendRequest(userid);
+                            setState(() {
+                              inviteSent = true;
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.red),
+                              child: Center(
+                                  child: Icon(CupertinoIcons.add,
+                                      size: 18, color: Colors.white))))
+                      : GestureDetector(
+                          onTap: null,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.transparent),
+                              child: Center(
+                                  child: Icon(CupertinoIcons.check_mark,
+                                      size: 18, color: Colors.green)))),
                 ),
               ));
         } else {
