@@ -139,12 +139,12 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       UserService(uid: uid).addExercise(
-                        //           "11_22_2021", "bench press", 7, 15, 500);
-                        //     },
-                        //     child: Text("test")),
+                        ElevatedButton(
+                            onPressed: () {
+                              UserService(uid: uid).addExercise(
+                                  "11_22_2021", "bench press", 7, 15, 500);
+                            },
+                            child: Text("test")),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -159,11 +159,21 @@ class _Home extends State<Home> {
                             Post(
                               name: "Anthony Duong",
                               username: "AntTonKnee",
-                              caption: "Checked in @ 9:59 PM",
+                              caption:
+                                  "We takin over the gym today! @bryantran1 @theblakelalonde @thuval2 @hmedin2",
                               media: false,
                               mediaURL: "",
                               profileImage:
                                   "assets/images/anthonyProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
+                              name: "Bryan Tran",
+                              username: "bryantran1",
+                              caption: "The boys killed it today yessir",
+                              media: true,
+                              mediaURL: "assets/images/groupPic.jpg",
+                              profileImage: "assets/images/bryanProfilePic.jpg",
                             ),
                             Divider(height: 20),
                             Post(
@@ -187,8 +197,18 @@ class _Home extends State<Home> {
                             ),
                             Divider(height: 20),
                             Post(
+                              name: "Trevor Huval",
+                              username: "thuval2",
+                              caption: "Amazing 3hr sesh",
+                              media: false,
+                              mediaURL: "",
+                              profileImage:
+                                  "assets/images/trevorProfilePic.jpg",
+                            ),
+                            Divider(height: 20),
+                            Post(
                                 name: "Horacio Medina",
-                                username: "hmedina",
+                                username: "hmedin2",
                                 caption: "big lifter guy",
                                 media: false,
                                 mediaURL: "",
@@ -266,7 +286,7 @@ class _Home extends State<Home> {
                             Divider(height: 20),
                             Post(
                               name: "Horacio Medina",
-                              username: "zer0score",
+                              username: "hmedin2",
                               caption: "gym boutta go dummy hard",
                               media: false,
                               mediaURL: "",
@@ -315,7 +335,8 @@ class _Home extends State<Home> {
                             Post(
                               name: "Anthony Duong",
                               username: "AntTonKnee",
-                              caption: "Checked in @ 7:14 PM",
+                              caption:
+                                  "That boy @theblakelalonde pressure at the gym",
                               media: false,
                               mediaURL: "",
                               profileImage:
