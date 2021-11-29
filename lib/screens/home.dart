@@ -139,12 +139,6 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
-                        ElevatedButton(
-                            onPressed: () {
-                              UserService(uid: uid).addExercise(
-                                  "11_22_2021", "bench press", 7, 15, 500);
-                            },
-                            child: Text("test")),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
