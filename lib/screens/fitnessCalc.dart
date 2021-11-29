@@ -21,9 +21,15 @@ class _fitnessCalc extends State<fitnessCalc> {
       Deadlift(),
     ];
     final _Tabs = <Tab>[
-      const Tab(icon: Icon(Icons.cloud), text: 'Squat'),
-      const Tab(icon: Icon(Icons.alarm), text: 'Bench'),
-      const Tab(icon: Icon(Icons.forum), text: 'Deadlift'),
+      Tab(
+          icon: ImageIcon(AssetImage('assets/images/Squat.png')),
+          text: 'Squat'),
+      Tab(
+          icon: ImageIcon(AssetImage('assets/images/Bench.png')),
+          text: 'Bench'),
+      Tab(
+          icon: ImageIcon(AssetImage('assets/images/Deadlift.png')),
+          text: 'Deadlift'),
     ];
     return DefaultTabController(
       length: _Tabs.length,
