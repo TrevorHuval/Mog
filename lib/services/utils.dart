@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firstapp/models/set.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 
@@ -58,6 +59,42 @@ class DatabaseService {
             .get();
     List<DocumentSnapshot> documents = userGroups.docs;
     return documents;
+  }
+
+  Future<List<DocumentSnapshot>> getWorkoutSets(date, exerciseType) async {
+    final QuerySnapshot<Map<String, dynamic>> workouts = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('pastWorkouts')
+        .doc(date)
+        .collection(exerciseType)
+        .get();
+    List<DocumentSnapshot> documents = workouts.docs;
+    return documents;
+  }
+
+  SetModel? _setFromFirebaseSnapshot(DocumentSnapshot snapshot) {
+    if (snapshot != null) {
+      return SetModel(
+          id: snapshot.id,
+          numOfSets: (snapshot.data() as dynamic)['numOfSets'] ?? 0,
+          numOfReps: (snapshot.data() as dynamic)['numOfReps'] ?? 0,
+          weight: (snapshot.data() as dynamic)['weight'] ?? 0);
+    } else {
+      return null;
+    }
+  }
+
+  List<SetModel> _setListFromQuerySnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return SetModel(
+        id: doc.id,
+        numOfSets: (doc.data() as dynamic)['numOfSets'] ?? 0,
+        numOfReps: (doc.data() as dynamic)['numOfReps'] ?? 0,
+        weight: (doc.data() as dynamic)['weight'] ?? 0,
+      );
+    }).toList();
   }
 }
 
@@ -123,7 +160,7 @@ String getRandomSets() {
   Random randomSets = Random();
 
   double randomWeightNum =
-      ((45 + randomWeight.nextInt(500 - 45)) / 5).floorToDouble() * 5;
+      ((45 + randomWeight.nextInt(200 - 45)) / 5).floorToDouble() * 5;
   int randomRepsNum = (5 + randomReps.nextInt(15 - 5));
   int randomSetsNum = (3 + randomSets.nextInt(12 - 3));
 

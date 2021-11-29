@@ -257,7 +257,7 @@ class UserService extends ChangeNotifier {
   Future<void> updateUserInformation(
       String firstName, String lastName, String userName) async {
     await FirebaseFirestore.instance.collection('users').doc(uid).set(
-        {'firstName': firstName, 'lastName': lastName, 'userName': userName},
+        {'firstName': firstName, 'lastName': lastName, 'username': userName},
         SetOptions(merge: true));
   }
 

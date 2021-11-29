@@ -23,6 +23,7 @@ class _Login extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'SanFran',
         primarySwatch: Colors.red,

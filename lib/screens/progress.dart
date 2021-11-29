@@ -241,8 +241,6 @@ class _Progress extends State<Progress> {
                                   child: Card(
                                       elevation: 0,
                                       color: Colors.grey.shade100,
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 10),
                                       child: Container(
                                         child: ValueListenableBuilder<
                                                 List<Event>>(
@@ -255,7 +253,7 @@ class _Progress extends State<Progress> {
                                                   return Padding(
                                                     padding:
                                                         const EdgeInsets.all(
-                                                            8.0),
+                                                            15),
                                                     child: value[index]
                                                                 .exerciseType ==
                                                             ""
