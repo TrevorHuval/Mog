@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/services/utils.dart';
-import 'package:firstapp/widgets/calendar.dart';
+// import 'package:firstapp/widgets/calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -287,6 +287,8 @@ class _Progress extends State<Progress> {
                                 ),
                               ),
                             ),
+                            ElevatedButton(
+                                onPressed: () {}, child: Text("Test")),
                             Container(
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 15),
