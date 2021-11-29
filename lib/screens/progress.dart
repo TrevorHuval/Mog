@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
+import 'package:firstapp/services/utils.dart';
+import 'package:firstapp/widgets/calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -16,11 +18,14 @@ class Progress extends StatefulWidget {
 
 class _Progress extends State<Progress> {
   var selectedDateMessage = "Select a date";
+  late final ValueNotifier<List<Event>> _selectedEvents;
   String graphType = "Weight";
   final CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  Map<DateTime, List<dynamic>>? _exercises;
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
   void _setGraphType(String selectedGraphType) {
@@ -32,9 +37,63 @@ class _Progress extends State<Progress> {
 
   @override
   void initState() {
-    _exercises = {};
-
     super.initState();
+
+    _selectedDay = _focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  }
+
+  @override
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
+  }
+
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return kEvents[day] ?? [];
+  }
+
+  List<Event> _getEventsForRange(DateTime start, DateTime end) {
+    // Implementation example
+    final days = daysInRange(start, end);
+
+    return [
+      for (final d in days) ..._getEventsForDay(d),
+    ];
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+        _rangeStart = null;
+        _rangeEnd = null;
+        _rangeSelectionMode = RangeSelectionMode.toggledOff;
+      });
+
+      _selectedEvents.value = _getEventsForDay(selectedDay);
+    }
+  }
+
+  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
+    setState(() {
+      _selectedDay = null;
+      _focusedDay = focusedDay;
+      _rangeStart = start;
+      _rangeEnd = end;
+      _rangeSelectionMode = RangeSelectionMode.toggledOn;
+    });
+
+    // `start` or `end` could be null
+    if (start != null && end != null) {
+      _selectedEvents.value = _getEventsForRange(start, end);
+    } else if (start != null) {
+      _selectedEvents.value = _getEventsForDay(start);
+    } else if (end != null) {
+      _selectedEvents.value = _getEventsForDay(end);
+    }
   }
 
   @override
@@ -72,6 +131,22 @@ class _Progress extends State<Progress> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(20))),
                                 child: TableCalendar(
+                                  calendarStyle: CalendarStyle(
+                                    selectedDecoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle),
+                                    todayDecoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        shape: BoxShape.circle),
+                                    markerDecoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle),
+                                    markersMaxCount: 1,
+                                  ),
+                                  rangeStartDay: _rangeStart,
+                                  rangeEndDay: _rangeEnd,
+                                  rangeSelectionMode: _rangeSelectionMode,
+                                  eventLoader: _getEventsForDay,
                                   headerStyle: const HeaderStyle(
                                     titleCentered: true,
                                     formatButtonVisible: false,
@@ -84,27 +159,9 @@ class _Progress extends State<Progress> {
                                   lastDay: DateTime(DateTime.now().year,
                                       DateTime.now().month, DateTime.now().day),
                                   startingDayOfWeek: StartingDayOfWeek.monday,
-                                  calendarStyle: CalendarStyle(
-                                    selectedDecoration: const BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle),
-                                    todayDecoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
-                                        shape: BoxShape.circle),
-                                  ),
-                                  selectedDayPredicate: (day) {
-                                    return isSameDay(_selectedDay, day);
-                                  },
-                                  onDaySelected: (selectedDay, focusedDay) {
-                                    if (!isSameDay(_selectedDay, selectedDay)) {
-                                      setState(
-                                        () {
-                                          _selectedDay = selectedDay;
-                                          _focusedDay = focusedDay;
-                                        },
-                                      );
-                                    }
-                                  },
+                                  selectedDayPredicate: (day) =>
+                                      isSameDay(_selectedDay, day),
+                                  onDaySelected: _onDaySelected,
                                   onPageChanged: (focusedDay) {
                                     focusedDay = focusedDay;
                                   },
@@ -112,6 +169,35 @@ class _Progress extends State<Progress> {
                                 ),
                               ),
                             ),
+
+                            // Container(
+                            //     height: 200,
+                            //     width: 200,
+                            //     child: ValueListenableBuilder<List<Event>>(
+                            //         valueListenable: _selectedEvents,
+                            //         builder: (context, value, _) {
+                            //           return ListView.builder(
+                            //             itemCount: value.length,
+                            //             itemBuilder: (context, index) {
+                            //               return Container(
+                            //                 margin: const EdgeInsets.symmetric(
+                            //                   horizontal: 12.0,
+                            //                   vertical: 4.0,
+                            //                 ),
+                            //                 decoration: BoxDecoration(
+                            //                   border: Border.all(),
+                            //                   borderRadius:
+                            //                       BorderRadius.circular(12.0),
+                            //                 ),
+                            //                 child: ListTile(
+                            //                   onTap: () =>
+                            //                       print('${value[index]}'),
+                            //                   title: Text('${value[index]}'),
+                            //                 ),
+                            //               );
+                            //             },
+                            //           );
+                            //         })),
                             Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 25),
@@ -157,14 +243,49 @@ class _Progress extends State<Progress> {
                                       color: Colors.grey.shade100,
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 10),
-                                      child: userData!.checkedIn == false
-                                          ? Center(
-                                              child: Text(
-                                                  "Please select a date to view its workout",
-                                                  style: TextStyle(
-                                                      color: Colors.grey)),
-                                            )
-                                          : Column()),
+                                      child: Container(
+                                        child: ValueListenableBuilder<
+                                                List<Event>>(
+                                            valueListenable: _selectedEvents,
+                                            builder: (context, value, _) {
+                                              return ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: value.length,
+                                                itemBuilder: (context, index) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: value[index]
+                                                                .exerciseType ==
+                                                            ""
+                                                        ? Text("test")
+                                                        : Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                  "${value[index].exerciseType}",
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          18)),
+                                                              Text(
+                                                                  "${value[index].sets}",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .grey
+                                                                          .shade700))
+                                                            ],
+                                                          ),
+                                                  );
+                                                },
+                                              );
+                                            }),
+                                      )),
                                 ),
                               ),
                             ),

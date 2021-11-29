@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/screens/notifications.dart';
 import 'package:firstapp/services/user.dart';
+import 'package:firstapp/widgets/calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -66,7 +67,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  String _title = "default";
+  String _title = "";
   User? user = FirebaseAuth.instance.currentUser;
   final AuthService _atuhService = AuthService();
   late List<Widget> children = _children();
@@ -171,19 +172,19 @@ class _HomePageState extends State<HomePage> {
                 items: [
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.house_fill),
-                    title: Text('Home'),
+                    label: "Test",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.fitness_center_rounded),
-                    title: Text('Fitness'),
+                    label: "Fitness",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.graph_circle_fill),
-                    title: Text('Progress'),
+                    label: "Progress",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.person_fill),
-                    title: Text('Profile'),
+                    label: "Profile",
                   ),
                 ],
               ),

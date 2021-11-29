@@ -29,10 +29,6 @@ class diary extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/backTargetMuscle.jpg'),
-                ),
                 title: Text(
                   'Back Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -136,10 +132,6 @@ class diary extends StatelessWidget {
               ),
               // Spacer
               ListTile(
-                leading: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/bicepTargetMuscle.jpg'),
-                ),
                 title: Text(
                   'Bicep Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -227,10 +219,6 @@ class diary extends StatelessWidget {
               ),
               // Spacer
               ListTile(
-                leading: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/chestTargetMuscle.jpg'),
-                ),
                 title: Text(
                   'Chest Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -302,10 +290,6 @@ class diary extends StatelessWidget {
               ),
               //Spacer
               ListTile(
-                leading: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/quadsTargetMuscle.jpg'),
-                ),
                 title: Text(
                   'Leg Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -377,10 +361,6 @@ class diary extends StatelessWidget {
               ),
               // Spacer
               ListTile(
-                leading: CircleAvatar(
-                  backgroundImage:
-                      AssetImage('assets/images/tricepTargetMuscle.jpg'),
-                ),
                 title: Text(
                   'Tricep Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),

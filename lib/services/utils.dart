@@ -1,6 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/material.dart';
+import 'dart:collection';
+
+import 'package:table_calendar/table_calendar.dart';
 
 class UtilsService {
   Future<String> uploadFile(File _image, String path) async {
@@ -55,3 +60,105 @@ class DatabaseService {
     return documents;
   }
 }
+
+class Event {
+  final String exerciseType;
+  final String sets;
+
+  const Event(this.exerciseType, this.sets);
+}
+
+String createRandomEvents() {
+  Random random = new Random();
+  return getRandomExercise();
+}
+
+String getRandomExercise() {
+  Random random = new Random();
+  int randomExercise = random.nextInt(9);
+  switch (randomExercise) {
+    case 0:
+      {
+        return "Bench Press";
+      }
+    case 1:
+      {
+        return "Deadlift";
+      }
+    case 2:
+      {
+        return "Squat";
+      }
+    case 3:
+      {
+        return "Lat Pulldown";
+      }
+    case 4:
+      {
+        return "Tricep Extensions";
+      }
+    case 5:
+      {
+        return "Leg Press";
+      }
+    case 6:
+      {
+        return "Preacher Curl";
+      }
+    case 7:
+      {
+        return "Cable Fly";
+      }
+    case 8:
+      {
+        return "Skull Crushers";
+      }
+  }
+  return "";
+}
+
+String getRandomSets() {
+  Random randomWeight = Random();
+  Random randomReps = Random();
+  Random randomSets = Random();
+
+  double randomWeightNum =
+      ((45 + randomWeight.nextInt(500 - 45)) / 5).floorToDouble() * 5;
+  int randomRepsNum = (5 + randomReps.nextInt(15 - 5));
+  int randomSetsNum = (3 + randomSets.nextInt(12 - 3));
+
+  return "$randomSetsNum sets of $randomRepsNum reps for $randomWeightNum \n${randomSetsNum - 1} sets of ${randomRepsNum + 1} reps for ${randomWeightNum + 5} \n${randomSetsNum - 2} sets of ${randomRepsNum + 2} reps for ${randomWeightNum + 10}";
+}
+
+/// Example events.
+///
+/// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
+final kEvents = LinkedHashMap<DateTime, List<Event>>(
+  equals: isSameDay,
+  hashCode: getHashCode,
+)..addAll(_kEventSource);
+
+final _kEventSource = Map.fromIterable(List.generate(90, (index) => index),
+    key: (item) => DateTime.utc(kToday.year, kFirstDay.month, item * 1),
+    value: (item) => List.generate(
+        item % 4 + 1, (index) => Event(getRandomExercise(), getRandomSets())))
+  ..addAll({
+    kToday: [],
+  });
+
+int getHashCode(DateTime key) {
+  return key.day * 1000000 + key.month * 10000 + key.year;
+}
+
+/// Returns a list of [DateTime] objects from [first] to [last], inclusive.
+List<DateTime> daysInRange(DateTime first, DateTime last) {
+  final dayCount = last.difference(first).inDays + 1;
+  return List.generate(
+    dayCount,
+    (index) => DateTime.utc(first.year, first.month, first.day + index),
+  );
+}
+
+final kToday = DateTime.now();
+final kFirstDay = DateTime(kToday.year, kToday.month - 1, kToday.day);
+final kLastDay = DateTime(kToday.year, kToday.month + 1, kToday.day);
