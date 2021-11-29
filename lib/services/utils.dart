@@ -61,7 +61,9 @@ class DatabaseService {
     return documents;
   }
 
-  Future<List<DocumentSnapshot>> getWorkoutSets(date, exerciseType) async {
+  Future<List<DocumentSnapshot>> getWorkoutSets(
+      String date, String exerciseType) async {
+    late String exerciseSetList;
     final QuerySnapshot<Map<String, dynamic>> workouts = await FirebaseFirestore
         .instance
         .collection('users')
@@ -71,6 +73,11 @@ class DatabaseService {
         .collection(exerciseType)
         .get();
     List<DocumentSnapshot> documents = workouts.docs;
+    documents.forEach((element) {
+      SetModel? thisSet = _setFromFirebaseSnapshot(element);
+      exerciseSetList = exerciseSetList +
+          "${thisSet!.numOfSets} sets of ${thisSet.numOfReps} reps for ${thisSet.weight} ";
+    });
     return documents;
   }
 
@@ -86,15 +93,40 @@ class DatabaseService {
     }
   }
 
-  List<SetModel> _setListFromQuerySnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return SetModel(
-        id: doc.id,
-        numOfSets: (doc.data() as dynamic)['numOfSets'] ?? 0,
-        numOfReps: (doc.data() as dynamic)['numOfReps'] ?? 0,
-        weight: (doc.data() as dynamic)['weight'] ?? 0,
-      );
-    }).toList();
+  // List<SetModel> _setListFromQuerySnapshot(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) {
+  //     return SetModel(
+  //       id: doc.id,
+  //       numOfSets: (doc.data() as dynamic)['numOfSets'] ?? 0,
+  //       numOfReps: (doc.data() as dynamic)['numOfReps'] ?? 0,
+  //       weight: (doc.data() as dynamic)['weight'] ?? 0,
+  //     );
+  //   }).toList();
+  // }
+
+  String stringOfSet(SetModel setModel) {
+    String returnStr =
+        "${setModel.numOfSets} sets of ${setModel.numOfReps} reps for ${setModel.weight}";
+    return returnStr;
+  }
+
+  Future<List<DocumentSnapshot>> getExerciseTypes(String date) async {
+    final QuerySnapshot<Map<String, dynamic>> workouts = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('pastWorkouts')
+        .doc(date)
+        .collection('workouts')
+        .get();
+    List<DocumentSnapshot> documents = workouts.docs;
+    return documents;
+  }
+
+  void buildEventFromDatabase(String date) async {
+    List<DocumentSnapshot> exerciseTypes = await getExerciseTypes(date);
+    exerciseTypes.forEach(
+        (DocumentSnapshot exercise) => getWorkoutSets(date, exercise.id));
   }
 }
 
