@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firstapp/models/set.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import 'dart:collection';
 
 import 'package:table_calendar/table_calendar.dart';
@@ -61,26 +63,6 @@ class DatabaseService {
     return documents;
   }
 
-  Future<List<DocumentSnapshot>> getWorkoutSets(
-      String date, String exerciseType) async {
-    late String exerciseSetList;
-    final QuerySnapshot<Map<String, dynamic>> workouts = await FirebaseFirestore
-        .instance
-        .collection('users')
-        .doc(uid)
-        .collection('pastWorkouts')
-        .doc(date)
-        .collection(exerciseType)
-        .get();
-    List<DocumentSnapshot> documents = workouts.docs;
-    documents.forEach((element) {
-      SetModel? thisSet = _setFromFirebaseSnapshot(element);
-      exerciseSetList = exerciseSetList +
-          "${thisSet!.numOfSets} sets of ${thisSet.numOfReps} reps for ${thisSet.weight} ";
-    });
-    return documents;
-  }
-
   SetModel? _setFromFirebaseSnapshot(DocumentSnapshot snapshot) {
     if (snapshot != null) {
       return SetModel(
@@ -93,21 +75,23 @@ class DatabaseService {
     }
   }
 
-  // List<SetModel> _setListFromQuerySnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     return SetModel(
-  //       id: doc.id,
-  //       numOfSets: (doc.data() as dynamic)['numOfSets'] ?? 0,
-  //       numOfReps: (doc.data() as dynamic)['numOfReps'] ?? 0,
-  //       weight: (doc.data() as dynamic)['weight'] ?? 0,
-  //     );
-  //   }).toList();
-  // }
-
   String stringOfSet(SetModel setModel) {
     String returnStr =
         "${setModel.numOfSets} sets of ${setModel.numOfReps} reps for ${setModel.weight}";
     return returnStr;
+  }
+
+  Future<void> buildEventFromDatabase(String date) async {
+    List<DocumentSnapshot> exerciseTypes = await getExerciseTypes(date);
+    String dateDay = date.replaceAll("_", "/");
+    DateTime dtDate = new DateFormat('MM/dd/yyyy').parse(dateDay);
+    if (kEvents[dtDate]!.isNotEmpty) {
+      kEvents[dtDate] = [];
+    }
+
+    exerciseTypes.forEach((DocumentSnapshot exercise) async {
+      await getWorkoutSets(date, exercise.id);
+    });
   }
 
   Future<List<DocumentSnapshot>> getExerciseTypes(String date) async {
@@ -120,13 +104,35 @@ class DatabaseService {
         .collection('workouts')
         .get();
     List<DocumentSnapshot> documents = workouts.docs;
+    //print(documents[0].id);
     return documents;
   }
 
-  void buildEventFromDatabase(String date) async {
-    List<DocumentSnapshot> exerciseTypes = await getExerciseTypes(date);
-    exerciseTypes.forEach(
-        (DocumentSnapshot exercise) => getWorkoutSets(date, exercise.id));
+  Future<void> getWorkoutSets(String date, String exerciseType) async {
+    String exerciseSetList = "";
+    final QuerySnapshot<Map<String, dynamic>> workouts = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('pastWorkouts')
+        .doc(date)
+        .collection("workouts")
+        .doc(exerciseType)
+        .collection(exerciseType)
+        .get();
+    List<DocumentSnapshot> documents = workouts.docs;
+    String dateDay = date.replaceAll("_", "/");
+    DateTime dtDate = new DateFormat('MM/dd/yyyy').parse(dateDay);
+    documents.forEach((element) {
+      SetModel? thisSet = _setFromFirebaseSnapshot(element);
+      exerciseSetList = exerciseSetList +
+          "${thisSet!.numOfSets} sets of ${thisSet.numOfReps} reps for ${thisSet.weight} \n";
+    });
+    if (kEvents[dtDate] != null) {
+      kEvents[dtDate]!.add(Event(exerciseType, exerciseSetList));
+    } else {
+      kEvents[dtDate] = [Event(exerciseType, exerciseSetList)];
+    }
   }
 }
 

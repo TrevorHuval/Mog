@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
+import 'package:firstapp/screens/diary.dart';
 import 'package:firstapp/services/user.dart';
 import 'package:firstapp/services/utils.dart';
 // import 'package:firstapp/widgets/calendar.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firstapp/widgets/graph.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Progress extends StatefulWidget {
@@ -17,6 +19,8 @@ class Progress extends StatefulWidget {
 }
 
 class _Progress extends State<Progress> {
+  String formattedDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
+
   var selectedDateMessage = "Select a date";
   late final ValueNotifier<List<Event>> _selectedEvents;
   String graphType = "Weight";
@@ -72,6 +76,14 @@ class _Progress extends State<Progress> {
         _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
+
+      // String date = formattedDate.replaceAll("/", "_");
+      // String formattedFocusedDay = DateFormat('MM/dd/yyyy').format(focusedDay);
+      // formattedFocusedDay.replaceAll("/", "_");
+      // DatabaseService(uid: uid).buildEventFromDatabase(formattedFocusedDay);
+      String date = formattedDate.replaceAll("/", "_");
+      DatabaseService(uid: uid).buildEventFromDatabase(date);
+      setState(() {});
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
@@ -218,7 +230,15 @@ class _Progress extends State<Progress> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20))),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      await Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(
+                                          builder: (context) => diary(),
+                                        ),
+                                      );
+                                      setState(() {});
+                                    },
                                     child: const Text(
                                       "Edit Workout",
                                       style: TextStyle(
@@ -287,92 +307,90 @@ class _Progress extends State<Progress> {
                                 ),
                               ),
                             ),
-                            ElevatedButton(
-                                onPressed: () {}, child: Text("Test")),
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 15),
-                              color: Colors.transparent,
-                              width: 500,
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                elevation: 0,
-                                color: Colors.grey.shade100,
-                                child: Column(
-                                  children: [
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                        splashFactory: NoSplash.splashFactory,
-                                      ),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      20)),
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(20),
-                                                  topRight: Radius.circular(20),
-                                                ),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  ListTile(
-                                                      title:
-                                                          const Text('Weight'),
-                                                      onTap: () =>
-                                                          _setGraphType(
-                                                              'Weight')),
-                                                  ListTile(
-                                                      title: const Text(
-                                                          'Bench Press'),
-                                                      onTap: () =>
-                                                          _setGraphType(
-                                                              'Bench Press')),
-                                                  ListTile(
-                                                      title: const Text(
-                                                          'Tricep Extension'),
-                                                      onTap: () => _setGraphType(
-                                                          'Tricep Extension')),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(graphType,
-                                              style: TextStyle(
-                                                color: Colors.grey.shade700,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                              )),
-                                          Icon(
-                                            Icons.arrow_drop_down_outlined,
-                                            color: Colors.grey.shade700,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    const Graph(),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   margin: const EdgeInsets.symmetric(
+                            //       horizontal: 20, vertical: 15),
+                            //   color: Colors.transparent,
+                            //   width: 500,
+                            //   child: Card(
+                            //     shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(20)),
+                            //     elevation: 0,
+                            //     color: Colors.grey.shade100,
+                            //     child: Column(
+                            //       children: [
+                            //         TextButton(
+                            //           style: TextButton.styleFrom(
+                            //             splashFactory: NoSplash.splashFactory,
+                            //           ),
+                            //           onPressed: () {
+                            //             showModalBottomSheet(
+                            //               shape: new RoundedRectangleBorder(
+                            //                   borderRadius:
+                            //                       new BorderRadius.circular(
+                            //                           20)),
+                            //               context: context,
+                            //               builder: (context) {
+                            //                 return Container(
+                            //                   decoration: BoxDecoration(
+                            //                     color: Theme.of(context)
+                            //                         .canvasColor,
+                            //                     borderRadius:
+                            //                         const BorderRadius.only(
+                            //                       topLeft: Radius.circular(20),
+                            //                       topRight: Radius.circular(20),
+                            //                     ),
+                            //                   ),
+                            //                   child: Column(
+                            //                     mainAxisSize: MainAxisSize.min,
+                            //                     mainAxisAlignment:
+                            //                         MainAxisAlignment.center,
+                            //                     children: [
+                            //                       ListTile(
+                            //                           title:
+                            //                               const Text('Weight'),
+                            //                           onTap: () =>
+                            //                               _setGraphType(
+                            //                                   'Weight')),
+                            //                       ListTile(
+                            //                           title: const Text(
+                            //                               'Bench Press'),
+                            //                           onTap: () =>
+                            //                               _setGraphType(
+                            //                                   'Bench Press')),
+                            //                       ListTile(
+                            //                           title: const Text(
+                            //                               'Tricep Extension'),
+                            //                           onTap: () => _setGraphType(
+                            //                               'Tricep Extension')),
+                            //                     ],
+                            //                   ),
+                            //                 );
+                            //               },
+                            //             );
+                            //           },
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.center,
+                            //             children: [
+                            //               Text(graphType,
+                            //                   style: TextStyle(
+                            //                     color: Colors.grey.shade700,
+                            //                     fontWeight: FontWeight.bold,
+                            //                     fontSize: 20,
+                            //                   )),
+                            //               Icon(
+                            //                 Icons.arrow_drop_down_outlined,
+                            //                 color: Colors.grey.shade700,
+                            //               )
+                            //             ],
+                            //           ),
+                            //         ),
+                            //         const Graph(),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

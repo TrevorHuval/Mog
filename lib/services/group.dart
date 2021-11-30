@@ -20,16 +20,6 @@ class GroupService {
     }
   }
 
-  String getGroupId(groupid) {
-    DocumentReference groupRef = FirebaseFirestore.instance
-        .collection("users")
-        .doc(groupid)
-        .collection("groups")
-        .doc();
-
-    return groupRef.id;
-  }
-
   Future<int> getMemberCount() async {
     final QuerySnapshot<Map<String, dynamic>> userGroups =
         await FirebaseFirestore.instance

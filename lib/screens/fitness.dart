@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/user.dart';
 import 'package:firstapp/services/user.dart';
-import 'package:firstapp/screens/fitnessCalc.dart';
+import 'package:firstapp/screens/weightliftingCalc.dart';
 import 'package:firstapp/screens/diary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

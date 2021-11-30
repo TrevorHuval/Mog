@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/models/set.dart';
+import 'package:firstapp/services/group.dart';
 import 'package:firstapp/services/utils.dart';
 import 'package:flutter/cupertino.dart';
 import '/models/user.dart';
@@ -82,6 +83,17 @@ class UserService extends ChangeNotifier {
         .collection('users')
         .doc(uid)
         .set({'checkedIn': true}, SetOptions(merge: true));
+
+    String groupID = await getGroupID();
+    print(groupID + " is the groupID");
+
+    List<DocumentSnapshot> groupMembers =
+        await GroupService(groupid: groupID).getGroupMemberIDs();
+    groupMembers.forEach((DocumentSnapshot member) async {
+      if (member.id != uid) {
+        await poke(member.id);
+      }
+    });
   }
 
   Future<List<DocumentSnapshot>> queryByUsername(search) async {
@@ -93,6 +105,17 @@ class UserService extends ChangeNotifier {
         .get();
     List<DocumentSnapshot> documentsOfUsers = list.docs;
     return documentsOfUsers;
+  }
+
+  Future<String> getGroupID() async {
+    final QuerySnapshot<Map<String, dynamic>> groups = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('groups')
+        .get();
+    List<DocumentSnapshot> documents = groups.docs;
+    return documents[0].id;
   }
 
   Future<List<DocumentSnapshot>> getUserFriends() async {
@@ -122,11 +145,39 @@ class UserService extends ChangeNotifier {
         .set({});
   }
 
+  Future<void> poke(uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("sentPokes")
+        .doc(uid)
+        .set({});
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('pokes')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({});
+  }
+
   Stream<bool> hasSentFriendRequest(uid, otherId) {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
         .collection("sentFriendRequests")
+        .doc(otherId)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.exists;
+    });
+  }
+
+  Stream<bool> hasSentPoke(uid, otherId) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("sentPokes")
         .doc(otherId)
         .snapshots()
         .map((snapshot) {
@@ -141,7 +192,6 @@ class UserService extends ChangeNotifier {
         .collection('sentFriendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
-    print("get the fuck");
 
     await FirebaseFirestore.instance
         .collection('users')
@@ -149,6 +199,44 @@ class UserService extends ChangeNotifier {
         .collection('friendRequests')
         .doc(uid)
         .delete();
+  }
+
+  Future<void> dismissPoke(uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('sentPokes')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .delete();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('pokes')
+        .doc(uid)
+        .delete();
+  }
+
+  Future<int> getNumPokes() async {
+    final QuerySnapshot<Map<String, dynamic>> pokes = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('pokes')
+        .get();
+    List<DocumentSnapshot> documents = pokes.docs;
+    return documents.length;
+  }
+
+  Future<List<DocumentSnapshot>> getPokes() async {
+    final QuerySnapshot<Map<String, dynamic>> pokes = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('pokes')
+        .get();
+    List<DocumentSnapshot> documents = pokes.docs;
+    return documents;
   }
 
   Future<void> acceptFriendRequest(uid) async {
@@ -248,6 +336,24 @@ class UserService extends ChangeNotifier {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('pastWorkouts')
         .doc(date)
+        .set({});
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('pastWorkouts')
+        .doc(date)
+        .collection("workouts")
+        .doc(exerciseType)
+        .set({});
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('pastWorkouts')
+        .doc(date)
+        .collection("workouts")
+        .doc(exerciseType)
         .collection(exerciseType)
         .doc()
         .set(

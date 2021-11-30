@@ -9,6 +9,7 @@ import 'models/user.dart';
 import 'screens/all.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'services/auth.dart';
+import 'package:badges/badges.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,15 +67,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+
   int _currentIndex = 0;
   String _title = "";
   User? user = FirebaseAuth.instance.currentUser;
-  final AuthService _atuhService = AuthService();
+  final AuthService _authService = AuthService();
   late List<Widget> children = _children();
+  bool gotNotificationCount = false;
+  String notificationCountStr = "";
 
   @override
   void initState() {
     _title = 'Home';
+    getNotificationCount(uid);
     super.initState();
   }
 
@@ -87,108 +93,132 @@ class _HomePageState extends State<HomePage> {
 
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
 
+  void getNotificationCount(uid) async {
+    int notificationCount = await UserService(uid: uid).getNumFriendRequests() +
+        await UserService(uid: uid).getNumPokes();
+    setState(() {
+      notificationCountStr = notificationCount.toString();
+      gotNotificationCount = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final uid = FirebaseAuth.instance.currentUser!.uid;
-
     return StreamBuilder<UserModel?>(
         stream: UserService(uid: uid).getUserInfo(uid),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             UserModel? userData = snapshot.data;
-            return Scaffold(
-              key: _scaffoldKey,
-              appBar: AppBar(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _title,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+            return gotNotificationCount == true
+                ? Scaffold(
+                    key: _scaffoldKey,
+                    appBar: AppBar(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            _title,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) => Notifications()));
+                              },
+                              child: Badge(
+                                  badgeContent: Text(notificationCountStr,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  badgeColor: Colors.white,
+                                  padding: EdgeInsets.all(4),
+                                  child: Icon(CupertinoIcons.bell_fill))),
+                        ],
+                      ),
+                      backgroundColor: Colors.red,
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => Notifications()));
-                        },
-                        child: Icon(CupertinoIcons.bell_fill)),
-                  ],
-                ),
-                backgroundColor: Colors.red,
-              ),
-              body: children[_currentIndex],
-              endDrawer: Drawer(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 85,
-                      child: DrawerHeader(
-                        child: Text(
-                          "${userData!.firstName} ${userData.lastName}",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                          textAlign: TextAlign.start,
+                    body: children[_currentIndex],
+                    endDrawer: Drawer(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 85,
+                            child: DrawerHeader(
+                              child: Text(
+                                "${userData!.firstName} ${userData.lastName}",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                                textAlign: TextAlign.start,
+                              ),
+                              //decoration: BoxDecoration(color: Colors.red),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: ListTile(
+                              leading: Icon(CupertinoIcons.gear_alt_fill),
+                              title: Text("Settings",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  )),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _authService.logout(context);
+                            },
+                            child: ListTile(
+                              leading: Icon(CupertinoIcons.square_arrow_left),
+                              title: Text("Sign Out",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    bottomNavigationBar: BottomNavigationBar(
+                      onTap: onTabTapped,
+                      currentIndex: _currentIndex,
+                      selectedItemColor: Theme.of(context).primaryColor,
+                      type: BottomNavigationBarType.fixed,
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(CupertinoIcons.house_fill),
+                          label: "Home",
                         ),
-                        //decoration: BoxDecoration(color: Colors.red),
-                      ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.fitness_center_rounded),
+                          label: "Fitness",
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(CupertinoIcons.graph_circle_fill),
+                          label: "Progress",
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(CupertinoIcons.person_fill),
+                          label: "Profile",
+                        ),
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: ListTile(
-                        leading: Icon(CupertinoIcons.gear_alt_fill),
-                        title: Text("Settings",
-                            style: TextStyle(
-                              fontSize: 20,
-                            )),
-                      ),
+                  )
+                : Container(
+                    color: Colors.white,
+                    child: Center(
+                      child: CircularProgressIndicator(),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _atuhService.logout(context);
-                      },
-                      child: ListTile(
-                        leading: Icon(CupertinoIcons.square_arrow_left),
-                        title: Text("Sign Out",
-                            style: TextStyle(
-                              fontSize: 20,
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              bottomNavigationBar: BottomNavigationBar(
-                onTap: onTabTapped,
-                currentIndex: _currentIndex,
-                selectedItemColor: Theme.of(context).primaryColor,
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.house_fill),
-                    label: "Test",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.fitness_center_rounded),
-                    label: "Fitness",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.graph_circle_fill),
-                    label: "Progress",
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.person_fill),
-                    label: "Profile",
-                  ),
-                ],
-              ),
-            );
+                  );
+            ;
           } else {
             return Container(
               color: Colors.white,

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstapp/services/user.dart';
+import 'package:firstapp/services/utils.dart';
 import 'package:firstapp/widgets/addSet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class setEntry extends StatefulWidget {
   final String exerciseType;
@@ -21,11 +23,14 @@ class setEntry extends StatefulWidget {
 class _setEntry extends State<setEntry> {
   User? user = FirebaseAuth.instance.currentUser;
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  final setsTextHolder = TextEditingController();
+  final repsTextHolder = TextEditingController();
+  final weightTextHolder = TextEditingController();
 
   int? numOfSets;
   int? numOfReps;
   int? weight;
-  String? date = "11_23_2021";
+  String formattedDate = DateFormat('MM/dd/yyyy').format(DateTime.now());
 
   final String exerciseType;
   _setEntry({Key? key, required this.exerciseType});
@@ -48,12 +53,31 @@ class _setEntry extends State<setEntry> {
     }
   }
 
+  clearTextInput() {
+    setsTextHolder.clear();
+    repsTextHolder.clear();
+    weightTextHolder.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Enter Set Information',
-              style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text(exerciseType,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold)),
+              ),
+              Text("Enter your set(s) information",
+                  style: TextStyle(color: Colors.white, fontSize: 16))
+            ],
+          ),
           backgroundColor: Colors.red),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -87,6 +111,7 @@ class _setEntry extends State<setEntry> {
                             height: 30,
                             width: 75,
                             child: TextFormField(
+                              controller: setsTextHolder,
                               enableInteractiveSelection: false,
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
@@ -107,6 +132,7 @@ class _setEntry extends State<setEntry> {
                             height: 30,
                             width: 75,
                             child: TextFormField(
+                              controller: repsTextHolder,
                               enableInteractiveSelection: false,
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
@@ -127,6 +153,7 @@ class _setEntry extends State<setEntry> {
                             height: 30,
                             width: 75,
                             child: TextFormField(
+                                controller: weightTextHolder,
                                 enableInteractiveSelection: false,
                                 textAlign: TextAlign.center,
                                 keyboardType: TextInputType.number,
@@ -159,6 +186,32 @@ class _setEntry extends State<setEntry> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            // Container(
+            //   height: 40,
+            //   width: 150,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Colors.red,
+            //       elevation: 0,
+            //       shape: new RoundedRectangleBorder(
+            //         borderRadius: new BorderRadius.circular(15),
+            //       ),
+            //     ),
+            //     onPressed: () {
+            //       HapticFeedback.lightImpact();
+            //       setState(() {
+            //         _addWidget();
+            //       });
+            //     },
+            //     child: Text(
+            //       'Add Another Set',
+            //       style: TextStyle(
+            //         fontSize: 15,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Container(
               height: 40,
               width: 150,
@@ -170,35 +223,12 @@ class _setEntry extends State<setEntry> {
                     borderRadius: new BorderRadius.circular(15),
                   ),
                 ),
-                onPressed: () {
-                  HapticFeedback.lightImpact();
-                  setState(() {
-                    _addWidget();
-                  });
-                },
-                child: Text(
-                  'Add Another Set',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 40,
-              width: 150,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  elevation: 0,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(15),
-                  ),
-                ),
-                onPressed: () {
-                  UserService(uid: uid).addExercise(
+                onPressed: () async {
+                  clearTextInput();
+                  String date = formattedDate.replaceAll("/", "_");
+                  await UserService(uid: uid).addExercise(
                       date, exerciseType, numOfSets, numOfReps, weight);
+                  DatabaseService(uid: uid).buildEventFromDatabase(date);
                   HapticFeedback.lightImpact();
                 },
                 child: Text(
