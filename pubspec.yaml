@@ -22,7 +22,7 @@ environment:
 
 dependencies:
   percent_indicator: ^3.4.0
-  table_calendar: ^3.0.3
+  table_calendar: ^3.0.2
   fl_chart: ^0.40.2
   convex_bottom_bar: ^3.0.0
   intl: ^0.17.0
@@ -43,6 +43,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   video_player: ^2.2.7
   modal_bottom_sheet: ^2.0.0
+  badges: ^2.0.2
 
 dev_dependencies:
   flutter_test:
