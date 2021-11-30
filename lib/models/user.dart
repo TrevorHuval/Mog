@@ -13,6 +13,7 @@ class UserModel {
   final int? squatPR;
   final int? deadliftPR;
   final int? streak;
+  final int? notificationCount;
   bool? checkedIn;
   bool? inGroup;
 
@@ -32,27 +33,28 @@ class UserModel {
       this.deadliftPR,
       this.inGroup,
       this.checkedIn,
-      this.streak});
+      this.streak,
+      this.notificationCount});
 
   factory UserModel.fromMap(map) {
     return UserModel(
-      id: map['id'],
-      username: map['username'],
-      profileImageUrl: map['profileImageUrl'],
-      firstName: map['firstName'],
-      lastName: map['lastName'],
-      email: map['email'],
-      feet: map['feet'],
-      inches: map['inches'],
-      weight: map['weight'],
-      sex: map['sex'],
-      inGroup: map['inGroup'],
-      benchPR: map['benchPR'],
-      squatPR: map['squatPR'],
-      deadliftPR: map['deadliftPR'],
-      streak: map['streak'],
-      checkedIn: map['checkedIn'],
-    );
+        id: map['id'],
+        username: map['username'],
+        profileImageUrl: map['profileImageUrl'],
+        firstName: map['firstName'],
+        lastName: map['lastName'],
+        email: map['email'],
+        feet: map['feet'],
+        inches: map['inches'],
+        weight: map['weight'],
+        sex: map['sex'],
+        inGroup: map['inGroup'],
+        benchPR: map['benchPR'],
+        squatPR: map['squatPR'],
+        deadliftPR: map['deadliftPR'],
+        streak: map['streak'],
+        checkedIn: map['checkedIn'],
+        notificationCount: map['notificationCount']);
   }
 
   Map<String, dynamic> toMap() {
@@ -73,6 +75,7 @@ class UserModel {
       'deadliftPR': deadliftPR,
       'streak': streak,
       'checkedIn': checkedIn,
+      'notificationCount': notificationCount
     };
   }
 }

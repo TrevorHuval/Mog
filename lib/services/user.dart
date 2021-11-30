@@ -4,6 +4,7 @@ import 'package:firstapp/models/set.dart';
 import 'package:firstapp/services/group.dart';
 import 'package:firstapp/services/utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import '/models/user.dart';
 
 class UserService extends ChangeNotifier {
@@ -18,23 +19,23 @@ class UserService extends ChangeNotifier {
   List<UserModel> _userListFromQuerySnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return UserModel(
-        id: doc.id,
-        username: (doc.data() as dynamic)['username'] ?? '',
-        firstName: (doc.data() as dynamic)['firstName'] ?? '',
-        lastName: (doc.data() as dynamic)['lastName'] ?? '',
-        profileImageUrl: (doc.data() as dynamic)['profileImageUrl'] ?? '',
-        email: (doc.data() as dynamic)['email'] ?? '',
-        sex: (doc.data() as dynamic)['sex'] ?? '',
-        weight: (doc.data() as dynamic)['weight'] ?? '',
-        inches: (doc.data() as dynamic)['inches'] ?? '',
-        feet: (doc.data() as dynamic)['feet'] ?? '',
-        benchPR: (doc.data() as dynamic)['benchPR'] ?? 0,
-        squatPR: (doc.data() as dynamic)['squatPR'] ?? 0,
-        deadliftPR: (doc.data() as dynamic)['deadliftPR'] ?? 0,
-        inGroup: (doc.data() as dynamic)['inGroup'] ?? false,
-        streak: (doc.data() as dynamic)['streak'] ?? 0,
-        checkedIn: (doc.data() as dynamic)['checkedIn'] ?? false,
-      );
+          id: doc.id,
+          username: (doc.data() as dynamic)['username'] ?? '',
+          firstName: (doc.data() as dynamic)['firstName'] ?? '',
+          lastName: (doc.data() as dynamic)['lastName'] ?? '',
+          profileImageUrl: (doc.data() as dynamic)['profileImageUrl'] ?? '',
+          email: (doc.data() as dynamic)['email'] ?? '',
+          sex: (doc.data() as dynamic)['sex'] ?? '',
+          weight: (doc.data() as dynamic)['weight'] ?? '',
+          inches: (doc.data() as dynamic)['inches'] ?? '',
+          feet: (doc.data() as dynamic)['feet'] ?? '',
+          benchPR: (doc.data() as dynamic)['benchPR'] ?? 0,
+          squatPR: (doc.data() as dynamic)['squatPR'] ?? 0,
+          deadliftPR: (doc.data() as dynamic)['deadliftPR'] ?? 0,
+          inGroup: (doc.data() as dynamic)['inGroup'] ?? false,
+          streak: (doc.data() as dynamic)['streak'] ?? 0,
+          checkedIn: (doc.data() as dynamic)['checkedIn'] ?? false,
+          notificationCount: (doc.data() as dynamic)['notificationCount'] ?? 0);
     }).toList();
   }
 
@@ -57,6 +58,8 @@ class UserService extends ChangeNotifier {
         inGroup: (snapshot.data() as dynamic)['inGroup'] ?? false,
         streak: (snapshot.data() as dynamic)['streak'] ?? 0,
         checkedIn: (snapshot.data() as dynamic)['checkedIn'] ?? false,
+        notificationCount:
+            (snapshot.data() as dynamic)['notificationCount'] ?? 0,
       );
     } else {
       return null;
@@ -118,6 +121,34 @@ class UserService extends ChangeNotifier {
     return documents[0].id;
   }
 
+  Future<int> getNotificationCount() async {
+    int numFriendRequests = await getNumFriendRequests();
+    int numPokes = await getNumPokes();
+    print(
+        "${numFriendRequests} = numFriendRequests inside getNotificationCount");
+
+    print("${numPokes} = numPokes inside getNotificationCount");
+    int notificationCount = numFriendRequests + numPokes;
+
+    print("${notificationCount} = inside getNotificationCount");
+    return notificationCount;
+  }
+
+  Future<void> increaseNotificationCount(otherid) async {
+    int notificationCount = await getNotificationCount();
+    print("$notificationCount =  current notification count");
+
+    await FirebaseFirestore.instance.collection('users').doc(otherid).set(
+        {'notificationCount': (notificationCount)}, SetOptions(merge: true));
+  }
+
+  Future<void> decreaseNotificationCount() async {
+    int notificationCount = await getNotificationCount();
+    print("$notificationCount =  current notification count");
+    await FirebaseFirestore.instance.collection('users').doc(uid).set(
+        {'notificationCount': (notificationCount)}, SetOptions(merge: true));
+  }
+
   Future<List<DocumentSnapshot>> getUserFriends() async {
     final QuerySnapshot<Map<String, dynamic>> userFriends =
         await FirebaseFirestore.instance
@@ -143,6 +174,8 @@ class UserService extends ChangeNotifier {
         .collection('friendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set({});
+
+    await increaseNotificationCount(uid);
   }
 
   Future<void> poke(uid) async {
@@ -159,6 +192,8 @@ class UserService extends ChangeNotifier {
         .collection('pokes')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set({});
+
+    await increaseNotificationCount(uid);
   }
 
   Stream<bool> hasSentFriendRequest(uid, otherId) {
@@ -185,22 +220,6 @@ class UserService extends ChangeNotifier {
     });
   }
 
-  Future<void> declineFriendRequest(uid) async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('sentFriendRequests')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .delete();
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('friendRequests')
-        .doc(uid)
-        .delete();
-  }
-
   Future<void> dismissPoke(uid) async {
     await FirebaseFirestore.instance
         .collection('users')
@@ -215,17 +234,8 @@ class UserService extends ChangeNotifier {
         .collection('pokes')
         .doc(uid)
         .delete();
-  }
 
-  Future<int> getNumPokes() async {
-    final QuerySnapshot<Map<String, dynamic>> pokes = await FirebaseFirestore
-        .instance
-        .collection('users')
-        .doc(uid)
-        .collection('pokes')
-        .get();
-    List<DocumentSnapshot> documents = pokes.docs;
-    return documents.length;
+    decreaseNotificationCount();
   }
 
   Future<List<DocumentSnapshot>> getPokes() async {
@@ -267,6 +277,26 @@ class UserService extends ChangeNotifier {
         .collection('friendRequests')
         .doc(uid)
         .delete();
+
+    decreaseNotificationCount();
+  }
+
+  Future<void> declineFriendRequest(uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('sentFriendRequests')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .delete();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('friendRequests')
+        .doc(uid)
+        .delete();
+
+    decreaseNotificationCount();
   }
 
   Future<void> removeFriend(uid) async {
@@ -295,6 +325,7 @@ class UserService extends ChangeNotifier {
   }
 
   Future<int> getNumFriendRequests() async {
+    print(uid);
     final QuerySnapshot<Map<String, dynamic>> friendRequests =
         await FirebaseFirestore.instance
             .collection('users')
@@ -302,7 +333,22 @@ class UserService extends ChangeNotifier {
             .collection('friendRequests')
             .get();
     List<DocumentSnapshot> requests = friendRequests.docs;
+    print("${requests.length} is getNumFriendRequests length");
+
     return requests.length;
+  }
+
+  Future<int> getNumPokes() async {
+    print(uid);
+    final QuerySnapshot<Map<String, dynamic>> pokes = await FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('pokes')
+        .get();
+    List<DocumentSnapshot> documents = pokes.docs;
+    print("${documents.length} is getNumPokes length");
+    return documents.length;
   }
 
   Future<List<DocumentSnapshot>> getFriendRequests() async {

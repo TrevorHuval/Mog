@@ -130,11 +130,12 @@ class _HomePageState extends State<HomePage> {
                                         builder: (context) => Notifications()));
                               },
                               child: Badge(
-                                  badgeContent: Text(notificationCountStr,
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                  badgeContent:
+                                      Text("${userData!.notificationCount}",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                          )),
                                   badgeColor: Colors.white,
                                   padding: EdgeInsets.all(4),
                                   child: Icon(CupertinoIcons.bell_fill))),
@@ -151,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                             height: 85,
                             child: DrawerHeader(
                               child: Text(
-                                "${userData!.firstName} ${userData.lastName}",
+                                "${userData.firstName} ${userData.lastName}",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontStyle: FontStyle.italic,

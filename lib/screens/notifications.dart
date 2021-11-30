@@ -245,7 +245,6 @@ class buildPokes extends StatelessWidget {
             return Dismissible(
               key: Key("pokeItem"),
               onDismissed: (direction) async {
-                print("dismissed");
                 await UserService(uid: currentUserid).dismissPoke(friendid);
               },
               child: SizedBox(
