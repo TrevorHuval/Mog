@@ -32,8 +32,8 @@ class _Notifications extends State<Notifications> {
   }
 
   void getNumNotifications() async {
-    numFriendRequests = await UserService(uid: uid).getNumFriendRequests();
-    numPokes = await UserService(uid: uid).getNumPokes();
+    numFriendRequests = await UserService(uid: uid).getNumFriendRequests(uid);
+    numPokes = await UserService(uid: uid).getNumPokes(uid);
 
     setState(() {
       gotNotificationCount = true;

@@ -88,7 +88,7 @@ class UserService extends ChangeNotifier {
         .set({'checkedIn': true}, SetOptions(merge: true));
 
     String groupID = await getGroupID();
-    print(groupID + " is the groupID");
+    //print(groupID + " is the groupID");
 
     List<DocumentSnapshot> groupMembers =
         await GroupService(groupid: groupID).getGroupMemberIDs();
@@ -121,9 +121,9 @@ class UserService extends ChangeNotifier {
     return documents[0].id;
   }
 
-  Future<int> getNotificationCount() async {
-    int numFriendRequests = await getNumFriendRequests();
-    int numPokes = await getNumPokes();
+  Future<void> updateNotificationCount(userid) async {
+    int numFriendRequests = await getNumFriendRequests(userid);
+    int numPokes = await getNumPokes(userid);
     print(
         "${numFriendRequests} = numFriendRequests inside getNotificationCount");
 
@@ -131,23 +131,30 @@ class UserService extends ChangeNotifier {
     int notificationCount = numFriendRequests + numPokes;
 
     print("${notificationCount} = inside getNotificationCount");
-    return notificationCount;
+    print("======");
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userid)
+        .set({'notificationCount': notificationCount}, SetOptions(merge: true));
   }
 
-  Future<void> increaseNotificationCount(otherid) async {
-    int notificationCount = await getNotificationCount();
-    print("$notificationCount =  current notification count");
+  // Future<void> increaseNotificationCount(otherid) async {
+  //   int notificationCount = await getNotificationCount(otherid);
+  //   print(
+  //       "$notificationCount =  current notification count in increase function");
 
-    await FirebaseFirestore.instance.collection('users').doc(otherid).set(
-        {'notificationCount': (notificationCount)}, SetOptions(merge: true));
-  }
+  //   await FirebaseFirestore.instance.collection('users').doc(otherid).set(
+  //       {'notificationCount': (notificationCount)}, SetOptions(merge: true));
+  // }
 
-  Future<void> decreaseNotificationCount() async {
-    int notificationCount = await getNotificationCount();
-    print("$notificationCount =  current notification count");
-    await FirebaseFirestore.instance.collection('users').doc(uid).set(
-        {'notificationCount': (notificationCount)}, SetOptions(merge: true));
-  }
+  // Future<void> decreaseNotificationCount() async {
+  //   int notificationCount = await getNotificationCount(uid);
+  //   print(
+  //       "$notificationCount =  current notification count in decrease function");
+  //   await FirebaseFirestore.instance.collection('users').doc(uid).set(
+  //       {'notificationCount': (notificationCount)}, SetOptions(merge: true));
+  // }
 
   Future<List<DocumentSnapshot>> getUserFriends() async {
     final QuerySnapshot<Map<String, dynamic>> userFriends =
@@ -160,43 +167,46 @@ class UserService extends ChangeNotifier {
     return documents;
   }
 
-  Future<void> sendFriendRequest(uid) async {
+  Future<void> sendFriendRequest(friendid) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("sentFriendRequests")
-        .doc(uid)
+        .doc(friendid)
         .set({});
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc(friendid)
         .collection('friendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set({});
 
-    await increaseNotificationCount(uid);
+    print("calling updateNotificationCount");
+    print(friendid);
+    updateNotificationCount(friendid);
+    //await increaseNotificationCount(uid);
   }
 
-  Future<void> poke(uid) async {
+  Future<void> poke(memberid) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("sentPokes")
-        .doc(uid)
+        .doc(memberid)
         .set({});
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc(memberid)
         .collection('pokes')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set({});
 
-    await increaseNotificationCount(uid);
+    await updateNotificationCount(memberid);
   }
 
-  Stream<bool> hasSentFriendRequest(uid, otherId) {
+  Stream<bool> hasSentFriendRequest(cuid, otherId) {
     return FirebaseFirestore.instance
         .collection("users")
         .doc(uid)
@@ -220,10 +230,10 @@ class UserService extends ChangeNotifier {
     });
   }
 
-  Future<void> dismissPoke(uid) async {
+  Future<void> dismissPoke(friendid) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc(friendid)
         .collection('sentPokes')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
@@ -232,10 +242,10 @@ class UserService extends ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('pokes')
-        .doc(uid)
+        .doc(friendid)
         .delete();
 
-    decreaseNotificationCount();
+    await updateNotificationCount(FirebaseAuth.instance.currentUser!.uid);
   }
 
   Future<List<DocumentSnapshot>> getPokes() async {
@@ -249,24 +259,24 @@ class UserService extends ChangeNotifier {
     return documents;
   }
 
-  Future<void> acceptFriendRequest(uid) async {
+  Future<void> acceptFriendRequest(friendid) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('friends')
-        .doc(uid)
+        .doc(friendid)
         .set({});
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc(friendid)
         .collection('friends')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .set({});
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc(friendid)
         .collection('sentFriendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
@@ -275,16 +285,18 @@ class UserService extends ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('friendRequests')
-        .doc(uid)
+        .doc(friendid)
         .delete();
 
-    decreaseNotificationCount();
+    updateNotificationCount(uid);
+
+    //decreaseNotificationCount();
   }
 
-  Future<void> declineFriendRequest(uid) async {
+  Future<void> declineFriendRequest(friendid) async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(uid)
+        .doc(friendid)
         .collection('sentFriendRequests')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .delete();
@@ -293,10 +305,11 @@ class UserService extends ChangeNotifier {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection('friendRequests')
-        .doc(uid)
+        .doc(friendid)
         .delete();
 
-    decreaseNotificationCount();
+    updateNotificationCount(uid);
+    //decreaseNotificationCount();
   }
 
   Future<void> removeFriend(uid) async {
@@ -324,30 +337,28 @@ class UserService extends ChangeNotifier {
         .set({'profileImageUrl': profileImageUrl}, SetOptions(merge: true));
   }
 
-  Future<int> getNumFriendRequests() async {
-    print(uid);
+  Future<int> getNumFriendRequests(userid) async {
     final QuerySnapshot<Map<String, dynamic>> friendRequests =
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(uid)
+            .doc(userid)
             .collection('friendRequests')
             .get();
     List<DocumentSnapshot> requests = friendRequests.docs;
-    print("${requests.length} is getNumFriendRequests length");
+    //print("${requests.length} is getNumFriendRequests length");
 
     return requests.length;
   }
 
-  Future<int> getNumPokes() async {
-    print(uid);
+  Future<int> getNumPokes(userid) async {
     final QuerySnapshot<Map<String, dynamic>> pokes = await FirebaseFirestore
         .instance
         .collection('users')
-        .doc(uid)
+        .doc(userid)
         .collection('pokes')
         .get();
     List<DocumentSnapshot> documents = pokes.docs;
-    print("${documents.length} is getNumPokes length");
+    //print("${documents.length} is getNumPokes length");
     return documents.length;
   }
 

@@ -38,6 +38,7 @@ class GroupService {
             .doc(groupid)
             .collection('members')
             .get();
+
     List<DocumentSnapshot> documents = groupMembers.docs;
     return documents;
   }

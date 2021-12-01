@@ -154,7 +154,7 @@ class _Group extends State<Group> {
                                     name: "Blake Lalonde",
                                     username: "theblakelalonde",
                                     caption:
-                                        "Rice Crispy Treats before the gym are so godly",
+                                        "Gotta get them Rice Crispies in before the gym",
                                     media: false,
                                     mediaURL: "",
                                     profileImage:

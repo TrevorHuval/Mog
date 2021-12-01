@@ -29,6 +29,10 @@ class diary extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/backTargetMuscle.jpg'),
+                ),
                 title: Text(
                   'Back Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -37,7 +41,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Deadlift',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -53,7 +57,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Dumbbell Lateral Raises',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -69,7 +73,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Iso-Lateral High Rows',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -85,7 +89,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Iso-Lateral Pulldowns',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -101,7 +105,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Pull-Ups',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -117,7 +121,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Seated Rows',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -132,6 +136,10 @@ class diary extends StatelessWidget {
               ),
               // Spacer
               ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/bicepTargetMuscle.jpg'),
+                ),
                 title: Text(
                   'Bicep Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -140,7 +148,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Alternate Dumbbell Curls',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -156,7 +164,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Curling Bar',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -172,7 +180,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Hammer Heads',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -188,7 +196,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Inclined Hammer Curls',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -204,7 +212,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Seated Bicep Curl',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -219,6 +227,10 @@ class diary extends StatelessWidget {
               ),
               // Spacer
               ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/chestTargetMuscle.jpg'),
+                ),
                 title: Text(
                   'Chest Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -227,7 +239,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Bench Press',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -243,7 +255,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Cable Flies',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -259,7 +271,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Dip Machine',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -275,7 +287,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Inclined Dumbbell Press',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -290,6 +302,10 @@ class diary extends StatelessWidget {
               ),
               //Spacer
               ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/quadsTargetMuscle.jpg'),
+                ),
                 title: Text(
                   'Leg Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -298,7 +314,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Dumbbell Lunges',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -314,7 +330,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Leg Extensions',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -330,7 +346,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Leg Press',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -346,7 +362,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Squats',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -361,6 +377,10 @@ class diary extends StatelessWidget {
               ),
               // Spacer
               ListTile(
+                leading: CircleAvatar(
+                  backgroundImage:
+                      AssetImage('assets/images/tricepTargetMuscle.jpg'),
+                ),
                 title: Text(
                   'Tricep Workouts:',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -370,7 +390,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Overhead Dumbbell Extensions',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -386,7 +406,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Overhead Rope Extensions',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -402,7 +422,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Pushdowns',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -418,7 +438,7 @@ class diary extends StatelessWidget {
               ListTile(
                 title: Text(
                   'Skull Crushers',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 16),
                 ),
                 onTap: () {
                   Navigator.push(

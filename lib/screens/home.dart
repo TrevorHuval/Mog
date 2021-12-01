@@ -139,6 +139,18 @@ class _Home extends State<Home> {
                               )
                             : groupPreview(uidForGroup: uid),
                         SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            UserService(uid: uid).updateNotificationCount(uid);
+                          },
+                          child: Text("Test"),
+                        ),
+                        // ElevatedButton(
+                        //   onPressed: () {
+                        //     UserService(uid: uid).decreaseNotificationCount();
+                        //   },
+                        //   child: Text("decrease"),
+                        // ),
                         Container(
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
