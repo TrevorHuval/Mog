@@ -126,11 +126,7 @@ class warmupSet extends StatelessWidget {
   int numOfReps = 5;
 
   double calculateWeightToLift() {
-    return roundedValue(((weight * .9) * (percentage / 100)));
-  }
-
-  double roundedValue(double value) {
-    return ((value * 5).round() / 5);
+    return ((weight * .9) * (percentage / 100));
   }
 
   @override
@@ -174,11 +170,7 @@ class workingSet extends StatelessWidget {
       required this.numOfReps});
 
   double calculateWeightToLift() {
-    return roundedValue(((weight * .9) * (percentage / 100)));
-  }
-
-  double roundedValue(double value) {
-    return ((value * 5).round() / 5);
+    return (((weight * .9) * (percentage / 100)));
   }
 
   @override

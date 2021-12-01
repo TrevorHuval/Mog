@@ -272,7 +272,8 @@ class _Profile extends State<Profile> {
                                           Text(userData.username!,
                                               style: TextStyle(
                                                   fontStyle: FontStyle.italic,
-                                                  color: Colors.grey)),
+                                                  color: Colors.grey.shade600,
+                                                  fontSize: 15)),
                                           Divider(
                                             height: 15,
                                           ),
@@ -486,12 +487,12 @@ class _Profile extends State<Profile> {
                                             children: [
                                               Text("Bench:",
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 20,
                                                       color: Colors
                                                           .grey.shade700)),
                                               Text("${userData.benchPR}",
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 20,
                                                       color: Colors
                                                           .grey.shade700)),
                                             ],
@@ -506,12 +507,12 @@ class _Profile extends State<Profile> {
                                             children: [
                                               Text("Squat:",
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 20,
                                                       color: Colors
                                                           .grey.shade700)),
                                               Text("${userData.squatPR}",
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 20,
                                                       color: Colors
                                                           .grey.shade700)),
                                             ],
@@ -526,12 +527,12 @@ class _Profile extends State<Profile> {
                                             children: [
                                               Text("Deadlift:",
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 20,
                                                       color: Colors
                                                           .grey.shade700)),
                                               Text("${userData.deadliftPR}",
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 20,
                                                       color: Colors
                                                           .grey.shade700)),
                                             ],
@@ -565,14 +566,19 @@ class _Profile extends State<Profile> {
                                                 "$total / 1000",
                                                 style: TextStyle(
                                                     color: Colors.grey.shade700,
-                                                    fontSize: 10),
+                                                    fontSize: 18),
                                               )
-                                            : Text(
-                                                "$total / 1000 \n Congratulations on hitting the 1K Club!",
-                                                style: TextStyle(
-                                                    color: Colors.grey.shade700,
-                                                    fontSize: 10),
-                                                textAlign: TextAlign.center,
+                                            : Container(
+                                                width: 150,
+                                                child: Text(
+                                                  "$total / 1000 \n Congratulations on hitting the 1K Club!",
+                                                  softWrap: true,
+                                                  style: TextStyle(
+                                                      color:
+                                                          Colors.grey.shade700,
+                                                      fontSize: 15),
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
                                       ],
                                     ),

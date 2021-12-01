@@ -141,6 +141,12 @@ class _Home extends State<Home> {
                         SizedBox(height: 20),
                         // ElevatedButton(
                         //   onPressed: () {
+                        //     UserService(uid: uid).updateNotificationCount(uid);
+                        //   },
+                        //   child: Text("Test"),
+                        // ),
+                        // ElevatedButton(
+                        //   onPressed: () {
                         //     UserService(uid: uid).decreaseNotificationCount();
                         //   },
                         //   child: Text("decrease"),
