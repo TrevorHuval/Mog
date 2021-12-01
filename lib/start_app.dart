@@ -130,15 +130,18 @@ class _HomePageState extends State<HomePage> {
                               CupertinoPageRoute(
                                   builder: (context) => Notifications()));
                         },
-                        child: Badge(
-                            badgeContent: Text("${userData!.notificationCount}",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            badgeColor: Colors.white,
-                            padding: EdgeInsets.all(4),
-                            child: Icon(CupertinoIcons.bell_fill))),
+                        child: userData!.notificationCount == 0
+                            ? Icon(CupertinoIcons.bell_fill)
+                            : Badge(
+                                badgeContent:
+                                    Text("${userData.notificationCount}",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                badgeColor: Colors.white,
+                                padding: EdgeInsets.all(4),
+                                child: Icon(CupertinoIcons.bell_fill))),
                   ],
                 ),
                 backgroundColor: Colors.red,
