@@ -151,13 +151,37 @@ class _Home extends State<Home> {
                         //   },
                         //   child: Text("decrease"),
                         // ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                          child: Text("Feed",
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Container(
+                            width: 500,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Feed",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.left),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    shape: new RoundedRectangleBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "+ Add Post",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         Column(
                           children: [
