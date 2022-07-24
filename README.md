@@ -1,16 +1,8 @@
-# firstapp
+# MOG
+Mog is a student-driven project for a class at LSU.
 
-A new Flutter project.
+# Purpose
+The intent for the app was to create a social-fitness app that would entice individuals to indulge into the community aspect of fitness.  It contains familiar features as other fitness apps, such as tracking your workouts, as well as a calculator to better inform individuals in their expceted weight calculations.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Where is Mog now?
+Unfortunately, we as a group did not pursue the project any more after the semester ended and we successfully presented our work.
