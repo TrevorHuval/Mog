@@ -1,6 +1,8 @@
 # MOG
 Mog is a student-driven project for a class at LSU.
 
+<img src="https://github.com/bryantran21/Mog/blob/main/assets/images/mogSecondaryLogoRed.png" width=300>
+
 # Purpose
 The intent for the app was to create a social-fitness app that would entice individuals to indulge into the community aspect of fitness.  It contains familiar features as other fitness apps, such as tracking your workouts, as well as a calculator to better inform individuals in their expceted weight calculations.
 
